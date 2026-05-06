@@ -1,0 +1,11 @@
+*.sas7bdat
+*.csv
+*.rds
+*.RDS
+*.xlsx
+*.xls
+data/
+*.Rhistory
+*.RData
+.Rproj.user/
+.DS_Store
