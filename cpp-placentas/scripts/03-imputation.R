@@ -1,14 +1,16 @@
 # ==============================================================================
 # 03-imputation.R
 # CPP Placental Pathology → Infantile Hemangioma
-# Updated May 2026
+# Updated June 2026
 #
 # Imputes missing covariates only — outcomes (ih1, ih2) never imputed
 # Exposures (mvm, ai) fully observed — included as predictors only
 # m = 20 imputations, maxit = 10, seed = 12345
 #
-# Logged events (1800): MICE dropped mvm2/ai as redundant predictors
-# due to collinearity with mvm3/ai3 — expected, imputation valid
+# Parity missingness corrected via na_tag() in 01-load-clean.R
+# Expected parity missingness now ~1% (down from 28.6%)
+# Logged events: MICE drops redundant exposure predictors
+# (mvm2 collinear with mvm3, ai collinear with ai3) — imputation valid
 # Density plot skipped — dm/chronic_htn too sparse for kernel density
 # ==============================================================================
 
@@ -65,6 +67,11 @@ for (v in miss_vars) {
   cat(sprintf("  %-15s %5d (%s%%)\n", v, n, round(100*n/nrow(df2), 1)))
 }
 
+cat("\nParity check — should be ~1% missing after na_tag() fix:\n")
+cat("  Parity missing:  ", sum(is.na(df2$parity)), "\n")
+cat("  Parity pct miss: ", round(100*mean(is.na(df2$parity)), 1), "%\n")
+cat("  Parity = 0 (primigravida): ", sum(df2$parity == "0", na.rm=TRUE), "\n")
+
 pdf("mice_missing.pdf", width = 12, height = 6)
 aggr(df2 %>% select(all_of(miss_vars)),
      col = c("navyblue","red"), numbers = TRUE,
@@ -82,10 +89,10 @@ vars_to_impute <- c(
   "age", "bmi", "smoking", "parity",
   "plurality", "income", "educ", "marital",
   "infant_sex", "race", "dm", "chronic_htn",
-  "site", "gest_age", "birthweight"
-)
+  "site", "gest_age", "birthweight")
 
 df_mi <- df2 %>% select(all_of(vars_to_impute))
+
 cat("\nVariables entering MICE:", ncol(df_mi), "\n")
 cat("Rows:", nrow(df_mi), "\n")
 
@@ -108,11 +115,8 @@ print(meth[meth != ""])
 # ------------------------------------------------------------------------------
 # RUN MICE
 # m = 20, maxit = 10, seed = 12345
-# Note: 1800 logged events expected — MICE drops redundant exposure predictors
-# (mvm2 collinear with mvm3, ai collinear with ai3) — imputation valid
 # ------------------------------------------------------------------------------
 cat("\nRunning MICE: m=20, maxit=10...\n")
-
 df_imp <- mice(df_mi,
                m               = 20,
                method          = meth,

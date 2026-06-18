@@ -1,7 +1,7 @@
 # ==============================================================================
 # 01-load-clean.R
 # CPP Placental Pathology → Infantile Hemangioma
-# Updated May 2026
+# Updated June 2026
 #
 # Decisions:
 #   - No GA restriction (Alexa twin paper approach)
@@ -12,6 +12,8 @@
 #   - Chronic HTN from cpp_htn_20231031.sas7bdat
 #   - Preterm, SGA, labor onset added per Ellen Francis
 #   - SGA sex-specific per Freedman et al. (grouped by gest_age + infant_sex)
+#   - Parity: na_tag() used to distinguish .P (primigravida → 0) from
+#     .U (unknown → NA), per Chakraborti guidance (November 2023)
 # ==============================================================================
 
 library(haven)
@@ -59,8 +61,7 @@ ncpp_vars <- ncppbasa %>% select(
   C36, C554,             # marital, infant sex
   C303, C1092,           # race, vital status
   C1317,                 # labor onset
-  SITE
-)
+  SITE)
 
 analytic <- path1 %>%
   inner_join(path2,         by = c("MOMID", "PREGID", "CHILDID")) %>%
@@ -108,10 +109,18 @@ analytic <- analytic %>%
       clean_numeric(C52) == 0                             ~ 0,
       clean_numeric(C52) >= 1 & clean_numeric(C52) <= 19  ~ 1,
       clean_numeric(C52) >= 20                            ~ 2),
+    
+    # ------------------------------------------------------------------
+    # PARITY — use na_tag() to distinguish .P (primigravida → 0)
+    # from .U (unknown → NA), per Chakraborti guidance (November 2023)
+    # na_tag() returns "p" for SAS .P and "u" for SAS .U
+    # ------------------------------------------------------------------
     parity  = pmin(case_when(
-      as.character(C50) == "p" ~ 0,
-      as.character(C50) == "u" ~ NA_real_,
-      TRUE ~ as.numeric(as.character(C50))), 4),
+      na_tag(C50) == "p" ~ 0,
+      na_tag(C50) == "u" ~ NA_real_,
+      is.na(C50)         ~ NA_real_,
+      TRUE               ~ as.numeric(C50)), 4),
+    
     plurality = case_when(
       clean_numeric(C10) == 1           ~ 1,
       clean_numeric(C10) %in% c(2,3,4) ~ 2),
@@ -153,11 +162,21 @@ analytic <- analytic %>%
   )
 
 # ------------------------------------------------------------------------------
+# PARITY CHECK
+# ------------------------------------------------------------------------------
+cat("Parity distribution (should have low missingness ~1%):\n")
+analytic %>%
+  summarise(
+    n_total   = n(),
+    n_missing = sum(is.na(parity)),
+    pct_miss  = round(100 * mean(is.na(parity)), 1),
+    n_zero    = sum(parity == 0, na.rm = TRUE),
+    pct_zero  = round(100 * mean(parity == 0, na.rm = TRUE), 1)
+  ) %>%
+  print()
+
+# ------------------------------------------------------------------------------
 # SGA — sex-specific per Freedman et al.
-# Birthweight < 10th percentile for gestational age AND sex
-# Internal CPP reference: mean and SD calculated within each gest_age x sex
-# cell using the analytic sample
-# -1.28 SD corresponds to approximately the 10th percentile
 # ------------------------------------------------------------------------------
 analytic <- analytic %>%
   group_by(gest_age, infant_sex) %>%
@@ -241,8 +260,7 @@ var_label(analytic) <- list(
   SGA          = "SGA <10th pctile for GA x sex: 0=No, 1=Yes",
   preterm      = "Preterm <37w: 0=No, 1=Yes",
   preterm3     = "0=Term, 1=Preterm 32-36w, 2=Very preterm <32w",
-  labor_onset  = "Labor onset: None/Spontaneous/Induced"
-)
+  labor_onset  = "Labor onset: None/Spontaneous/Induced")
 
 # ------------------------------------------------------------------------------
 # CHECK + SAVE

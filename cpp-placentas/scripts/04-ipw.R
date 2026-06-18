@@ -1,12 +1,15 @@
 # ==============================================================================
 # 04-ipw.R
 # CPP Placental Pathology → Infantile Hemangioma
-# Updated May 2026
+# Updated June 2026
 #
 # Single IPW model for non-survival before 1-year examination
 # LTFU confirmed non-differential by exposure (Ellen Francis) — not weighted
 # Stabilized weights: numerator = intercept only, denominator = full covariates
+# Denominator includes binary MVM (any vs none) and binary AI (any vs none)
+# consistent with primary analytic exposure parameterisation
 # Applied within each of 20 imputed datasets
+# chronic_htn added to match outcome model covariate set
 # ==============================================================================
 
 library(tidyverse)
@@ -35,8 +38,8 @@ long <- long %>%
     race      = factor(race,      levels = c("White","Black","Puerto Rican","Other")),
     site      = factor(site)
   ) %>%
-  mutate(across(c(dm, infant_sex, chorangioma, mvm2,
-                  mvm_villous, mvm_vascular, ai), as.factor))
+  mutate(across(c(dm, chronic_htn, infant_sex, chorangioma,
+                  mvm2, mvm_villous, mvm_vascular, ai), as.factor))
 
 # ------------------------------------------------------------------------------
 # OUTCOME OBSERVATION INDICATOR
@@ -61,18 +64,18 @@ long %>%
 
 # ------------------------------------------------------------------------------
 # IPW MODEL
-# Denominator: P(observed | exposure + covariates)
+# Denominator: P(observed | binary MVM + binary AI + covariates)
 # Numerator:   P(observed | 1) — stabilized weights
 # Weight = numerator / denominator
-# newdata = d forces prediction on all rows — returns NA for missing covariates
+# chronic_htn added to match outcome model covariate set
 # ------------------------------------------------------------------------------
 ipw_covs <- "age + bmi + race + educ + income + marital +
-             smoking + parity + dm + infant_sex + site"
+             smoking + parity + dm + chronic_htn + infant_sex + site"
 
 calc_weights <- function(data, imp_num) {
   d <- data %>% filter(.imp == imp_num)
   
-  f_denom <- as.formula(paste("ih_obs ~ mvm3 + ai3 +", ipw_covs))
+  f_denom <- as.formula(paste("ih_obs ~ mvm2 + ai +", ipw_covs))
   f_numer <- as.formula("ih_obs ~ 1")
   
   m_denom <- glm(f_denom, data = d, family = binomial(link = "logit"),

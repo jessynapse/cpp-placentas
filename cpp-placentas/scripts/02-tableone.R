@@ -1,10 +1,11 @@
 # ==============================================================================
 # 02-tableone.R
 # CPP Placental Pathology → Infantile Hemangioma
-# Updated May 2026
-# Produces: Table 1 by MVM/AI, supplemental table by IH,
-#           cross-tabs for results section,
-#           differential exclusion/LTFU check
+# Updated June 2026
+# Produces: Table 1 by MVM any/none and AI any/none (binary primary)
+#           Supplemental table by IH status
+#           Cross-tabs for results section
+#           Differential exclusion/LTFU check
 # ==============================================================================
 
 library(tidyverse)
@@ -21,8 +22,12 @@ df <- readRDS("analytic_sample.RDS")
 # ------------------------------------------------------------------------------
 df2 <- df %>%
   mutate(
+    mvm2      = factor(mvm2,    levels = 0:1,
+                       labels = c("No MVM", "Any MVM")),
     mvm3      = factor(mvm3,    levels = 0:2,
                        labels = c("None", "Low", "High")),
+    ai        = factor(ai,      levels = 0:1,
+                       labels = c("No AI", "Any AI")),
     ai3       = factor(ai3,     levels = 0:2,
                        labels = c("None", "Low", "High")),
     smoking   = factor(smoking, levels = 0:2,
@@ -46,10 +51,8 @@ df2 <- df %>%
     dm          = factor(dm,          levels = 0:1, labels = c("No", "Yes")),
     chronic_htn = factor(chronic_htn, levels = 0:1, labels = c("No", "Yes")),
     chorangioma = factor(chorangioma, levels = 0:1, labels = c("No", "Yes")),
-    mvm2        = factor(mvm2,        levels = 0:1, labels = c("No", "Yes")),
     mvm_villous = factor(mvm_villous, levels = 0:1, labels = c("No", "Yes")),
     mvm_vascular= factor(mvm_vascular,levels = 0:1, labels = c("No", "Yes")),
-    ai          = factor(ai,          levels = 0:1, labels = c("No", "Yes")),
     ih1         = factor(ih1,         levels = 0:1, labels = c("No IH", "IH")),
     ih2         = factor(ih2,         levels = 0:1, labels = c("No IH", "IH"))
   )
@@ -69,11 +72,13 @@ label(df2$dm)          <- "Pre-pregnancy diabetes"
 label(df2$chronic_htn) <- "Chronic hypertension"
 label(df2$gest_age)    <- "Gestational age (weeks)"
 label(df2$birthweight) <- "Birthweight (g)"
+label(df2$preterm)     <- "Preterm birth (<37 weeks)"
+label(df2$SGA)         <- "Small for gestational age"
 label(df2$infant_sex)  <- "Infant sex"
 label(df2$chorangioma) <- "Chorangioma"
-label(df2$mvm3)        <- "MVM grade"
-label(df2$ai3)         <- "Acute inflammation stage"
-label(df2$ih1)         <- "Infantile hemangioma at 1y (V1)"
+label(df2$mvm2)        <- "Maternal vascular malperfusion"
+label(df2$ai)          <- "Acute inflammation"
+label(df2$ih1)         <- "Infantile haemangioma at 1y (V1)"
 
 # ------------------------------------------------------------------------------
 # TABLE 1 VARIABLE LIST
@@ -82,39 +87,39 @@ tab1_var <- c("age", "bmi",
               "race", "educ", "income", "marital",
               "smoking", "parity",
               "dm", "chronic_htn",
-              "gest_age", "birthweight",
+              "gest_age", "birthweight", "preterm", "SGA",
               "infant_sex", "chorangioma",
               "ih1")
 
 # ------------------------------------------------------------------------------
-# TABLE 1 — by MVM grade (table1 package, pretty HTML)
+# TABLE 1 — by MVM any vs none (table1 package, pretty HTML)
 # ------------------------------------------------------------------------------
 aTab1_mvm <- table1(
   ~age + bmi + race + educ + income + marital +
     smoking + parity + dm + chronic_htn +
-    gest_age + birthweight + infant_sex + chorangioma + ih1 | mvm3,
-  data    = df2 %>% filter(!is.na(mvm3)),
+    gest_age + birthweight + preterm + SGA +
+    infant_sex + chorangioma + ih1 | mvm2,
+  data    = df2 %>% filter(!is.na(mvm2)),
   overall = c(right = "Overall"),
-  render.continuous = c(. = "Mean (SD)", . = "Median [Q1, Q3]")
-)
+  render.continuous = c(. = "Mean (SD)", . = "Median [Q1, Q3]"))
 
 aTab1_ai <- table1(
   ~age + bmi + race + educ + income + marital +
     smoking + parity + dm + chronic_htn +
-    gest_age + birthweight + infant_sex + chorangioma + ih1 | ai3,
-  data    = df2 %>% filter(!is.na(ai3)),
+    gest_age + birthweight + preterm + SGA +
+    infant_sex + chorangioma + ih1 | ai,
+  data    = df2 %>% filter(!is.na(ai)),
   overall = c(right = "Overall"),
-  render.continuous = c(. = "Mean (SD)", . = "Median [Q1, Q3]")
-)
+  render.continuous = c(. = "Mean (SD)", . = "Median [Q1, Q3]"))
 
 aTab1_ih <- table1(
   ~age + bmi + race + educ + income + marital +
     smoking + parity + dm + chronic_htn +
-    gest_age + birthweight + infant_sex + chorangioma | ih1,
+    gest_age + birthweight + preterm + SGA +
+    infant_sex + chorangioma | ih1,
   data    = df2 %>% filter(!is.na(ih1)),
   overall = c(right = "Overall"),
-  render.continuous = c(. = "Mean (SD)", . = "Median [Q1, Q3]")
-)
+  render.continuous = c(. = "Mean (SD)", . = "Median [Q1, Q3]"))
 
 # ------------------------------------------------------------------------------
 # TABLE 1 — by MVM/AI/IH (tableone package, with SMDs)
@@ -122,12 +127,12 @@ aTab1_ih <- table1(
 # ------------------------------------------------------------------------------
 bTab1_mvm <- CreateTableOne(
   vars       = tab1_var,
-  strata     = "mvm3",
-  data       = df2 %>% filter(!is.na(mvm3)),
+  strata     = "mvm2",
+  data       = df2 %>% filter(!is.na(mvm2)),
   test       = FALSE,
   includeNA  = FALSE,
-  addOverall = TRUE
-)
+  addOverall = TRUE)
+
 bTab1_mvm_x <- print(bTab1_mvm,
                      showAllLevels = TRUE, smd = TRUE,
                      nonnormal     = "gest_age",
@@ -136,12 +141,12 @@ bTab1_mvm_x <- print(bTab1_mvm,
 
 bTab1_ai <- CreateTableOne(
   vars       = tab1_var,
-  strata     = "ai3",
-  data       = df2 %>% filter(!is.na(ai3)),
+  strata     = "ai",
+  data       = df2 %>% filter(!is.na(ai)),
   test       = FALSE,
   includeNA  = FALSE,
-  addOverall = TRUE
-)
+  addOverall = TRUE)
+
 bTab1_ai_x <- print(bTab1_ai,
                     showAllLevels = TRUE, smd = TRUE,
                     nonnormal     = "gest_age",
@@ -154,16 +159,16 @@ bTab1_ih <- CreateTableOne(
   data       = df2 %>% filter(!is.na(ih1)),
   test       = FALSE,
   includeNA  = FALSE,
-  addOverall = TRUE
-)
+  addOverall = TRUE)
+
 bTab1_ih_x <- print(bTab1_ih,
                     showAllLevels = TRUE, smd = TRUE,
                     nonnormal     = "gest_age",
                     missing       = TRUE, noSpaces = TRUE,
                     printToggle   = FALSE, varLabels = TRUE)
 
-write.csv(bTab1_mvm_x, "table1_by_mvm.csv")
-write.csv(bTab1_ai_x,  "table1_by_ai.csv")
+write.csv(bTab1_mvm_x, "table1_by_mvm_binary.csv")
+write.csv(bTab1_ai_x,  "table1_by_ai_binary.csv")
 write.csv(bTab1_ih_x,  "supp_table_by_ih.csv")
 
 # ------------------------------------------------------------------------------
@@ -174,10 +179,10 @@ build_xtab <- function(data, exposure, exposure_label) {
     filter(!is.na(.data[[exposure]]), !is.na(ih1)) %>%
     group_by(.data[[exposure]]) %>%
     summarise(
-      N          = n(),
-      IH_n       = sum(ih1 == "IH"),
-      IH_pct     = round(100 * mean(ih1 == "IH"), 2),
-      .groups    = "drop"
+      N      = n(),
+      IH_n   = sum(ih1 == "IH"),
+      IH_pct = round(100 * mean(ih1 == "IH"), 2),
+      .groups = "drop"
     ) %>%
     rename(!!exposure_label := !!sym(exposure))
 }
@@ -193,18 +198,24 @@ xtab_overall <- df2 %>%
             IH_pct = round(100 * mean(ih1 == "IH"), 2))
 cat("\nOverall IH:\n"); print(xtab_overall)
 
-# By exposure
+# By exposure — binary primary
+xtab_mvm2  <- build_xtab(df2, "mvm2",        "MVM_any")
+xtab_ai    <- build_xtab(df2, "ai",           "AI_any")
+
+# By exposure — supplemental
 xtab_mvm3  <- build_xtab(df2, "mvm3",        "MVM_grade")
 xtab_ai3   <- build_xtab(df2, "ai3",         "AI_stage")
 xtab_vil   <- build_xtab(df2, "mvm_villous", "MVM_villous")
 xtab_ves   <- build_xtab(df2, "mvm_vascular","MVM_vascular")
 xtab_chor  <- build_xtab(df2, "chorangioma", "Chorangioma")
 
-cat("\nIH by MVM grade:\n");          print(xtab_mvm3)
-cat("\nIH by AI stage:\n");           print(xtab_ai3)
-cat("\nIH by MVM villous lesions:\n");print(xtab_vil)
+cat("\nIH by MVM any vs none:\n");     print(xtab_mvm2)
+cat("\nIH by AI any vs none:\n");      print(xtab_ai)
+cat("\nIH by MVM grade (3-level):\n"); print(xtab_mvm3)
+cat("\nIH by AI stage (3-level):\n");  print(xtab_ai3)
+cat("\nIH by MVM villous lesions:\n"); print(xtab_vil)
 cat("\nIH by MVM vascular lesions:\n");print(xtab_ves)
-cat("\nIH by chorangioma:\n");        print(xtab_chor)
+cat("\nIH by chorangioma:\n");         print(xtab_chor)
 
 # MVM continuous
 xtab_mvm_cont <- df2 %>%
@@ -218,10 +229,10 @@ cat("\nIH by MVM score (continuous):\n"); print(xtab_mvm_cont)
 xtab_joint <- df2 %>%
   filter(!is.na(mvm2), !is.na(ai), !is.na(ih1)) %>%
   mutate(joint = factor(case_when(
-    mvm2 == "No"  & ai == "No"  ~ "Neither",
-    mvm2 == "No"  & ai == "Yes" ~ "AI only",
-    mvm2 == "Yes" & ai == "No"  ~ "MVM only",
-    mvm2 == "Yes" & ai == "Yes" ~ "Both MVM + AI"
+    mvm2 == "No MVM"  & ai == "No AI"  ~ "Neither",
+    mvm2 == "No MVM"  & ai == "Any AI" ~ "AI only",
+    mvm2 == "Any MVM" & ai == "No AI"  ~ "MVM only",
+    mvm2 == "Any MVM" & ai == "Any AI" ~ "Both MVM + AI"
   ), levels = c("Neither","AI only","MVM only","Both MVM + AI"))) %>%
   group_by(joint) %>%
   summarise(N = n(), IH_n = sum(ih1 == "IH"),
@@ -229,14 +240,16 @@ xtab_joint <- df2 %>%
 cat("\nIH by joint MVM x AI:\n"); print(xtab_joint)
 
 # Save cross-tabs
-write.csv(xtab_overall,  "xtab_overall.csv",      row.names = FALSE)
-write.csv(xtab_mvm3,     "xtab_mvm_grade.csv",    row.names = FALSE)
-write.csv(xtab_ai3,      "xtab_ai_stage.csv",     row.names = FALSE)
-write.csv(xtab_vil,      "xtab_mvm_villous.csv",  row.names = FALSE)
-write.csv(xtab_ves,      "xtab_mvm_vascular.csv", row.names = FALSE)
-write.csv(xtab_chor,     "xtab_chorangioma.csv",  row.names = FALSE)
+write.csv(xtab_overall,  "xtab_overall.csv",       row.names = FALSE)
+write.csv(xtab_mvm2,     "xtab_mvm_binary.csv",    row.names = FALSE)
+write.csv(xtab_ai,       "xtab_ai_binary.csv",     row.names = FALSE)
+write.csv(xtab_mvm3,     "xtab_mvm_grade.csv",     row.names = FALSE)
+write.csv(xtab_ai3,      "xtab_ai_stage.csv",      row.names = FALSE)
+write.csv(xtab_vil,      "xtab_mvm_villous.csv",   row.names = FALSE)
+write.csv(xtab_ves,      "xtab_mvm_vascular.csv",  row.names = FALSE)
+write.csv(xtab_chor,     "xtab_chorangioma.csv",   row.names = FALSE)
 write.csv(xtab_mvm_cont, "xtab_mvm_continuous.csv",row.names = FALSE)
-write.csv(xtab_joint,    "xtab_joint_mvm_ai.csv", row.names = FALSE)
+write.csv(xtab_joint,    "xtab_joint_mvm_ai.csv",  row.names = FALSE)
 
 # ------------------------------------------------------------------------------
 # DIFFERENTIAL EXCLUSION / LTFU CHECK
@@ -260,10 +273,10 @@ check_selection <- function(data, exposure) {
     )
 }
 
-cat("\nNon-survivor + LTFU by MVM grade:\n")
-print(check_selection(df2, "mvm3"))
+cat("\nNon-survivor + LTFU by MVM any vs none:\n")
+print(check_selection(df2, "mvm2"))
 
-cat("\nNon-survivor + LTFU by AI stage:\n")
-print(check_selection(df2, "ai3"))
+cat("\nNon-survivor + LTFU by AI any vs none:\n")
+print(check_selection(df2, "ai"))
 
 cat("\nDone. Files saved to Downloads.\n")
