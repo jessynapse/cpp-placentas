@@ -1,0 +1,63 @@
+outcome,analysis_type,exposure,model,term,original,corrected,n_cases,n_obs
+V1 definite,crude,AI any vs none,crude,ai_num,"1.25 (1.05, 1.47)","1.25 (1.06, 1.47)",700,40700
+V1 definite,crude,MVM any vs none,crude,mvm2_num,"1.22 (1.04, 1.43)","1.22 (1.05, 1.43)",700,40700
+V1 definite,crude,MVM score (continuous),crude,mvm_num,"1.09 (1.01, 1.18)","1.09 (1.01, 1.18)",700,40700
+V1 definite,primary,AI any vs none,adjusted,ai1,"1.20 (1.01, 1.41)","1.20 (1.01, 1.42)",700,40700
+V1 definite,primary,AI any vs none,adjusted+IPW,ai1,"1.20 (1.02, 1.42)","1.20 (1.02, 1.42)",700,40700
+V1 definite,primary,MVM any vs none,adjusted,mvm21,"1.25 (1.07, 1.47)","1.26 (1.07, 1.47)",700,40700
+V1 definite,primary,MVM any vs none,adjusted+IPW,mvm21,"1.25 (1.07, 1.46)","1.25 (1.07, 1.46)",700,40700
+V1 definite,primary,MVM score (continuous),adjusted,mvm,"1.12 (1.04, 1.22)","1.12 (1.04, 1.22)",700,40700
+V1 definite,primary,MVM score (continuous),adjusted+IPW,mvm,"1.12 (1.03, 1.21)","1.12 (1.03, 1.21)",700,40700
+V1 definite,site,AI any vs none,adjusted+site,ai1,"1.13 (0.96, 1.34)","1.13 (0.96, 1.34)",700,40700
+V1 definite,site,AI any vs none,adjusted+site+IPW,ai1,"1.14 (0.96, 1.35)","1.14 (0.96, 1.35)",700,40700
+V1 definite,site,MVM any vs none,adjusted+site,mvm21,"1.14 (0.96, 1.35)","1.14 (0.96, 1.35)",700,40700
+V1 definite,site,MVM any vs none,adjusted+site+IPW,mvm21,"1.14 (0.96, 1.35)","1.14 (0.96, 1.35)",700,40700
+V1 definite,site,MVM score (continuous),adjusted+site,mvm,"1.06 (0.97, 1.15)","1.06 (0.97, 1.15)",700,40700
+V1 definite,site,MVM score (continuous),adjusted+site+IPW,mvm,"1.05 (0.97, 1.15)","1.05 (0.97, 1.15)",700,40700
+V1 definite,supplemental,AI stage (3-level),adjusted,ai3High,"1.07 (0.85, 1.36)","1.07 (0.85, 1.37)",700,40700
+V1 definite,supplemental,AI stage (3-level),adjusted,ai3Low,"1.30 (1.06, 1.60)","1.30 (1.06, 1.60)",700,40700
+V1 definite,supplemental,AI stage (3-level),adjusted+IPW,ai3High,"1.07 (0.84, 1.36)","1.07 (0.84, 1.36)",700,40700
+V1 definite,supplemental,AI stage (3-level),adjusted+IPW,ai3Low,"1.32 (1.07, 1.62)","1.32 (1.07, 1.63)",700,40700
+V1 definite,supplemental,MVM grade (3-level),adjusted,mvm3High,"1.30 (0.92, 1.84)","1.30 (0.91, 1.84)",700,40700
+V1 definite,supplemental,MVM grade (3-level),adjusted,mvm3Low,"1.25 (1.06, 1.47)","1.25 (1.06, 1.47)",700,40700
+V1 definite,supplemental,MVM grade (3-level),adjusted+IPW,mvm3High,"1.28 (0.90, 1.81)","1.28 (0.90, 1.81)",700,40700
+V1 definite,supplemental,MVM grade (3-level),adjusted+IPW,mvm3Low,"1.24 (1.05, 1.47)","1.25 (1.06, 1.47)",700,40700
+V1 definite,supplemental,MVM x AI interaction,adjusted,ai1,"1.11 (0.90, 1.37)","1.11 (0.90, 1.37)",700,40700
+V1 definite,supplemental,MVM x AI interaction,adjusted,mvm21,"1.18 (0.98, 1.43)","1.18 (0.98, 1.43)",700,40700
+V1 definite,supplemental,MVM x AI interaction,adjusted,mvm21:ai1,"1.20 (0.85, 1.70)","1.20 (0.85, 1.70)",700,40700
+V1 definite,supplemental,MVM x AI interaction,adjusted+IPW,ai1,"1.11 (0.90, 1.37)","1.11 (0.90, 1.37)",700,40700
+V1 definite,supplemental,MVM x AI interaction,adjusted+IPW,mvm21,"1.18 (0.98, 1.42)","1.18 (0.98, 1.42)",700,40700
+V1 definite,supplemental,MVM x AI interaction,adjusted+IPW,mvm21:ai1,"1.20 (0.84, 1.70)","1.20 (0.85, 1.70)",700,40700
+V1 definite,supplemental,Tumor (possible chorangioma),adjusted,chorangioma1,"2.56 (0.98, 6.67)","2.54 (0.97, 6.65)",699,40546
+V1 definite,supplemental,Tumor (possible chorangioma),adjusted+IPW,chorangioma1,"2.65 (1.02, 6.91)","2.64 (1.01, 6.90)",699,40546
+V2 suspect = present,crude,AI any vs none,crude,ai_num,"1.25 (1.08, 1.44)","1.25 (1.08, 1.45)",930,40700
+V2 suspect = present,crude,MVM any vs none,crude,mvm2_num,"1.24 (1.09, 1.42)","1.25 (1.09, 1.43)",930,40700
+V2 suspect = present,crude,MVM score (continuous),crude,mvm_num,"1.08 (1.01, 1.16)","1.09 (1.01, 1.16)",930,40700
+V2 suspect = present,primary,AI any vs none,adjusted,ai1,"1.19 (1.03, 1.37)","1.19 (1.03, 1.37)",930,40700
+V2 suspect = present,primary,AI any vs none,adjusted+IPW,ai1,"1.19 (1.03, 1.37)","1.19 (1.03, 1.37)",930,40700
+V2 suspect = present,primary,MVM any vs none,adjusted,mvm21,"1.26 (1.11, 1.45)","1.27 (1.11, 1.45)",930,40700
+V2 suspect = present,primary,MVM any vs none,adjusted+IPW,mvm21,"1.26 (1.10, 1.45)","1.26 (1.10, 1.45)",930,40700
+V2 suspect = present,primary,MVM score (continuous),adjusted,mvm,"1.11 (1.04, 1.19)","1.11 (1.04, 1.19)",930,40700
+V2 suspect = present,primary,MVM score (continuous),adjusted+IPW,mvm,"1.11 (1.04, 1.19)","1.11 (1.04, 1.19)",930,40700
+V2 suspect = present,site,AI any vs none,adjusted+site,ai1,not fitted in 05,"1.10 (0.95, 1.27)",930,40700
+V2 suspect = present,site,AI any vs none,adjusted+site+IPW,ai1,not fitted in 05,"1.10 (0.95, 1.27)",930,40700
+V2 suspect = present,site,MVM any vs none,adjusted+site,mvm21,not fitted in 05,"1.13 (0.98, 1.30)",930,40700
+V2 suspect = present,site,MVM any vs none,adjusted+site+IPW,mvm21,not fitted in 05,"1.13 (0.98, 1.30)",930,40700
+V2 suspect = present,site,MVM score (continuous),adjusted+site,mvm,not fitted in 05,"1.04 (0.97, 1.13)",930,40700
+V2 suspect = present,site,MVM score (continuous),adjusted+site+IPW,mvm,not fitted in 05,"1.04 (0.96, 1.12)",930,40700
+V2 suspect = present,supplemental,AI stage (3-level),adjusted,ai3High,"1.09 (0.89, 1.34)","1.09 (0.89, 1.34)",930,40700
+V2 suspect = present,supplemental,AI stage (3-level),adjusted,ai3Low,"1.27 (1.06, 1.52)","1.27 (1.06, 1.52)",930,40700
+V2 suspect = present,supplemental,AI stage (3-level),adjusted+IPW,ai3High,"1.08 (0.88, 1.33)","1.08 (0.88, 1.33)",930,40700
+V2 suspect = present,supplemental,AI stage (3-level),adjusted+IPW,ai3Low,"1.28 (1.07, 1.53)","1.28 (1.07, 1.53)",930,40700
+V2 suspect = present,supplemental,MVM grade (3-level),adjusted,mvm3High,"1.16 (0.84, 1.59)","1.16 (0.84, 1.59)",930,40700
+V2 suspect = present,supplemental,MVM grade (3-level),adjusted,mvm3Low,"1.28 (1.11, 1.48)","1.28 (1.11, 1.48)",930,40700
+V2 suspect = present,supplemental,MVM grade (3-level),adjusted+IPW,mvm3High,"1.15 (0.83, 1.58)","1.15 (0.83, 1.58)",930,40700
+V2 suspect = present,supplemental,MVM grade (3-level),adjusted+IPW,mvm3Low,"1.28 (1.11, 1.48)","1.28 (1.11, 1.48)",930,40700
+V2 suspect = present,supplemental,MVM x AI interaction,adjusted,ai1,"1.12 (0.94, 1.35)","1.12 (0.94, 1.35)",930,40700
+V2 suspect = present,supplemental,MVM x AI interaction,adjusted,mvm21,"1.21 (1.03, 1.42)","1.21 (1.04, 1.43)",930,40700
+V2 suspect = present,supplemental,MVM x AI interaction,adjusted,mvm21:ai1,"1.14 (0.84, 1.53)","1.14 (0.84, 1.54)",930,40700
+V2 suspect = present,supplemental,MVM x AI interaction,adjusted+IPW,ai1,"1.12 (0.93, 1.35)","1.12 (0.93, 1.34)",930,40700
+V2 suspect = present,supplemental,MVM x AI interaction,adjusted+IPW,mvm21,"1.21 (1.03, 1.42)","1.21 (1.03, 1.43)",930,40700
+V2 suspect = present,supplemental,MVM x AI interaction,adjusted+IPW,mvm21:ai1,"1.13 (0.83, 1.52)","1.13 (0.83, 1.52)",930,40700
+V2 suspect = present,supplemental,Tumor (possible chorangioma),adjusted,chorangioma1,"4.23 (2.29, 7.82)","4.24 (2.29, 7.83)",929,40546
+V2 suspect = present,supplemental,Tumor (possible chorangioma),adjusted+IPW,chorangioma1,"4.39 (2.39, 8.07)","4.40 (2.39, 8.09)",929,40546
