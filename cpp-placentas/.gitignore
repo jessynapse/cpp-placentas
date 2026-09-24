@@ -9,3 +9,7 @@ data/
 *.RData
 .Rproj.user/
 .DS_Store
+
+# Aggregate results tables are safe to commit (no individual-level data)
+!cpp-placentas/outputs/*.csv
+!outputs/*.csv
