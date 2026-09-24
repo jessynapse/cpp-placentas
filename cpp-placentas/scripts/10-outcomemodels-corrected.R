@@ -174,11 +174,14 @@ run_gee <- function(exposure, label, outcome, model,
   all_group_counts[[length(all_group_counts) + 1]] <<-
     group_counts(d1, exp_vars, outcome, label, model)
 
+  # counts computed first so they are not confused with the outcome column
+  cases_1 <- sum(d1[[outcome]] == 1)
+  obs_1   <- nrow(d1)
   pool_gee(fits) %>%
     filter(term != "(Intercept)", !grepl(covariate_terms, term)) %>%
     mutate(exposure = label, outcome = outcome, model = model,
-           n_cases  = sum(d1[[outcome]] == 1),
-           n_obs    = nrow(d1),
+           n_cases  = cases_1,
+           n_obs    = obs_1,
            rr_ci    = fmt_rr(rr, lci, uci))
 }
 
