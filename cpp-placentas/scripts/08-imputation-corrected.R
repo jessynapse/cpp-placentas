@@ -21,12 +21,12 @@
 #      12348), combined with ibind(). Same model, about 4x faster.
 #      Results differ from a single chain only through the random draws.
 #      mclapply forks on macOS and Linux. On Windows set n_cores <- 1.
-#   5. ai and ai3 are temporarily imputed. 03 treated them as fully
-#      observed, but 2 placentas are missing AI, and one of those women
-#      is also missing income, education and infant sex, so mice could
-#      not impute her. After imputation, ai and ai3 are reset to their
-#      observed values (NA for those 2), so the exposure is never
-#      imputed and AI models still exclude them.
+#   5. Exposures are never imputed. 07 excludes the 2 pregnancies
+#      missing AI (complete case on both exposures), so ai and ai3 are
+#      now truly fully observed. In 03 they were treated as fully
+#      observed while 2 were missing, and one of those women was also
+#      missing income, education and infant sex, so mice could not
+#      impute her.
 #   6. A check stops the script if any covariate is still missing after
 #      imputation.
 #   7. Outputs saved with a _corrected suffix.
@@ -136,9 +136,9 @@ pred <- ini$predictorMatrix
 
 # Fully observed — set to "" so MICE does not impute them
 # CHANGED: gest_age, birthweight, plurality no longer in the model
-# CHANGED: ai and ai3 removed from fully_obs (2 missing). They are
-# imputed only so other covariates can be imputed, then reset below.
-fully_obs <- c("mvm","mvm3","mvm2","age","race","site")
+fully_obs <- c("mvm","mvm3","mvm2","ai","ai3","age","race","site")
+# CHANGED: verify the fully observed predictors really have no missing values
+stopifnot(all(colSums(is.na(df_mi[, fully_obs])) == 0))
 meth[fully_obs] <- ""
 pred[fully_obs, ] <- 0
 
@@ -210,9 +210,6 @@ long <- long %>%
     chorangioma  = rep(df2$chorangioma,  times = df_imp$m + 1),
     mvm_villous  = rep(df2$mvm_villous,  times = df_imp$m + 1),
     mvm_vascular = rep(df2$mvm_vascular, times = df_imp$m + 1),
-    # CHANGED: exposure reset to observed values, never imputed
-    ai           = rep(df2$ai,           times = df_imp$m + 1),
-    ai3          = rep(df2$ai3,          times = df_imp$m + 1),
     # CHANGED: added back unimputed, no longer in the imputation model
     gest_age     = rep(df2$gest_age,     times = df_imp$m + 1),
     birthweight  = rep(df2$birthweight,  times = df_imp$m + 1)

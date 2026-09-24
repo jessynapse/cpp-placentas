@@ -12,9 +12,13 @@
 #      1 chronic, 2 gestational HTN, 3 preeclampsia, 4 superimposed.
 #      01 used HTN_PREG == 1 only, which put 888 women with chronic HTN
 #      in the reference group.
-#   3. Output saved as analytic_sample_corrected.RDS so the original
+#   3. Complete case on both exposures: the 2 pregnancies missing AI
+#      (AI_DI) are excluded, so every model uses the same sample. MVM is
+#      never missing (pregnancies without MVM were already excluded).
+#      Exposures are never imputed.
+#   4. Output saved as analytic_sample_corrected.RDS so the original
 #      analytic_sample.RDS is not overwritten.
-#   4. Header note on MVM duplicates updated. In the February 2026 MVM
+#   5. Header note on MVM duplicates updated. In the February 2026 MVM
 #      file, all 194 PREGIDs with conflicting MVM records are twins or
 #      triplets, none are singletons.
 #
@@ -122,6 +126,11 @@ analytic <- analytic %>%
 
 cat("Multiples removed by the C10 == 1 check:",
     n_before_c10 - nrow(analytic), "\n")
+
+# CHANGED: complete case on both exposures. Exclude pregnancies missing AI.
+n_missing_ai <- sum(is.na(analytic$AI_DI))
+analytic <- analytic %>% filter(!is.na(AI_DI))
+cat("Pregnancies excluded for missing AI:", n_missing_ai, "\n")
 
 # ------------------------------------------------------------------------------
 # COVARIATES
