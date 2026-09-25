@@ -1,0 +1,17 @@
+exposure,score,n_cases,n_obs,ih_pct
+AI score (compartments),0,519,31820,"1.6% (519/31,820)"
+AI score (compartments),1,94,3731,"2.5% (94/3,731)"
+AI score (compartments),2,26,1781,"1.5% (26/1,781)"
+AI score (compartments),3,17,939,1.8% (17/939)
+AI score (compartments),4,7,726,1.0% (7/726)
+AI score (compartments),5,14,715,2.0% (14/715)
+AI score (compartments),6,12,530,2.3% (12/530)
+AI score (compartments),7,11,458,2.4% (11/458)
+MVM score,0,475,29376,"1.6% (475/29,376)"
+MVM score,1,154,7840,"2.0% (154/7,840)"
+MVM score,2,38,1716,"2.2% (38/1,716)"
+MVM score,3,26,1362,"1.9% (26/1,362)"
+MVM score,4,5,331,1.5% (5/331)
+MVM score,5,1,61,1.6% (1/61)
+MVM score,6,1,13,7.7% (1/13)
+MVM score,7,0,1,0.0% (0/1)
