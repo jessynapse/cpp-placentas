@@ -6,12 +6,19 @@ Placental pathology and infantile haemangioma (IH) in the Collaborative
 Perinatal Project (CPP). Manuscript for the journal *Placenta*. Part of a
 PhD dissertation in epidemiology (University of Pennsylvania).
 
-## Sample
+## Sample (corrected pipeline, scripts 07-10, September 2026)
 
-- 45,296 singleton pregnancies (but see Known issues: 26 are twins)
-- 40,719 with an observed IH outcome at one year
-- 701 definite IH cases (`ih1`)
-- 931 when suspect cases count as IH (`ih2`)
+- 45,268 singleton pregnancies: 45,296 in the original sample, minus 26
+  multiples (`C10 != 1`) and 2 pregnancies missing AI (complete case on
+  both exposures, exposures never imputed)
+- 40,700 with an observed IH outcome at one year, all used in models
+- 700 definite IH cases (`ih1`)
+- 930 when suspect cases count as IH (`ih2`)
+- Chronic hypertension 5.8% (2,640), coded `HTN_PREG %in% c(1, 4)`
+
+The original pipeline (01-05, manuscript draft) had 45,296 pregnancies,
+40,719 observed, 701 cases, but its adjusted models silently used only
+40,683 infants. The corrections changed no estimate by more than 0.01.
 
 ## Exposures
 
@@ -25,9 +32,11 @@ PhD dissertation in epidemiology (University of Pennsylvania).
 - Modified Poisson regression using GEE (`geepack::geeglm`, log link)
   with an exchangeable correlation structure, clustered on maternal ID
   (`MOMID`)
-- 20 multiply imputed datasets (`mice`, maxit 10, seed 12345), pooled
-  with Rubin's rules (manual `pool_gee()` in script 05, since GEE fits
-  are not `mira` compatible)
+- 20 multiply imputed datasets (`mice`, maxit 10). Corrected pipeline
+  (08) runs 4 parallel chains of 5 (seeds 12345 to 12348). Gestational
+  age and birthweight are not imputation predictors. Models are fit in
+  each imputed dataset and pooled with Rubin's rules (manual
+  `pool_gee()`, since GEE fits are not `mira` compatible)
 - Stabilised inverse probability of censoring weights. Numerator is
   intercept only. Denominator includes `mvm2`, `ai`, all 11 covariates,
   and `site`. In the code, "censored" (`ih_obs == 0`) means died before
@@ -45,15 +54,29 @@ hypertension, infant sex.
 
 Gestational age and birthweight are NOT adjusted for in primary models
 because they are potential mediators. Gestational hypertension and
-preeclampsia are also not adjusted for, for the same reason. Site is
-not in primary models (it captures pathologist variability) but is a
-sensitivity analysis in script 05.
+preeclampsia are also not adjusted for, for the same reason.
 
-## Primary results to reproduce (adjusted + IPW, `ih1`)
+**Study site (12 centres) is in the PRIMARY model** (decided with Ellen
+Francis, September 2026). Sites differ in population, number of
+pathologists and IH ascertainment: any MVM ranges 10% to 80% and definite
+IH 0.4% to 3.6% across sites. Site 5 = Boston (41% of cases). Other site
+names are unknown (SAS format catalogue not available).
 
-- MVM any: aRR 1.25 (1.07, 1.46)
-- MVM continuous: aRR 1.12 (1.03, 1.21)
-- AI any: aRR 1.20 (1.02, 1.42)
+## Model hierarchy and current results (corrected pipeline, `ih1`)
+
+| Model | MVM any | MVM continuous | AI any |
+|-------|---------|----------------|--------|
+| PRIMARY: 11 covariates + site + IPW | 1.14 (0.96, 1.35) | 1.05 (0.97, 1.15) | 1.14 (0.96, 1.35) |
+| SECONDARY: 11 covariates + IPW, no site | 1.25 (1.07, 1.46) | 1.12 (1.03, 1.21) | 1.20 (1.02, 1.42) |
+| Crude | 1.22 (1.05, 1.43) | 1.09 (1.01, 1.18) | 1.25 (1.06, 1.47) |
+
+Sensitivity and supplemental: sequential adjustment (13), Boston vs not
+Boston (13), suspect-as-present outcome (10), AI stage (12: low 1.32
+(1.07, 1.62), high 1.07 (0.84, 1.36), no dose-response).
+
+The original manuscript draft reported the SECONDARY model as primary.
+Script 02 descriptive tables and the manuscript counts still need to be
+rebuilt from the corrected sample.
 
 ## Rules for all output
 
@@ -115,8 +138,29 @@ Intermediate files created by the pipeline: `analytic_sample.RDS` (01),
 - `05-outcomemodels.R`: crude, primary (adjusted and adjusted + IPW),
   site sensitivity, `ih2` sensitivity, and supplemental models (3-level
   MVM and AI, MVM x AI, chorangioma), pooled with Rubin's rules
+- `06-site-descriptives.R`: sample, follow-up, IH, exposure and race by
+  site, and crude within-site RRs
+- `07`-`10`: corrected copies of 01, 03, 04, 05 (changes marked
+  `# CHANGED:`). Intermediate files use a `_corrected` suffix.
+- `11-compare-original-corrected.R`: original vs corrected, side by side
+- `12-ai-stage.R`: AI stage dose-response, IPW rebuilt with `ai3`
+- `13-sequential-site.R`: sequential adjustment, primary vs secondary,
+  Boston vs not Boston
 
-## Known issues (found September 2026, not yet fixed)
+## Other variables available
+
+- `path2all` has neutrophil infiltration graded 0 to 3 in 7 compartments
+  (maternal: chorion PA02_35/37, amnion PA02_34/36. fetal: umbilical
+  vein PA02_25, umbilical artery PA02_26, fetal surface vessels PA02_38.
+  cord substance PA02_27). `AI_DI` = any of the 7 except cord substance
+  (reproduced 100%). `AI_3cat` rule is undocumented (~95% match to
+  "high = amnion or umbilical artery involved"), confirm with Alexa.
+- Also: bacterial colonies in amnion (PA02_33), decidual neutrophils
+  and lymphocytes, macrophages, pathologist knowledge at exam
+  (PA101_59, PA02_72), individual MVM lesions, `FVM_DI` (fetal vascular
+  malperfusion, not yet used).
+
+## Known issues in the ORIGINAL scripts 01-05 (all fixed in 07-10)
 
 1. **26 twins remain in the analytic sample.** Script 01 identifies
    twins only as `PREGID` appearing more than once after merging. When a
@@ -134,5 +178,11 @@ Intermediate files created by the pipeline: `analytic_sample.RDS` (01),
    singletons.
 4. The chronic HTN variable label still says `HTN_PREG==1`.
 
-Because existing scripts must not be edited, fixes for these go in new
-numbered scripts.
+5. Gestational age and birthweight were imputation predictors but not
+   imputed, and 2 placentas missing AI were treated as complete, so 57
+   women kept missing covariates and 36 with observed outcomes were
+   silently dropped from adjusted models (N 40,683, not 40,719).
+6. Income reference in the code was <=$1,999 (133 women), while the
+   manuscript says $4,000-$5,999.
+
+Existing scripts are never edited. Fixes live in new numbered scripts.
