@@ -101,7 +101,15 @@ weighted <- weighted %>%
   ) %>%
   mutate(across(c(dm, chronic_htn, infant_sex), as.factor))
 
-imp_data <- weighted %>% filter(.imp > 0, ih_obs == 1) %>% arrange(MOMID) %>% split(.$.imp)
+# keep only the columns the models use, then free the full dataset:
+# forked workers otherwise each carry the whole 20-imputation file (OOM)
+imp_data <- weighted %>%
+  filter(.imp > 0, ih_obs == 1) %>%
+  select(.imp, MOMID, ih1, ipw, mvm2, mvm, ai, site, examiner, age, bmi, race,
+         educ, income, marital, smoking, parity, dm, chronic_htn, infant_sex) %>%
+  arrange(MOMID) %>%
+  split(.$.imp)
+rm(weighted, base); invisible(gc())
 
 # ------------------------------------------------------------------------------
 # MODELS
