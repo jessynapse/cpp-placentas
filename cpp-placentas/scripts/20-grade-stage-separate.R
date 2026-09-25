@@ -128,7 +128,8 @@ out <- lvl_counts %>%
   mutate(across(all_of(names(models)), ~ ifelse(level == "None", "1.00 (ref)", .x)),
          analysis = factor(analysis, names(specs)), level = factor(level, lv)) %>%
   arrange(analysis, level) %>%
-  select(analysis, level, ih_pct, n_cases, n_obs, all_of(names(models)))
+  select(analysis, level, ih_pct, n_cases, n_obs, `Crude`,
+         `Primary: covariates + site + IPW`, `Secondary: covariates + IPW, no site`)
 
 cat("\n==================== MVM GRADE AND AI STAGE, SEPARATE MODELS ====================\n")
 print(out %>% select(-n_cases, -n_obs), n = Inf, width = Inf)
