@@ -80,6 +80,9 @@ rebuilt from the corrected sample.
 
 ## Rules for all output
 
+- Use definite IH (`ih1`) as the outcome for all new analyses. The
+  suspect-as-present outcome (`ih2`) is kept only as the prespecified
+  sensitivity analysis already in Table S2.
 - Never report p-values
 - Format estimates as aRR 1.25 (1.07, 1.46), two decimals
 - Report percentages before counts, e.g. 2.0% (225/11,334)
