@@ -1,0 +1,10 @@
+joint,mvm3,ai3,n_cases,n_obs,ih_pct
+MVM None / AI None,None,None,364,23391,"1.6% (364/23,391)"
+MVM Low / AI None,Low,None,131,7111,"1.8% (131/7,111)"
+MVM High / AI None,High,None,24,1318,"1.8% (24/1,318)"
+MVM None / AI Low,None,Low,68,3135,"2.2% (68/3,135)"
+MVM Low / AI Low,Low,Low,34,1065,"3.2% (34/1,065)"
+MVM High / AI Low,High,Low,4,176,2.3% (4/176)
+MVM None / AI High,None,High,43,2850,"1.5% (43/2,850)"
+MVM Low / AI High,Low,High,27,1380,"2.0% (27/1,380)"
+MVM High / AI High,High,High,5,274,1.8% (5/274)
