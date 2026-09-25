@@ -1,0 +1,7 @@
+outcome,ai_stage,n_cases,n_obs,ih_pct
+Definite IH,None,519,31820,"1.6% (519/31,820)"
+Definite IH,Low,106,4376,"2.4% (106/4,376)"
+Definite IH,High,75,4504,"1.7% (75/4,504)"
+Suspect = present,None,689,31820,"2.2% (689/31,820)"
+Suspect = present,Low,138,4376,"3.2% (138/4,376)"
+Suspect = present,High,103,4504,"2.3% (103/4,504)"
