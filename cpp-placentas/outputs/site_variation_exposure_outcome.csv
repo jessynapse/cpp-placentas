@@ -1,0 +1,7 @@
+variable,adjustment,overall_prevalence,site_range,max_min_ratio,site_variance,MOR,ICC
+Any MVM (exposure),Unadjusted,27.8%,8.5% to 79.5%,9.3,0.92,2.5,0.219
+Any MVM (exposure),Adjusted for race and age,27.8%,8.5% to 79.5%,9.3,0.94,2.52,0.222
+Any AI (exposure),Unadjusted,21.8%,14.0% to 37.8%,2.7,0.12,1.4,0.037
+Any AI (exposure),Adjusted for race and age,21.8%,14.0% to 37.8%,2.7,0.12,1.4,0.036
+Definite IH (outcome),Unadjusted,1.7%,0.4% to 3.6%,9.2,0.48,1.94,0.127
+Definite IH (outcome),Adjusted for race and age,1.7%,0.4% to 3.6%,9.2,0.2,1.54,0.058
