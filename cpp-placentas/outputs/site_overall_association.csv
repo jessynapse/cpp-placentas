@@ -1,0 +1,4 @@
+variable,prevalence,"Site RR range vs Boston (adj. race, age)","MRR, unadjusted","MRR, adjusted for race and age",% deviance explained by site alone,% deviance explained by site beyond race and age
+Any MVM (placenta),27.8%,0.31 to 2.89,1.74,1.75,12.8,12.8
+Any AI (placenta),21.8%,0.51 to 1.36,1.29,1.29,2.3,1.9
+Definite IH (outcome),1.7%,0.33 to 1.35,1.92,1.53,5.4,1.8
