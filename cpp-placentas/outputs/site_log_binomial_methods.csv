@@ -1,0 +1,7 @@
+var,adj,method
+Any MVM,unadjusted,modified Poisson (log-binomial did not converge)
+Any MVM,adjusted for race and age,modified Poisson (log-binomial did not converge)
+Any AI,unadjusted,log-binomial
+Any AI,adjusted for race and age,log-binomial
+Definite IH,unadjusted,log-binomial
+Definite IH,adjusted for race and age,log-binomial
