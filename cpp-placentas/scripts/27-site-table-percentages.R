@@ -45,8 +45,8 @@ coefs <- read_csv(file.path(out_dir, "site_coefficients.csv"), show_col_types = 
          `Site RR (AI model)` = `Primary model, AI any`)
 
 out <- tab %>% left_join(coefs, by = "site") %>%
-  mutate(`Site name` = site_names[site], .after = site) %>%
-  rename(`Site code` = site) %>%
+  mutate(site = paste(site, site_names[site])) %>%
+  rename(Site = site) %>%
   mutate(across(starts_with("Site RR"), ~ ifelse(.x == "1.00 (ref)", "1 REF", .x)))
 
 print(out, width = Inf)
