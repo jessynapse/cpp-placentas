@@ -1,0 +1,4 @@
+variable,prevalence,"LR chi-square for site, unadjusted (11 df)","LR chi-square for site, adjusted for race and age (11 df)",Cramer's V,"McFadden pseudo R2, site alone"
+Any MVM (placenta),27.8%,5712.1,5692.9,0.38,0.119
+Any AI (placenta),21.8%,821.6,689.1,0.145,0.019
+Definite IH (outcome),1.7%,309.9,106.3,0.085,0.044
