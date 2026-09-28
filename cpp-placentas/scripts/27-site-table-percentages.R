@@ -35,7 +35,6 @@ d <- readRDS(file.path(in_dir, "analytic_sample_corrected.RDS")) %>%
 
 tab <- d %>% group_by(site) %>%
   summarise(
-    N = format(n(), big.mark = ","),
     `IH cases` = fmt(sum(ih1 == 1), n()),
     .groups = "drop") %>%
   mutate(site = as.character(site))
@@ -47,7 +46,8 @@ coefs <- read_csv(file.path(out_dir, "site_coefficients.csv"), show_col_types = 
 
 out <- tab %>% left_join(coefs, by = "site") %>%
   mutate(`Site name` = site_names[site], .after = site) %>%
-  rename(`Site code` = site)
+  rename(`Site code` = site) %>%
+  mutate(across(starts_with("Site RR"), ~ ifelse(.x == "1.00 (ref)", "1 REF", .x)))
 
 print(out, width = Inf)
 write_csv(out, file.path(out_dir, "site_table_percentages.csv"))
