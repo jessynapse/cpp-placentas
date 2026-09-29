@@ -117,6 +117,14 @@ rebuilt from the corrected sample.
 - Never commit data files. `data/` and all `.csv`, `.rds` and
   `.sas7bdat` files are git-ignored for a reason.
 - In any prose written for the user, never use em-dashes or semicolons
+- All manuscript text, tables, captions and supplement use British
+  English (haemangioma, foetal, paediatrician, oedema, tumour, centre,
+  behaviour, standardised, analysed, hypothesised, enrolment,
+  acknowledgements, pre-eclampsia, placenta praevia, haematoma,
+  haemorrhage, anaemia, ischaemia, gynaecology, modelling, labelled,
+  programme). Keep original spelling in reference titles and proper
+  nouns (e.g. "Department of Obstetrics and Gynecology", "Civic Center
+  Blvd"). Code and R variable names are unaffected.
 
 ## Code environment
 
