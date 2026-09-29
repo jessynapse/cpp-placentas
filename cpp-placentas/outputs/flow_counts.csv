@@ -1,0 +1,12 @@
+step,n
+Pregnancies (infants) in the CPP,59391
+Excluded: no placental pathology record,12301
+Infants with a placental pathology record,47090
+Excluded: multiple gestation,933
+Excluded: missing MVM score,887
+Excluded: missing AI,2
+Analytic sample (Table 1),45268
+Excluded: died before the one-year examination,1834
+Excluded: alive but no one-year IH examination,2734
+Infants with an observed IH outcome (Table 2),40700
+Definite IH cases,700

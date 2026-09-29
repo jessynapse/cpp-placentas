@@ -1,0 +1,9 @@
+variable,n_missing,pct
+bmi,3936,8.7%
+income,2865,6.3%
+educ,642,1.4%
+parity,469,1.0%
+smoking,342,0.8%
+dm,7,0.0%
+chronic_htn,7,0.0%
+marital,1,0.0%

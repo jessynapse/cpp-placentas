@@ -99,6 +99,14 @@ Reference rows are written "1 REF".
   2.55). Feasible but too
   imprecise to be informative.
 
+**Manuscript (September 2026)**: 33 builds Table 1, Table S1, the site
+table and flow counts from the corrected sample. 34 draws Figure 1.
+`manuscript/content.js` holds all manuscript text (citations as [@key]),
+`manuscript/responses.js` the response-to-coauthors table, and
+`node manuscript/build_manuscript.js` (needs `npm install docx`) writes
+the manuscript, supplement (Tables S1 to S13), and response Word files.
+Edit the text in content.js, never in the Word files, then rebuild.
+
 The original manuscript draft reported the SECONDARY model as primary.
 Script 02 descriptive tables and the manuscript counts still need to be
 rebuilt from the corrected sample.
