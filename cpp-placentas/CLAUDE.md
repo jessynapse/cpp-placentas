@@ -127,6 +127,8 @@ rebuilt from the corrected sample.
   programme). Keep original spelling in reference titles and proper
   nouns (e.g. "Department of Obstetrics and Gynecology", "Civic Center
   Blvd"). Code and R variable names are unaffected.
+- Manuscript text avoids first person (no "we" or "our"). Use passive
+  or third person ("This analysis included...").
 
 ## Code environment
 
