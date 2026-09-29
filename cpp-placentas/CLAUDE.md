@@ -3,7 +3,9 @@
 ## Study
 
 Placental pathology and infantile haemangioma (IH) in the Collaborative
-Perinatal Project (CPP). Manuscript for the journal *Placenta*. Part of a
+Perinatal Project (CPP). Title (September 2026): "Placental Pathology and
+Infantile Haemangioma in the Collaborative Perinatal Project". Running
+head: "Placental Pathology and Infantile Haemangioma". Manuscript for the journal *Placenta*. Part of a
 PhD dissertation in epidemiology (University of Pennsylvania).
 
 ## Sample (corrected pipeline, scripts 07-10, September 2026)
