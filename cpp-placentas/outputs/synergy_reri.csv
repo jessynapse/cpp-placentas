@@ -1,0 +1,8 @@
+measure,Crude,Primary: covariates + site + IPW,"Secondary: covariates + IPW, no site",n_cases,n_obs
+"RR, MVM only vs neither","1.18 (0.98, 1.42)","1.08 (0.89, 1.32)","1.18 (0.98, 1.42)",700,40700
+"RR, AI only vs neither","1.19 (0.96, 1.47)","1.07 (0.86, 1.32)","1.11 (0.90, 1.37)",700,40700
+"RR, both vs neither","1.55 (1.20, 1.99)","1.37 (1.05, 1.78)","1.57 (1.22, 2.02)",700,40700
+"RERI (additive, 0 = none)","0.18 (-0.28, 0.65)","0.22 (-0.20, 0.64)","0.28 (-0.18, 0.74)",700,40700
+"Attributable proportion, AP (additive, 0 = none)","0.12 (-0.16, 0.40)","0.16 (-0.12, 0.44)","0.18 (-0.09, 0.45)",700,40700
+"Synergy index, S (additive, 1 = none)","1.51 (0.51, 4.46)","2.46 (0.27, 22.76)","1.97 (0.56, 6.94)",700,40700
+"Ratio of RRs (multiplicative, 1 = none)","1.11 (0.78, 1.57)","1.18 (0.83, 1.68)","1.20 (0.85, 1.70)",700,40700

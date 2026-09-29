@@ -1,0 +1,6 @@
+step,mothers,pregnancies,IH cases
+All infants with observed IH,"34,212","40,700",700
+Mothers with 2 or more infants in the sample,"5,412","11,900",181
+  IH-discordant mothers (at least one case and one non-case),173,386,174
+    also discordant on any MVM (informative for MVM),78,177,79
+    also discordant on any AI (informative for AI),73,169,74

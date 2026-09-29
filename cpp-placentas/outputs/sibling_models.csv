@@ -1,0 +1,9 @@
+exposure,model,OR (95% CI),n_cases,n_obs,n_mothers
+Any MVM,"Within-mother (conditional logistic), crude","0.89 (0.57, 1.41)",179,11670,5408
+Any MVM,"Within-mother (conditional logistic), + age, parity, smoking, sex","0.78 (0.48, 1.27)",179,11670,5408
+Any MVM,"Between-mother (logistic GEE), crude, same sibling sample","1.18 (0.85, 1.62)",179,11670,5408
+Any MVM,"Between-mother (logistic GEE), + age, parity, smoking, sex, same sibling sample","1.19 (0.86, 1.64)",179,11670,5408
+Any AI,"Within-mother (conditional logistic), crude","1.19 (0.74, 1.90)",179,11670,5408
+Any AI,"Within-mother (conditional logistic), + age, parity, smoking, sex","1.26 (0.75, 2.12)",179,11670,5408
+Any AI,"Between-mother (logistic GEE), crude, same sibling sample","1.40 (1.01, 1.94)",179,11670,5408
+Any AI,"Between-mother (logistic GEE), + age, parity, smoking, sex, same sibling sample","1.39 (1.00, 1.93)",179,11670,5408

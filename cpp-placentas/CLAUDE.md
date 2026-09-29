@@ -82,6 +82,20 @@ and AI as the main exposures (scores alongside), plus the joint exposure
 goes in the Supplemental Material. Column order: crude, primary, secondary.
 Reference rows are written "1 REF".
 
+**Supplement, coauthor requests (scripts 30-32)**:
+- 30 synergy (Linda): primary RERI 0.22 (-0.20, 0.64), AP 0.16 (-0.12,
+  0.44), ratio of RRs 1.18 (0.83, 1.68). S is unstable (RR10 and RR01
+  near 1). Pooled covariance by Rubin's rules, delta-method CIs.
+- 31 maternal vs fetal AI (Linda): primary, maternal only 1.07 (0.81,
+  1.43), fetal only 1.12 (0.86, 1.47), both 1.20 (0.94, 1.55). Fetal
+  only (mostly umbilical vein, no membrane inflammation) is 2,224
+  placentas, 61% of them from Boston (14.1% of Boston placentas vs 0.9%
+  to 8.1% elsewhere). Crude 1.67 falls to 1.12 with site. Ask Linda.
+- 32 sibling design (Alexa): 173 IH-discordant mothers, only 78 (MVM)
+  and 73 (AI) also exposure-discordant. Within-mother ORs MVM 0.78
+  (0.48, 1.27), AI 1.26 (0.75, 2.12), adjusted. Feasible but too
+  imprecise to be informative.
+
 The original manuscript draft reported the SECONDARY model as primary.
 Script 02 descriptive tables and the manuscript counts still need to be
 rebuilt from the corrected sample.

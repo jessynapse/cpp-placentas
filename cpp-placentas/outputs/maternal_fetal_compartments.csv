@@ -1,0 +1,4 @@
+aimf,n,amnion_roll,chorion_roll,amnion_surface,chorion_surface,umbilical_vein,umbilical_artery,fetal_surface_vessels
+Maternal only,3293,35.7%,81.0%,12.7%,38.3%,0.0%,0.0%,0.0%
+Fetal only,2224,0.0%,0.0%,0.0%,0.0%,87.8%,8.7%,13.9%
+Maternal and fetal,3363,57.6%,85.5%,47.3%,80.8%,72.4%,34.0%,68.6%
