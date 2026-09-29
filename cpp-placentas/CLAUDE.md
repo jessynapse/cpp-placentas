@@ -70,9 +70,17 @@ names are unknown (SAS format catalogue not available).
 | SECONDARY: 11 covariates + IPW, no site | 1.25 (1.07, 1.46) | 1.12 (1.03, 1.21) | 1.20 (1.02, 1.42) |
 | Crude | 1.22 (1.05, 1.43) | 1.09 (1.01, 1.18) | 1.25 (1.06, 1.47) |
 
-Sensitivity and supplemental: sequential adjustment (13), Boston vs not
-Boston (13), suspect-as-present outcome (10), AI stage (12: low 1.32
-(1.07, 1.62), high 1.07 (0.84, 1.36), no dose-response).
+Sensitivity and supplemental: sequential adjustment (13, 17), Boston vs
+not Boston (13, 17), suspect-as-present outcome (10), MVM grade and AI
+stage (20, no dose-response), site random effect (21), pathologist (15),
+Boston reader validity (28).
+
+**Main Table 2 (decided with Ellen Francis, September 2026)**: binary MVM
+and AI as the main exposures (scores alongside), plus the joint exposure
+(neither, MVM only, AI only, both). Both vs neither, primary: 1.37 (1.05,
+1.78). Built by 29-table2-main.R (outputs/table2_main.csv). Everything else
+goes in the Supplemental Material. Column order: crude, primary, secondary.
+Reference rows are written "1 REF".
 
 The original manuscript draft reported the SECONDARY model as primary.
 Script 02 descriptive tables and the manuscript counts still need to be
