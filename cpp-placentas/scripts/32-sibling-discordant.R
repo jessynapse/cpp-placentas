@@ -18,8 +18,7 @@
 # Part 2. Conditional logistic regression (survival::clogit), stratified on
 #         MOMID, for any MVM and any AI:
 #           crude
-#           + pregnancy-varying covariates: maternal age, parity, smoking,
-#             infant sex (complete case on these, observed data only)
+#           + all 11 covariates (20 imputed datasets, Rubin's rules)
 #         For comparison, a standard (between-mother) logistic GEE in the
 #         SAME sibling sample, to separate the effect of restricting the
 #         sample from the effect of the within-mother comparison.
@@ -79,32 +78,69 @@ direction <- bind_rows(dir_tab(inf_mvm, "mvm_any"), dir_tab(inf_ai, "ai_any"))
 
 # ------------------------------------------------------------------------------
 # PART 2. WITHIN-MOTHER (clogit) VS BETWEEN-MOTHER (GEE) IN SIBLING SAMPLE
+# All 11 covariates, 20 imputed datasets (from 09), pooled with Rubin's
+# rules. Covariates that never vary within a mother (race, and site) drop
+# out of the conditional model automatically.
 # ------------------------------------------------------------------------------
-covs <- "age + parity + smoking + infant_sex"
-sib_cc <- sib %>% filter(if_all(c(age, parity, smoking, infant_sex), ~ !is.na(.x))) %>%
-  arrange(MOMID)
+confounders <- "age + bmi + race + educ + income + marital +
+                smoking + parity + dm + chronic_htn + infant_sex"
+sib_ids <- unique(sib$MOMID)
 
-est <- function(fit, term) {
-  b <- coef(fit)[term]; se <- sqrt(diag(vcov(fit)))[term]
-  sprintf("%.2f (%.2f, %.2f)", exp(b), exp(b - 1.96 * se), exp(b + 1.96 * se))
+imp_sib <- readRDS(file.path(in_dir, "weighted_long_corrected.RDS")) %>%
+  filter(.imp > 0, !is.na(ih1), exclusion == 0, MOMID %in% sib_ids) %>%
+  mutate(
+    mvm_any   = as.integer(as.character(mvm2) == "1"),
+    ai_any    = as.integer(as.character(ai) == "1"),
+    smoking   = factor(smoking,   levels = c("Non-smoker","1-19/day","20+/day")),
+    parity    = factor(parity,    levels = c("0","1","2","3","4+")),
+    income    = factor(as.character(income),
+                       levels = c("$4,000-$5,999","<=$1,999",
+                                  "$2,000-$3,999","$6,000-$7,999",
+                                  "$8,000-$9,999","$10,000-$14,999",
+                                  ">=$15,000")),
+    educ      = factor(educ,      levels = c("<HS","Some HS","HS grad","College+")),
+    marital   = factor(marital,   levels = c("Married/CL","Single","Wid/Div/Sep")),
+    race      = factor(race,      levels = c("White","Black","Puerto Rican","Other")),
+    site      = factor(site)
+  ) %>%
+  mutate(across(c(dm, chronic_htn, infant_sex), as.factor)) %>%
+  arrange(MOMID) %>%
+  split(.$.imp)
+invisible(gc())
+stopifnot(nrow(imp_sib[[1]]) == nrow(sib))
+
+pool_term <- function(fits, term) {
+  m <- length(fits)
+  b <- sapply(fits, function(f) coef(f)[term])
+  v <- sapply(fits, function(f) vcov(f)[term, term])
+  se <- sqrt(mean(v) + (1 + 1/m) * var(b))
+  sprintf("%.2f (%.2f, %.2f)", exp(mean(b)), exp(mean(b) - 1.96 * se),
+          exp(mean(b) + 1.96 * se))
 }
 
-models <- imap_dfr(c(mvm_any = "Any MVM", ai_any = "Any AI"), function(lab, x) {
-    fits <- list(
-      `Within-mother (conditional logistic), crude` =
-        clogit(as.formula(paste("ih1 ~", x, "+ strata(MOMID)")), data = sib_cc),
-      `Within-mother (conditional logistic), + age, parity, smoking, sex` =
-        clogit(as.formula(paste("ih1 ~", x, "+", covs, "+ strata(MOMID)")), data = sib_cc),
-      `Between-mother (logistic GEE), crude, same sibling sample` =
-        geeglm(as.formula(paste("ih1 ~", x)), data = sib_cc, family = binomial,
-               id = MOMID, corstr = "exchangeable"),
-      `Between-mother (logistic GEE), + age, parity, smoking, sex, same sibling sample` =
-        geeglm(as.formula(paste("ih1 ~", x, "+", covs)), data = sib_cc,
-               family = binomial, id = MOMID, corstr = "exchangeable"))
-    imap_dfr(fits, ~ tibble(exposure = lab, model = .y, `OR (95% CI)` = est(.x, x)))
-  }) %>%
-  mutate(n_cases = sum(sib_cc$ih1), n_obs = nrow(sib_cc),
-         n_mothers = n_distinct(sib_cc$MOMID))
+specs <- list(
+  `Within-mother (conditional logistic), crude` =
+    function(x, d) clogit(as.formula(paste("ih1 ~", x, "+ strata(MOMID)")), data = d),
+  `Within-mother (conditional logistic), + 11 covariates` =
+    function(x, d) clogit(as.formula(paste("ih1 ~", x, "+", confounders,
+                                           "+ strata(MOMID)")), data = d),
+  `Between-mother (logistic GEE), crude, same sibling sample` =
+    function(x, d) geeglm(as.formula(paste("ih1 ~", x)), data = d, family = binomial,
+                          id = MOMID, corstr = "exchangeable"),
+  `Between-mother (logistic GEE), + 11 covariates + site, same sibling sample` =
+    function(x, d) geeglm(as.formula(paste("ih1 ~", x, "+", confounders, "+ site")),
+                          data = d, family = binomial, id = MOMID,
+                          corstr = "exchangeable"))
+
+models <- imap_dfr(c(mvm_any = "Any MVM", ai_any = "Any AI"), function(lab, x)
+  imap_dfr(specs, function(fn, spec) {
+    cat(" ", lab, "/", spec, "\n")
+    fits <- lapply(imp_sib, function(d) fn(x, d))
+    tibble(exposure = lab, model = spec, `OR (95% CI)` = pool_term(fits, x),
+           n_imps = length(fits))
+  })) %>%
+  mutate(n_cases = sum(imp_sib[[1]]$ih1), n_obs = nrow(imp_sib[[1]]),
+         n_mothers = n_distinct(imp_sib[[1]]$MOMID))
 
 cat("\n==================== SIBLING FEASIBILITY ====================\n")
 print(feas, width = Inf)

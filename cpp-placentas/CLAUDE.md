@@ -92,8 +92,9 @@ Reference rows are written "1 REF".
   placentas, 61% of them from Boston (14.1% of Boston placentas vs 0.9%
   to 8.1% elsewhere). Crude 1.67 falls to 1.12 with site. Ask Linda.
 - 32 sibling design (Alexa): 173 IH-discordant mothers, only 78 (MVM)
-  and 73 (AI) also exposure-discordant. Within-mother ORs MVM 0.78
-  (0.48, 1.27), AI 1.26 (0.75, 2.12), adjusted. Feasible but too
+  and 73 (AI) also exposure-discordant. Within-mother ORs, all 11
+  covariates, 20 imputations: MVM 0.67 (0.38, 1.17), AI 1.46 (0.83,
+  2.55). Feasible but too
   imprecise to be informative.
 
 The original manuscript draft reported the SECONDARY model as primary.
