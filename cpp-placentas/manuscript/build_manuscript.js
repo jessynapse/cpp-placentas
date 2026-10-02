@@ -43,6 +43,7 @@ function readCSV(file) {
 const fmtNum = s => s.replace(/\b(\d{4,})\b/g, m => Number(m).toLocaleString("en-US"));
 const ref1 = s => s.replace(/1\.00 \(ref\)/g, "1 REF").replace(/\(-/g, "(−").replace(/, -/g, ", −");
 const lab = s => s.replace("MVM any vs none", "Any MVM").replace("AI any vs none", "Any AI").replace("MVM score, per 1 point", "MVM score, per point").replace("AI score, per 1 compartment", "AI score, per compartment");
+const sgaInfant = r => r.map(x => x === "Small for gestational age" ? "Small for gestational age infant" : x);
 const foetal = s => s.replace(/Fetal/g, "Foetal").replace(/fetal/g, "foetal");
 
 // ---------------------------------------------------------------------------
@@ -133,7 +134,7 @@ function table1() {
   const w = [2960, 1280, 1280, 1280, 1280, 1280];
   return [
     caption("Table 1.", "Characteristics of 45,268 singleton pregnancies in the Collaborative Perinatal Project, overall and by placental maternal vascular malperfusion (MVM) and acute inflammation (AI)."),
-    table(header, rows, w, { boldSections: true }),
+    table(header, rows.map(sgaInfant), w, { boldSections: true }),
     note("Values are % (n) unless stated otherwise. Percentages exclude missing values, and the number missing is shown for each characteristic. Perinatal characteristics are shown for description only and were not included in adjusted models. BMI, body mass index. SD, standard deviation."),
   ];
 }
@@ -179,7 +180,7 @@ function supplement() {
   // S1
   let s = headerWithN(readCSV("tableS1_by_ih.csv"));
   add("Table S1.", "Placental pathology and maternal and infant characteristics among 40,700 infants with an observed outcome, by definite infantile haemangioma (IH) status.",
-    s.header, s.rows.map(r => r.map(foetal)), [3960, 1800, 1800, 1800],
+    s.header, s.rows.map(r => sgaInfant(r.map(foetal))), [3960, 1800, 1800, 1800],
     "Values are % (n) unless stated otherwise. MVM, maternal vascular malperfusion. AI, acute inflammation. BMI, body mass index. SD, standard deviation.", { boldSections: true });
 
   // S2
