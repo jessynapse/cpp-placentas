@@ -183,10 +183,13 @@ function supplement() {
     "Values are % (n) unless stated otherwise. MVM, maternal vascular malperfusion. AI, acute inflammation. BMI, body mass index. SD, standard deviation.", { boldSections: true });
 
   // S2
-  const s2 = readCSV("tableS2_site.csv");
+  const s2raw = readCSV("tableS2_site.csv");
+  const rr2 = readCSV("site_table_percentages.csv");
+  const s2 = s2raw.map((r, i) => i === 0 ? [...r, "Site RR (95% CI)\u1d43"] :
+    [...r, r[0] === "All sites" ? "" : ref1((rr2.find(x => x[0] === r[0]) || [])[2] || "")]);
   add("Table S2.", "Placental diagnoses, follow-up, and definite infantile haemangioma (IH) by Collaborative Perinatal Project study site (45,268 pregnancies).",
-    s2[0], s2.slice(1), [2400, 1100, 1450, 1450, 1500, 1460],
-    "Site names other than Boston are from the study team's site mapping and should be confirmed against CPP documentation. Cramér's V for the association of study site with any MVM, any AI, and definite IH among 40,700 infants: 0.38, 0.15, and 0.09. MVM, maternal vascular malperfusion. AI, acute inflammation.");
+    s2[0], s2.slice(1), [2000, 1000, 1250, 1250, 1300, 1300, 1260],
+    "\u1d43Relative risk of definite IH for each site compared with Boston, from the primary model for any MVM (adjusted for 11 covariates, with inverse probability of censoring weights). Site names other than Boston are from the study team's site mapping and should be confirmed against CPP documentation. Cramér's V for the association of study site with any MVM, any AI, and definite IH among 40,700 infants: 0.38, 0.15, and 0.09. MVM, maternal vascular malperfusion. AI, acute inflammation.");
 
   // S3
   const s3 = readCSV("seq_cumulative_4exp.csv");
