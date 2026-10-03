@@ -238,49 +238,22 @@ function supplement() {
     [2560, 1700, 1700, 1700, 1700],
     "Relative risks (95% CI), adjusted for 11 covariates with inverse probability of censoring weights, and for study site in the other 11 centres and all centres. In Boston, 92.6% of placentas were examined by one pathologist. MVM, maternal vascular malperfusion. AI, acute inflammation.");
 
-  // S9
-  const s9 = readCSV("boston_reader_validity.csv");
-  add("Table S9.", "Associations of placental diagnoses with expected birth outcomes in the Boston centre and the other 11 centres, as a check of construct validity.",
-    ["Outcome, by exposure", "Centre", "Exposed, % (n/N)", "Unexposed, % (n/N)", "Crude RR (95% CI)"],
-    s9.slice(1).map((r, i) => [i % 2 === 0 ? r[0].replace("labor", "labour") : "", r[1].replace("sites", "centres"), fmtNum(r[2]), fmtNum(r[3]), r[4]]),
-    [2560, 1500, 1800, 1800, 1700],
-    "All 45,268 pregnancies with non-missing values. Pre-eclampsia includes superimposed pre-eclampsia. MVM, maternal vascular malperfusion. AI, acute inflammation. RR, relative risk.");
-
   // S10
   const s10 = readCSV("site_random_effect_models.csv");
-  add("Table S10.", "Associations of placental pathology with definite infantile haemangioma, with study site as a fixed or random effect.",
+  add("Table S9.", "Associations of placental pathology with definite infantile haemangioma, with study site as a fixed or random effect.",
     ["Exposure", "Crude", "Site as fixed effect (primary)", "Site as random effect", "No site (secondary)"],
     s10.slice(1).map(r => [lab(r[0]), r[3], r[4], r[5], r[6]]), [2560, 1700, 1700, 1700, 1700],
     "Relative risks (95% CI). Random-effect models were Poisson models with a random intercept for study site, adjusted for 11 covariates with inverse probability of censoring weights. Median rate ratio for study site: " + s10[1][7] + " to " + s10[4][7] + ". MVM, maternal vascular malperfusion. AI, acute inflammation.");
-
-  // S11
-  const s11 = readCSV("pathologist_models.csv");
-  const ex11 = [...new Set(s11.slice(1).map(r => r[0]))];
-  const pick = (e, m) => s11.find(r => r[0] === e && r[1] === m)[4];
-  add("Table S11.", "Associations of placental pathology with definite infantile haemangioma, adjusted for the examining pathologist instead of study site.",
-    ["Exposure", "Primary (study site)", "Examining pathologist", "Secondary (no site)"],
-    ex11.map(e => [lab(e), pick(e, "Primary: covariates + site"), pick(e, "Covariates + examiner"), pick(e, "Secondary: covariates, no site")]),
-    [3360, 2000, 2000, 2000],
-    "Relative risks (95% CI), adjusted for 11 covariates with inverse probability of censoring weights. Examining pathologist was defined by site-specific examiner codes on the gross examination form, with examiners who read fewer than 100 placentas grouped within site. MVM, maternal vascular malperfusion. AI, acute inflammation.");
 
   // S12
   const s12 = readCSV("corrected_outcome_results.csv").filter(r => r[1] === "ih2");
   const ex12 = ["MVM any vs none", "MVM score (continuous)", "AI any vs none"];
   const p12 = (e, m) => (s12.find(r => r[2] === e && r[3] === m) || [])[7];
-  add("Table S12.", "Associations of placental pathology with infantile haemangioma when suspect cases are classified as IH (930 cases among 40,700 infants).",
+  add("Table S10.", "Associations of placental pathology with infantile haemangioma when suspect cases are classified as IH (930 cases among 40,700 infants).",
     ["Exposure", "Crude", "Primary", "Secondary"],
     ex12.map(e => [e.replace("MVM any vs none", "Any MVM").replace("MVM score (continuous)", "MVM score, per point").replace("AI any vs none", "Any AI"), p12(e, "crude"), p12(e, "adjusted+site+IPW"), p12(e, "adjusted+IPW")]),
     [3360, 2000, 2000, 2000], "Relative risks (95% CI). Prespecified sensitivity analysis. " + MODEL_NOTE.replace(" Definite IH, 700 cases among 40,700 infants, unless stated otherwise.", ""));
 
-  // S13
-  const f13 = readCSV("sibling_feasibility.csv"); const m13 = readCSV("sibling_models.csv");
-  out.push(caption("Table S13.", "Feasibility and results of a within-mother (sibling) comparison."));
-  out.push(table(["Step", "Mothers", "Pregnancies", "IH cases"], f13.slice(1), [4560, 1600, 1600, 1600]));
-  out.push(para([run(" ", { size: 16 })], { line: 240 }));
-  out.push(table(["Exposure", "Model", "OR (95% CI)"],
-    m13.slice(1).map(r => [r[0], r[1].replace("Within-mother (conditional logistic)", "Within mother, conditional logistic").replace("Between-mother (logistic GEE)", "Between mothers, logistic GEE").replace(", same sibling sample", ""), r[2]]),
-    [1800, 5560, 2000]));
-  out.push(note("Among 11,900 pregnancies (181 IH cases) of 5,412 mothers with two or more infants in the sample. Only mothers discordant for both IH and the exposure contribute to within-mother estimates. Models adjusted for 11 covariates (and study site for between-mother models), pooled across 20 imputed datasets. OR, odds ratio. IH, infantile haemangioma."));
   return out;
 }
 
@@ -305,7 +278,7 @@ function manuscript() {
   const bodyWords = C.body.filter(b => b[0] === "p").map(b => b[1].replace(/\[@[^\]]+\]/g, "")).join(" ").split(/\s+/).length;
   const absWords = C.abstract.map(a => a[0] + " " + a[1]).join(" ").split(/\s+/).length;
   kids.push(para([run("Word count: ", { bold: true }), run(`${bodyWords.toLocaleString("en-US")} (main text), ${absWords} (abstract)`)]));
-  kids.push(para([run("Tables: ", { bold: true }), run("2. Figures: 1. Supplementary material: 1 file (Tables S1 to S13). References: " + Object.keys(C.references).length)]));
+  kids.push(para([run("Tables: ", { bold: true }), run("2. Figures: 1. Supplementary material: 1 file (Tables S1 to S10). References: " + Object.keys(C.references).length)]));
   kids.push(para([run("ORCID iDs: ", { bold: true }), run(C.orcid.join(". "))]));
   kids.push(brk());
 
