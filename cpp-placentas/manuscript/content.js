@@ -82,7 +82,7 @@ module.exports.body = [
 
   ["h1", "3. Results"],
   ["h2", "3.1. Participants"],
-  ["p", "Of 45,268 pregnancies, 29.0% (13,119) had any MVM, 22.5% (10,188) had any AI, and 7.9% (3,554) had both (Table 1). Pregnancies with AI more often involved White women (52.3% vs 47.0%) and heavy smoking (20.5% vs 16.6%). Among the 40,700 infants (89.9%) with an observed outcome, 1.7% (700) had definite IH and a further 0.6% (230) had suspect IH (Supplementary Table S1)."],
+  ["p", "Of 45,268 pregnancies, 29.0% (13,119) had any MVM, 22.5% (10,188) had any AI, and 7.9% (3,554) had both (Table 1). Pregnancies with MVM more often involved women with less than a high school education (19.7% vs 16.3%) and pre-pregnancy diabetes (2.1% vs 1.3%). Pregnancies with AI more often involved White women (52.3% vs 47.0%) and heavy smoking (20.5% vs 16.6%). Among the 40,700 infants (89.9%) with an observed outcome, 1.7% (700) had definite IH and a further 0.6% (230) had suspect IH (Supplementary Table S1)."],
   ["p", "Across centres, any MVM ranged from 9.8% to 80.3%, any AI from 14.5% to 38.1%, and definite IH from 0.4% to 3.6% (Supplementary Table S2). Boston contributed 41.4% (290/700) of IH cases."],
 
   ["h2", "3.2. MVM, AI, and IH"],
