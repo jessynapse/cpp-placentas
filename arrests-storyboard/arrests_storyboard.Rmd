@@ -1,0 +1,447 @@
+---
+title: "Who Gets a Summons? Toronto Marijuana Arrests, 1997 to 2002"
+output:
+  flexdashboard::flex_dashboard:
+    storyboard: true
+    theme: flatly
+    orientation: columns
+---
+
+```{r setup, include=FALSE}
+# Packages: install.packages(c("flexdashboard", "carData", "ggplot2", "vcd", "dplyr", "tidyr"))
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE,
+                      fig.width = 9, fig.height = 5.5)
+library(flexdashboard)
+library(carData)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(vcd)
+
+data(Arrests)
+A <- Arrests %>%
+  mutate(rel = as.integer(released == "Yes"),
+         agegrp = cut(age, c(11, 17, 20, 25, 30, 40, 70),
+                      labels = c("12-17", "18-20", "21-25", "26-30", "31-40", "41-66")))
+
+theme_set(theme_minimal(base_size = 13) +
+            theme(panel.grid.minor = element_blank(),
+                  plot.title.position = "plot"))
+col_race <- c(Black = "#3B6FB6", White = "#E1A33B")
+col_rel  <- c(No = "#C8553D", Yes = "#5B8E7D")
+
+pct <- function(x, d = 0) paste0(formatC(100 * x, format = "f", digits = d), "%")
+
+# Proportion released with a Wilson 95% CI, by any grouping
+rel_by <- function(data, ...) {
+  data %>%
+    group_by(...) %>%
+    summarise(n = n(), k = sum(rel), .groups = "drop") %>%
+    mutate(p = k / n,
+           z = 1.96,
+           lo = (p + z^2 / (2 * n) - z * sqrt(p * (1 - p) / n + z^2 / (4 * n^2))) / (1 + z^2 / n),
+           hi = (p + z^2 / (2 * n) + z * sqrt(p * (1 - p) / n + z^2 / (4 * n^2))) / (1 + z^2 / n))
+}
+
+overall <- mean(A$rel)
+
+# Models used in the later frames
+fit_crude <- glm(released ~ colour, family = binomial, data = A)
+fit_adj   <- glm(released ~ colour + year + age + sex + employed + citizen + checks,
+                 family = binomial, data = A)
+fit_int   <- update(fit_adj, . ~ . + colour:year + colour:age)
+fit_cec   <- glm(released ~ colour * employed * citizen, family = binomial, data = A)
+
+or_ci <- function(fit, term) {
+  est <- coef(fit)[term]
+  se  <- sqrt(vcov(fit)[term, term])
+  exp(c(est, est - 1.96 * se, est + 1.96 * se))
+}
+or_crude <- or_ci(fit_crude, "colourWhite")
+or_adj   <- or_ci(fit_adj, "colourWhite")
+lrt_int  <- anova(fit_adj, fit_int, test = "Chisq")
+lrt_cec  <- anova(glm(released ~ colour + employed + citizen, family = binomial, data = A),
+                  fit_cec, test = "Chisq")
+fmt_or <- function(o) sprintf("%.2f (95%% CI %.2f to %.2f)", o[1], o[2], o[3])
+```
+
+### **The data.** 5,226 arrests for simple possession of marijuana in Toronto. Most people (`r pct(overall)`) were released with a summons rather than held for a bail hearing.
+
+```{r overview}
+A %>%
+  count(released) %>%
+  mutate(p = n / sum(n)) %>%
+  ggplot(aes(x = released, y = n, fill = released)) +
+  geom_col(width = 0.6, show.legend = FALSE) +
+  geom_text(aes(label = paste0(scales::comma(n), "\n(", pct(p, 1), ")")),
+            vjust = -0.2, size = 4.5) +
+  scale_fill_manual(values = col_rel) +
+  scale_y_continuous(labels = scales::comma, expand = expansion(mult = c(0, 0.18))) +
+  labs(x = "Released with a summons?", y = "Number of arrests",
+       title = "Outcome: release with a summons (released)")
+```
+
+***
+
+**Source.** `carData::Arrests`, compiled by the *Toronto Star* from police records of arrests for simple possession of small quantities of marijuana.
+
+**Variables**
+
+* `released`: outcome (Yes = summons, No = held for bail hearing)
+* `colour`: Black or White
+* `year`: 1997 to 2002
+* `age`: years
+* `sex`: Female or Male
+* `employed`: Yes or No
+* `citizen`: Yes or No
+* `checks`: number of police databases (0 to 6) in which the person's name appeared
+
+There are no missing values. The outcome is not rare (`r pct(1 - overall, 1)` were held), so odds ratios later in the story should not be read as risk ratios.
+
+### **Q1a. The arrested population is mostly young, male, White, employed and Canadian.** Bar charts of each factor make the imbalance obvious at a glance.
+
+```{r dist-factors}
+A %>%
+  select(colour, sex, employed, citizen) %>%
+  pivot_longer(everything(), names_to = "variable", values_to = "level") %>%
+  count(variable, level) %>%
+  group_by(variable) %>%
+  mutate(p = n / sum(n)) %>%
+  ungroup() %>%
+  mutate(variable = factor(variable, levels = c("colour", "sex", "employed", "citizen"))) %>%
+  ggplot(aes(x = level, y = n)) +
+  geom_col(fill = "grey45", width = 0.65) +
+  geom_text(aes(label = pct(p)), vjust = -0.3, size = 4) +
+  facet_wrap(~ variable, nrow = 1, scales = "free_x") +
+  scale_y_continuous(labels = scales::comma, expand = expansion(mult = c(0, 0.12))) +
+  labs(x = NULL, y = "Number of arrests",
+       title = "Each binary characteristic is heavily skewed toward one level")
+```
+
+***
+
+**Features worth mentioning**
+
+* **Sex.** Only `r sum(A$sex == "Female")` arrestees (`r pct(mean(A$sex == "Female"), 1)`) are female, so estimates for women will be imprecise.
+* **Colour.** `r pct(mean(A$colour == "Black"), 1)` are Black. Black residents made up roughly 8% of Toronto's population at the 2001 census, so Black people are strongly over represented among those arrested. This is a selection feature of the data. Any comparison of release rates is conditional on having been arrested.
+* **Employment and citizenship.** About four in five are employed and about six in seven are citizens.
+
+**Graphic choice.** Simple bar charts (or a single dot plot of percentages) are the clearest way to show a binary variable. Pie charts would hide the small categories.
+
+### **Q1b. Age is strongly right skewed, and the number of police checks is lumpy with a spike at zero.**
+
+```{r dist-numeric, fig.height = 6}
+p_age <- ggplot(A, aes(x = age)) +
+  geom_histogram(binwidth = 1, boundary = 0.5, fill = "grey45", colour = "white") +
+  geom_vline(xintercept = median(A$age), linetype = 2) +
+  annotate("text", x = median(A$age) + 1, y = Inf, vjust = 1.5, hjust = 0,
+           label = paste("median =", median(A$age))) +
+  labs(x = "Age (years)", y = "Arrests", title = "Age (1 year bins)")
+
+p_chk <- ggplot(A, aes(x = factor(checks))) +
+  geom_bar(fill = "grey45", width = 0.7) +
+  geom_text(stat = "count", aes(label = after_stat(count)), vjust = -0.3, size = 3.8) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  labs(x = "Number of databases with the person's name", y = "Arrests", title = "Checks")
+
+p_yr <- ggplot(A, aes(x = factor(year))) +
+  geom_bar(fill = "grey45", width = 0.7) +
+  geom_text(stat = "count", aes(label = after_stat(count)), vjust = -0.3, size = 3.8) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  labs(x = "Year", y = "Arrests", title = "Year")
+
+grid::grid.newpage()
+grid::pushViewport(grid::viewport(layout = grid::grid.layout(2, 2)))
+print(p_age, vp = grid::viewport(layout.pos.row = 1, layout.pos.col = 1:2))
+print(p_chk, vp = grid::viewport(layout.pos.row = 2, layout.pos.col = 1))
+print(p_yr,  vp = grid::viewport(layout.pos.row = 2, layout.pos.col = 2))
+```
+
+***
+
+**Age.** Ages run from `r min(A$age)` to `r max(A$age)` with a median of `r median(A$age)`. Half of the arrests are of people aged 18 to 27, and a long right tail reaches into the 60s. A one year histogram shows the sharp peak in the late teens. Note that `r sum(A$age < 18)` arrestees (`r pct(mean(A$age < 18))`) are under 18, so youth justice rules may apply to them.
+
+**Checks.** `r pct(mean(A$checks == 0))` appear in no police database, but there is a second bump at 3 checks. Values of 5 and 6 are rare (only `r sum(A$checks == 6)` people have 6). A bar chart, not a histogram, respects that this is a count with few values.
+
+**Year.** 1997 and 2002 have far fewer arrests than the middle years. This most likely reflects partial years of data collection, not a real fall in arrests, so per year comparisons at the ends of the series are less precise.
+
+### **Q2a. Taken one at a time, being Black, unemployed or a non-citizen each lowers the chance of release.** A dot plot of the percentage released, with confidence intervals, puts every factor on a common scale.
+
+```{r marg-factors}
+marg <- bind_rows(
+  rel_by(A, level = colour)   %>% mutate(variable = "colour",   level = as.character(level)),
+  rel_by(A, level = sex)      %>% mutate(variable = "sex",      level = as.character(level)),
+  rel_by(A, level = employed) %>% mutate(variable = "employed", level = as.character(level)),
+  rel_by(A, level = citizen)  %>% mutate(variable = "citizen",  level = as.character(level))
+) %>%
+  mutate(variable = factor(variable, levels = c("colour", "employed", "citizen", "sex")),
+         label = paste0(variable, ": ", level))
+
+ggplot(marg, aes(x = p, y = reorder(label, p))) +
+  geom_vline(xintercept = overall, linetype = 2, colour = "grey50") +
+  geom_errorbarh(aes(xmin = lo, xmax = hi), height = 0.25, colour = "grey40") +
+  geom_point(aes(size = n), colour = "#2F4858") +
+  geom_text(aes(label = paste0(pct(p, 1), "  (n = ", n, ")")),
+            nudge_y = 0.33, size = 3.6) +
+  facet_grid(variable ~ ., scales = "free_y", space = "free_y") +
+  scale_x_continuous(labels = scales::percent, limits = c(0.6, 0.95)) +
+  scale_size_area(max_size = 6, guide = "none") +
+  labs(x = "Percent released with a summons (95% CI)", y = NULL,
+       title = "Release by each binary characteristic",
+       subtitle = "Dashed line is the overall release rate")
+```
+
+***
+
+**One variable at a time**
+
+* **Employment** has the largest gap: `r pct(mean(A$rel[A$employed == "Yes"]), 1)` of employed versus `r pct(mean(A$rel[A$employed == "No"]), 1)` of unemployed arrestees were released.
+* **Colour**: `r pct(mean(A$rel[A$colour == "White"]), 1)` of White versus `r pct(mean(A$rel[A$colour == "Black"]), 1)` of Black arrestees. The crude odds ratio for White versus Black is `r fmt_or(or_crude)`.
+* **Citizenship**: `r pct(mean(A$rel[A$citizen == "Yes"]), 1)` of citizens versus `r pct(mean(A$rel[A$citizen == "No"]), 1)` of non citizens.
+* **Sex** makes little difference, and the female estimate is imprecise.
+
+**Graphic choice.** For a binary outcome, plotting the *proportion released* with an interval is more informative than stacked bars of counts, because groups of very different size are compared on the same scale. A spine plot is a good alternative (next frame).
+
+### **Q2b. Release falls steadily with more police checks, declines slightly with age, and dips then recovers over the years.**
+
+```{r marg-numeric, fig.height = 6}
+chk <- rel_by(A, x = checks)
+agg <- rel_by(A, x = agegrp)
+yrs <- rel_by(A, x = year)
+
+pdot <- function(d, xlab, ttl) {
+  ggplot(d, aes(x = factor(x), y = p)) +
+    geom_hline(yintercept = overall, linetype = 2, colour = "grey50") +
+    geom_errorbar(aes(ymin = lo, ymax = hi), width = 0.15, colour = "grey40") +
+    geom_point(aes(size = n), colour = "#2F4858") +
+    geom_line(aes(group = 1), colour = "#2F4858", alpha = 0.5) +
+    scale_y_continuous(labels = scales::percent, limits = c(0.3, 1)) +
+    scale_size_area(max_size = 5, guide = "none") +
+    labs(x = xlab, y = "% released", title = ttl)
+}
+
+grid::grid.newpage()
+grid::pushViewport(grid::viewport(layout = grid::grid.layout(2, 2)))
+print(pdot(chk, "Number of checks", "Checks"), vp = grid::viewport(layout.pos.row = 1, layout.pos.col = 1))
+print(pdot(agg, "Age group", "Age"),            vp = grid::viewport(layout.pos.row = 1, layout.pos.col = 2))
+print(pdot(yrs, "Year", "Year"),                vp = grid::viewport(layout.pos.row = 2, layout.pos.col = 1:2))
+```
+
+***
+
+**Checks** is the strongest single predictor. Release drops from `r pct(chk$p[chk$x == 0])` with no checks to about `r pct(mean(A$rel[A$checks >= 4]))` with four or more. The very wide interval at 6 checks reflects only `r sum(A$checks == 6)` people.
+
+**Age** has a weak, roughly linear negative relationship. Teenagers and people in their early 20s are released slightly more often than people over 40.
+
+**Year** shows lower release in 1997 and 2002 (the two small years) and a peak in 2000. The year to year variation is modest and not monotone.
+
+**Graphic choice.** For the numeric variables, plotting the proportion released at each value (or age group) with point size showing *n* reveals both the shape of the trend and where data are thin. A spinogram (`spineplot(released ~ checks, data = Arrests)`) is a compact base R alternative.
+
+### **Q2c. Spine plots show the same pattern while keeping the group sizes visible.**
+
+```{r spine, fig.height = 6}
+op <- par(mfrow = c(2, 3), mar = c(4, 4, 2.5, 1), cex.main = 1.1)
+spineplot(released ~ colour,           data = A, col = col_rel, main = "Colour")
+spineplot(released ~ employed,         data = A, col = col_rel, main = "Employed")
+spineplot(released ~ citizen,          data = A, col = col_rel, main = "Citizen")
+spineplot(released ~ sex,              data = A, col = col_rel, main = "Sex")
+spineplot(released ~ factor(checks),   data = A, col = col_rel, main = "Checks", xlab = "checks")
+spineplot(released ~ factor(year),     data = A, col = col_rel, main = "Year", xlab = "year")
+par(op)
+```
+
+***
+
+In a spine plot the **width** of each bar is proportional to the number of arrests in that group and the **height** of the red segment is the proportion *not* released.
+
+This makes two things visible at once:
+
+1. how unequal the group sizes are (narrow bars for women, non citizens and high check counts), and
+2. how the outcome differs between groups.
+
+Spine plots are the natural one variable at a time graphic for a binary response, and they lead directly into the mosaic and doubledecker plots used for the combined analysis.
+
+### **Q3a. Colour, employment and citizenship in combination.** A doubledecker plot shows that the three disadvantages add up. Release ranges from 54% (Black, unemployed, non citizen) to 90% (White, employed, citizen).
+
+```{r doubledecker, fig.height = 6}
+doubledecker(released ~ citizen + employed + colour, data = A,
+             gp = gpar(fill = col_rel),
+             labeling_args = list(abbreviate_labs = c(colour = 1)),
+             main = "Release by citizenship, employment and colour (B = Black, W = White)")
+```
+
+***
+
+**How to read it.** Each bar is one of the eight combinations of citizen, employed and colour. Its width shows how many arrests fall in that cell. The shaded height shows the share released.
+
+**What it shows**
+
+* Within every combination of employment and citizenship, White arrestees are released more often than Black arrestees.
+* Within every combination of colour and citizenship, employed arrestees are released more often.
+* The effects look **additive on the log odds scale**. A logistic model with all two and three way interactions does not fit better than the main effects model (likelihood ratio χ² = `r sprintf("%.2f", lrt_cec$Deviance[2])` on `r lrt_cec$Df[2]` df, p = `r sprintf("%.2f", lrt_cec[["Pr(>Chi)"]][2])`).
+
+**Graphic choice.** A doubledecker plot (from the `vcd` package) is designed exactly for a binary response against several factors. A mosaic plot with shading by Pearson residuals is a good companion (next frame).
+
+### **Q3b. The eight combinations side by side.** Black arrestees in every group are released less often, and the gap is roughly constant.
+
+```{r combo-dot}
+cec <- rel_by(A, colour, employed, citizen) %>%
+  mutate(group = paste0("Employed: ", employed, "\nCitizen: ", citizen),
+         group = factor(group, levels = unique(group[order(p)])))
+
+ggplot(cec, aes(x = p, y = group, colour = colour)) +
+  geom_line(aes(group = group), colour = "grey70", linewidth = 1.2) +
+  geom_errorbarh(aes(xmin = lo, xmax = hi), height = 0.2, alpha = 0.6) +
+  geom_point(aes(size = n)) +
+  scale_colour_manual(values = col_race, name = "Colour") +
+  scale_size_area(max_size = 7, name = "Arrests") +
+  scale_x_continuous(labels = scales::percent) +
+  labs(x = "Percent released with a summons (95% CI)", y = NULL,
+       title = "Release by colour within employment and citizenship groups")
+```
+
+***
+
+```{r combo-table}
+cec %>%
+  transmute(Colour = colour, Employed = employed, Citizen = citizen, n,
+            `% released` = sprintf("%.1f", 100 * p)) %>%
+  arrange(Employed, Citizen, Colour) %>%
+  knitr::kable(align = "lllrr")
+```
+
+A dumbbell plot shows the Black and White release rates for each employment and citizenship group on the same line. The gap between the two dots is the colour difference, and it barely changes across groups.
+
+### **Q3c. A mosaic plot reveals that the predictors are themselves related.** Black arrestees are less often employed and less often citizens.
+
+```{r mosaic, fig.height = 6}
+mosaic(~ colour + employed + citizen + released, data = A,
+       shade = TRUE, legend = TRUE,
+       labeling_args = list(abbreviate_labs = c(colour = FALSE, employed = 3,
+                                                citizen = 3, released = 3)),
+       main = "Mosaic of colour, employment, citizenship and release")
+```
+
+***
+
+**Why this matters.** `r pct(mean(A$employed[A$colour == "Black"] == "No"))` of Black arrestees are unemployed compared with `r pct(mean(A$employed[A$colour == "White"] == "No"))` of White arrestees, and `r pct(mean(A$citizen[A$colour == "Black"] == "No"))` are non citizens compared with `r pct(mean(A$citizen[A$colour == "White"] == "No"))`.
+
+Because employment and citizenship are associated with both colour and release, part of the crude colour difference could be explained by them. But the doubledecker plot showed the colour gap persists *within* each group.
+
+Cells are shaded by Pearson residuals from the model of mutual independence. Blue cells hold more arrests than independence predicts, red cells fewer.
+
+### **Q4a. Black arrestees have more prior police checks.** Checks is the strongest predictor of being held, so it is a key variable to adjust for.
+
+```{r checks-colour}
+A %>%
+  count(colour, checks) %>%
+  group_by(colour) %>%
+  mutate(p = n / sum(n)) %>%
+  ggplot(aes(x = factor(checks), y = p, fill = colour)) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.75) +
+  scale_fill_manual(values = col_race, name = "Colour") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "Number of databases with the person's name", y = "Percent of arrestees in group",
+       title = "Distribution of police checks by colour")
+```
+
+***
+
+**Other features worth reporting**
+
+* Mean checks are `r sprintf("%.2f", mean(A$checks[A$colour == "Black"]))` for Black and `r sprintf("%.2f", mean(A$checks[A$colour == "White"]))` for White arrestees. `r pct(mean(A$checks[A$colour == "White"] == 0))` of White arrestees have no checks compared with `r pct(mean(A$checks[A$colour == "Black"] == 0))` of Black arrestees.
+* Checks are also higher among the unemployed (mean `r sprintf("%.2f", mean(A$checks[A$employed == "No"]))` versus `r sprintf("%.2f", mean(A$checks[A$employed == "Yes"]))`).
+* Black arrestees are slightly more likely to be male (`r pct(mean(A$sex[A$colour == "Black"] == "Male"))` versus `r pct(mean(A$sex[A$colour == "White"] == "Male"))`).
+* The age distributions of Black and White arrestees are almost identical (medians `r median(A$age[A$colour == "Black"])` and `r median(A$age[A$colour == "White"])`).
+
+**An interpretive caution.** Checks may partly *reflect* earlier differential policing. If Black residents are more heavily policed, they will accumulate more database entries for the same behaviour. Adjusting for checks could then understate the total effect of colour. Checks is better seen as a possible mediator than a pure confounder.
+
+### **Q4b. After adjustment, White arrestees still have about 1.5 times the odds of release.** Employment, citizenship and checks also matter. Age, sex and year do not.
+
+```{r forest}
+tidy_or <- function(fit, model) {
+  est <- coef(fit)[-1]
+  se  <- sqrt(diag(vcov(fit)))[-1]
+  data.frame(term = names(est), OR = exp(est),
+             lo = exp(est - 1.96 * se), hi = exp(est + 1.96 * se), model = model)
+}
+labs_map <- c(colourWhite = "White (vs Black)", employedYes = "Employed",
+              citizenYes = "Citizen", checks = "Each additional check",
+              age = "Age (per year)", sexMale = "Male", year = "Year (per year)")
+fo <- tidy_or(fit_adj, "Adjusted") %>%
+  bind_rows(tidy_or(fit_crude, "Crude")) %>%
+  mutate(term = factor(labs_map[term], levels = rev(labs_map)))
+
+ggplot(fo, aes(x = OR, y = term, colour = model)) +
+  geom_vline(xintercept = 1, linetype = 2) +
+  geom_errorbarh(aes(xmin = lo, xmax = hi), height = 0.2,
+                 position = position_dodge(width = 0.5)) +
+  geom_point(size = 3, position = position_dodge(width = 0.5)) +
+  scale_x_log10(breaks = c(0.5, 0.7, 1, 1.5, 2, 3)) +
+  scale_colour_manual(values = c(Adjusted = "#2F4858", Crude = "#B0B0B0"), name = NULL) +
+  labs(x = "Odds ratio for release with a summons (log scale, 95% CI)", y = NULL,
+       title = "Logistic regression of release on all seven variables")
+```
+
+***
+
+**Model.** `released ~ colour + year + age + sex + employed + citizen + checks`, logistic regression.
+
+**Colour.** The odds ratio for White versus Black falls from `r fmt_or(or_crude)` crude to `r fmt_or(or_adj)` after adjustment. Roughly half of the crude gap on the log odds scale is accounted for by the other variables (mainly checks and employment), but a clear difference remains.
+
+**Other predictors.** Each additional check multiplies the odds of release by about `r sprintf("%.2f", exp(coef(fit_adj)["checks"]))`. Employment roughly doubles the odds and citizenship increases them by about 80%.
+
+**Caveat.** The adjusted OR is a conditional association among people who were arrested. It does not by itself establish discrimination, because unmeasured factors (for example demeanour, quantity possessed or outstanding warrants) are not recorded.
+
+### **Q4c. The colour gap is not constant.** It is largest for young arrestees and in the earlier years, and it shrinks or reverses for older arrestees and in 2001 to 2002.
+
+```{r interaction}
+by_age_yr <- A %>%
+  mutate(period = ifelse(year <= 1999, "1997 to 1999", "2000 to 2002")) %>%
+  rel_by(colour, agegrp, period)
+
+ggplot(by_age_yr, aes(x = agegrp, y = p, colour = colour, group = colour)) +
+  geom_line(linewidth = 1) +
+  geom_point(aes(size = n)) +
+  facet_wrap(~ period) +
+  scale_colour_manual(values = col_race, name = "Colour") +
+  scale_size_area(max_size = 5, name = "Arrests") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "Age group", y = "Percent released",
+       title = "Release by colour across age groups and periods")
+```
+
+***
+
+**Effect modification.** Adding `colour:year` and `colour:age` interaction terms to the adjusted model improves fit substantially (likelihood ratio χ² = `r sprintf("%.1f", lrt_int$Deviance[2])` on `r lrt_int$Df[2]` df, `r ifelse(lrt_int[["Pr(>Chi)"]][2] < 1e-4, "p < 0.0001", sprintf("p = %.4f", lrt_int[["Pr(>Chi)"]][2]))`).
+
+* **Age.** The White advantage is concentrated among young people. The gap narrows through the 30s, and Black and White arrestees over 40 are released at similar rates.
+* **Year.** The colour gap is larger in 1997 to 1999 and narrows in 2000 to 2002.
+
+This is the most interesting finding in the data and worth reporting alongside the main effect. A single adjusted odds ratio hides this heterogeneity.
+
+### **Summary.** What the Arrests data show.
+
+```{r summary-plot, fig.height = 4.5}
+fit_int_coef <- coef(fit_int)
+grid_df <- expand.grid(age = c(16, 20, 25, 30, 40, 50), year = c(1998, 2001))
+grid_df$logor <- fit_int_coef["colourWhite"] +
+  fit_int_coef["colourWhite:year"] * grid_df$year +
+  fit_int_coef["colourWhite:age"] * grid_df$age
+ggplot(grid_df, aes(x = age, y = exp(logor), colour = factor(year))) +
+  geom_hline(yintercept = 1, linetype = 2) +
+  geom_line(linewidth = 1.2) + geom_point(size = 2.5) +
+  scale_y_log10() +
+  scale_colour_manual(values = c("1998" = "#2F4858", "2001" = "#C8553D"), name = "Year") +
+  labs(x = "Age", y = "Adjusted OR, White vs Black (log scale)",
+       title = "Model based White vs Black odds ratio for release, by age and year")
+```
+
+***
+
+1. **Distributions.** Arrestees are overwhelmingly young, male, White, employed and Canadian. Black people are over represented relative to Toronto's population. Age is right skewed and checks are lumpy with a spike at zero. The first and last years are partial.
+2. **One at a time.** Release is lower for Black, unemployed and non citizen arrestees and falls steeply with the number of police checks. Sex, age and year matter little.
+3. **In combination.** Colour, employment and citizenship act additively on the log odds of release. The colour gap appears within every subgroup.
+4. **Other features.** Black arrestees have more police checks, a possible pathway for disadvantage. After adjustment, the White to Black odds ratio is about `r sprintf("%.1f", or_adj[1])`, and it is concentrated among younger arrestees and earlier years.
+
+*Data:* Fox J, Weisberg S. *carData: Companion to Applied Regression Data Sets.* R package.
