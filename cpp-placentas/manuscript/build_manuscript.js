@@ -144,6 +144,11 @@ function table2() {
   const get = lab => t.find(r => r[0] === lab).slice(2, 5);
   const REF = ["1 REF", "1 REF", "1 REF"];
   const rows = [
+    ["Joint MVM and AI", "", "", "", ""],
+    ["  Neither", "1.6% (364/23,391)", ...REF],
+    ["  MVM only", "1.8% (155/8,429)", ...get("MVM only")],
+    ["  AI only", "1.9% (111/5,985)", ...get("AI only")],
+    ["  Both MVM and AI", "2.4% (70/2,895)", ...get("Both MVM and AI")],
     ["Maternal vascular malperfusion", "", "", "", ""],
     ["  None", "1.6% (475/29,376)", ...REF],
     ["  Any", "2.0% (225/11,324)", ...get("Any MVM vs none")],
@@ -152,11 +157,6 @@ function table2() {
     ["  None", "1.6% (519/31,820)", ...REF],
     ["  Any", "2.0% (181/8,880)", ...get("Any AI vs none")],
     ["  Score, per 1 compartment", "", ...get("AI score, per 1 compartment")],
-    ["Joint MVM and AI", "", "", "", ""],
-    ["  Neither", "1.6% (364/23,391)", ...REF],
-    ["  MVM only", "1.8% (155/8,429)", ...get("MVM only")],
-    ["  AI only", "1.9% (111/5,985)", ...get("AI only")],
-    ["  Both MVM and AI", "2.4% (70/2,895)", ...get("Both MVM and AI")],
   ];
   return [
     caption("Table 2.", "Associations of placental maternal vascular malperfusion (MVM) and acute inflammation (AI) with definite infantile haemangioma (IH) by one year of age (700 cases among 40,700 infants)."),
@@ -193,16 +193,16 @@ function supplement() {
     "\u1d43Relative risk of definite IH for each site compared with Boston, from the primary model for any MVM (adjusted for 11 covariates, with inverse probability of censoring weights). Site names other than Boston are from the study team's site mapping and should be confirmed against CPP documentation. MVM, maternal vascular malperfusion. AI, acute inflammation.");
 
   // S3
-  const s4 = readCSV("mutual_4exp.csv");
-  add("Table S3.", "Mutually adjusted associations of maternal vascular malperfusion (MVM) and acute inflammation (AI) with definite infantile haemangioma.",
-    ["Exposure", "Mutually adjusted for", "Crude", "Primary", "Secondary", "Primary, single exposure"],
-    s4.slice(1).map(r => [r[0], r[1], r[2], r[4], r[3], r[5]]), [2000, 1400, 1480, 1480, 1480, 1520], "Relative risks (95% CI). " + MODEL_NOTE);
-
-  // S4
   const s5 = readCSV("synergy_reri.csv");
-  add("Table S4.", "Additive and multiplicative interaction between maternal vascular malperfusion (MVM) and acute inflammation (AI) for definite infantile haemangioma.",
+  add("Table S3.", "Additive and multiplicative interaction between maternal vascular malperfusion (MVM) and acute inflammation (AI) for definite infantile haemangioma.",
     ["Measure", "Crude", "Primary", "Secondary"], s5.slice(1).map(r => [r[0], r[1], r[2], r[3]].map(ref1)), [3960, 1800, 1800, 1800],
     "Estimates (95% CI) from the four-level joint exposure (reference: neither). CIs by the delta method using the pooled variance-covariance matrix. RERI, relative excess risk due to interaction. The synergy index is unstable when the single-exposure RRs are close to 1 and is shown for completeness. " + MODEL_NOTE);
+
+  // S4
+  const s4 = readCSV("mutual_4exp.csv");
+  add("Table S4.", "Mutually adjusted associations of maternal vascular malperfusion (MVM) and acute inflammation (AI) with definite infantile haemangioma.",
+    ["Exposure", "Mutually adjusted for", "Crude", "Primary", "Secondary", "Primary, single exposure"],
+    s4.slice(1).map(r => [r[0], r[1], r[2], r[4], r[3], r[5]]), [2000, 1400, 1480, 1480, 1480, 1520], "Relative risks (95% CI). " + MODEL_NOTE);
 
   // S5
   const s6 = readCSV("grade_stage_separate.csv");
@@ -350,6 +350,22 @@ async function main() {
     ] }],
   });
   fs.writeFileSync(path.join(MS, "Response_to_coauthors.docx"), await Packer.toBuffer(resp));
+  const R2p = path.join(MS, "responses_round2.js");
+  if (fs.existsSync(R2p)) {
+    const R2 = require(R2p);
+    const resp2 = new Document({
+      styles,
+      sections: [{ properties: { page: { ...page, size: { width: 12240, height: 15840, orientation: PageOrientation.LANDSCAPE } } }, footers: { default: footer }, children: [
+        para([run(R2.title, { bold: true, size: 28 })], { after: 120 }),
+        para([run(R2.intro, { size: 20 })], { line: 276, after: 200 }),
+        table(["#", "From", "Comment", "Response", "Where"], R2.rows.map((r, i) => [String(i + 1), ...r]), [400, 1300, 4300, 6000, 1960]),
+        para([run(" ")]),
+        para([run("Open questions", { bold: true })], { line: 276, before: 200 }),
+        ...R2.questions.map(q => para([run("\u2022 " + q, { size: 20 })], { line: 276 })),
+      ] }],
+    });
+    fs.writeFileSync(path.join(MS, "Response_to_Ellen_and_Stefanie.docx"), await Packer.toBuffer(resp2));
+  }
   console.log(`Main text words: ${bodyWords}. Abstract words: ${absWords}. References: ${order.length}.`);
 }
 main();
