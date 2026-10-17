@@ -1,0 +1,8 @@
+exposure,rr_ci,"E-value, estimate","E-value, CI limit"
+Both MVM and AI vs neither,"1.37 (1.05, 1.79)",2.08,1.28
+MVM only vs neither,"1.08 (0.89, 1.32)",1.39,1
+AI only vs neither,"1.07 (0.86, 1.32)",1.33,1
+Any MVM vs none,"1.14 (0.96, 1.35)",1.54,1
+"MVM score, per point","1.05 (0.97, 1.15)",1.29,1
+Any AI vs none,"1.14 (0.96, 1.35)",1.53,1
+"AI score, per compartment","1.03 (0.98, 1.08)",1.2,1
