@@ -115,7 +115,7 @@ module.exports.titlePageStatements = [
   ["Ethics approval", "This secondary analysis of de-identified, publicly available data was determined exempt by the University of Pennsylvania Institutional Review Board."],
   ["Patient consent", "General informed consent was obtained when the Collaborative Perinatal Project was initiated, before the establishment of institutional review boards."],
   ["Permission to reproduce material from other sources", "Not applicable."],
-  ["Co-author email addresses", "[FLAG: add an email address for each co-author]"],
+  ["Author email addresses", "Jessica J. Wong [FLAG: add]. Sunni L. Mumford, Sunni.Mumford@Pennmedicine.upenn.edu. Alexa A. Freedman, alexa.freedman@northwestern.edu. Linda M. Ernst, lindamarie.ernst@endeavorhealth.org. Yajnaseni Chakraborti, Yajnaseni.Chakraborti@Pennmedicine.upenn.edu. David J. Margolis, margo@pennmedicine.upenn.edu. Ellen C. Caniglia [FLAG: add]. Enrique F. Schisterman [FLAG: add]. Stefanie N. Hinkle, Stefanie.Hinkle@Pennmedicine.upenn.edu. Ellen C. Francis, ellen.francis@rutgers.edu."],
 ];
 
 module.exports.socialMediaImage = "Table 2";
