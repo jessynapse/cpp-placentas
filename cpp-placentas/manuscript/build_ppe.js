@@ -332,6 +332,13 @@ function manuscript() {
   kids.push(para([tr("Tables and figures: ", { bold: true }), tr("2 tables and 1 figure. Supporting Information: " + etOrderPreview() + " eTables.")]));
   kids.push(brk());
 
+  // synopsis and social media (PPE order: title page, synopsis, abstract)
+  kids.push(heading("SYNOPSIS", 1));
+  C.synopsis.forEach(([h, t]) => kids.push(para([tr(h + ": ", { bold: true }), tr(t)])));
+  kids.push(heading("SOCIAL MEDIA QUOTE", 1));
+  kids.push(para([tr(C.socialMedia)]));
+  kids.push(brk());
+
   // abstract
   kids.push(heading("ABSTRACT", 1));
   C.abstract.forEach(([h, t]) => kids.push(para([tr(h + ": ", { bold: true }), tr(t)])));
@@ -339,12 +346,6 @@ function manuscript() {
   kids.push(para([tr("Word count: ", { bold: true }), tr(`${bodyWords.toLocaleString("en-US")} (main text)`)]));
   kids.push(brk());
 
-  // synopsis and social media
-  kids.push(heading("SYNOPSIS", 1));
-  C.synopsis.forEach(([h, t]) => kids.push(para([tr(h + ": ", { bold: true }), tr(t)])));
-  kids.push(heading("SOCIAL MEDIA QUOTE", 1));
-  kids.push(para([tr(C.socialMedia)]));
-  kids.push(brk());
 
   // body
   C.body.forEach(([type, text]) => {
@@ -354,8 +355,6 @@ function manuscript() {
     else kids.push(para(bodyRuns(text)));
   });
 
-  // declarations
-  C.declarations.forEach(([h, t]) => { kids.push(heading(h, 1)); kids.push(para([tr(t)])); });
 
   // references
   kids.push(brk());
@@ -363,6 +362,10 @@ function manuscript() {
   order.forEach((k, i) => kids.push(para([tr(`${i + 1}. ${C.references[k]}`)], { indent: { left: 480, hanging: 480 } })));
   const unused = Object.keys(C.references).filter(k => !order.includes(k));
   if (unused.length) console.warn("Unused references:", unused.join(", "));
+
+  // declarations after references (PPE order: references, acknowledgements, funding)
+  kids.push(brk());
+  C.declarations.forEach(([h, t]) => { kids.push(heading(h, 1)); kids.push(para([tr(t)])); });
 
   return { kids, bodyWords, absWords, synWords };
 }
@@ -376,10 +379,11 @@ function etOrderPreview() {
 async function main() {
   const { kids, bodyWords, absWords, synWords } = manuscript();
   const fig = fs.readFileSync(path.join(MS, "figure1_flow.png"));
+  // PPE order: figure legends, tables, figures
   const tablesSection = [
-    ...table1(), brk(), ...table2(), brk(),
     heading("FIGURE LEGEND", 1),
-    ...C.figureLegends.map(([l, t]) => para([tr(l + " ", { bold: true }), tr(t)])),
+    ...C.figureLegends.map(([l, t]) => para([tr(l + " ", { bold: true }), tr(t)])), brk(),
+    ...table1(), brk(), ...table2(), brk(),
     new Paragraph({ children: [new ImageRun({ type: "png", data: fig, transformation: { width: 600, height: 554 } })] }),
   ];
   const styles = { default: { document: { run: { font: FONT, size: BODY_SIZE } } } };
