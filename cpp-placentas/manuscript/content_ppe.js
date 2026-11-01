@@ -40,9 +40,9 @@ module.exports.abstract = [
 module.exports.keywords = "Hemangioma; Placenta Diseases; Placental Insufficiency; Chorioamnionitis; Infant; Cohort Studies";
 
 module.exports.synopsis = [
-  ["Study question", "Are placental maternal vascular malperfusion and acute inflammation, alone or together, associated with infantile haemangioma?"],
-  ["What's already known", "Infantile haemangioma shares molecular features with the placenta, and small clinical studies have reported more placental abnormalities in affected pregnancies, without adjustment for confounding."],
-  ["What this study adds", "In 40,700 infants with systematic placental histopathology, infants whose placentas showed both malperfusion and inflammation had a 37% higher risk of haemangioma than infants whose placentas showed neither. Either pattern alone was associated with a modestly higher but imprecise risk."],
+  ["Study question", "Are placental maternal vascular malperfusion and acute inflammation, separately or together, associated with infantile haemangioma by 12 months of age?"],
+  ["What's already known", "Infantile haemangioma shares molecular features with the placenta, and clinical conditions of placental origin have been inconsistently associated with it. Small clinical studies have reported more placental abnormalities in affected pregnancies, but none examined contemporary patterns of placental injury with adjustment for confounding."],
+  ["What this study adds", "Among 40,700 infants in a prospective cohort with systematic placental histopathology, haemangioma risk was 2.4% when placentas showed both malperfusion and inflammation and 1.6% when they showed neither (adjusted relative risk 1.37, 95% confidence interval 1.05, 1.79). Either pattern alone was associated with a modestly higher but imprecise risk (adjusted relative risk 1.14 for each)."],
 ];
 
 module.exports.socialMedia = "In 40,700 infants from the Collaborative Perinatal Project, placentas showing both malperfusion and acute inflammation were linked to a 37% higher risk of infantile haemangioma. Either pattern alone showed smaller, imprecise increases.";
