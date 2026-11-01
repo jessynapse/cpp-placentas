@@ -330,6 +330,11 @@ function manuscript() {
   kids.push(para([tr("Running title: ", { bold: true }), tr(C.runningTitle)]));
   kids.push(para([tr("Word count: ", { bold: true }), tr(`${bodyWords.toLocaleString("en-US")} (main text), ${absWords} (abstract)`)]));
   kids.push(para([tr("Tables and figures: ", { bold: true }), tr("2 tables and 1 figure. Supporting Information: " + etOrderPreview() + " eTables.")]));
+  C.titlePageStatements.forEach(([h, t]) => kids.push(para([tr(h + ": ", { bold: true }), tr(t)])));
+  ["DATA AVAILABILITY STATEMENT", "FUNDING INFORMATION", "CONFLICT OF INTEREST STATEMENT"].forEach(k => {
+    const d = C.declarations.find(x => x[0] === k);
+    if (d) kids.push(para([tr(d[0].charAt(0) + d[0].slice(1).toLowerCase() + ": ", { bold: true }), tr(d[1])]));
+  });
   kids.push(brk());
 
   // synopsis and social media (PPE order: title page, synopsis, abstract)
@@ -337,11 +342,13 @@ function manuscript() {
   C.synopsis.forEach(([h, t]) => kids.push(para([tr(h + ": ", { bold: true }), tr(t)])));
   kids.push(heading("SOCIAL MEDIA QUOTE", 1));
   kids.push(para([tr(C.socialMedia)]));
+  kids.push(para([tr("Image to accompany the quote: ", { bold: true }), tr(C.socialMediaImage)]));
   kids.push(brk());
 
   // abstract
   kids.push(heading("ABSTRACT", 1));
   C.abstract.forEach(([h, t]) => kids.push(para([tr(h + ": ", { bold: true }), tr(t)])));
+  kids.push(brk());
   kids.push(para([tr("Keywords: ", { bold: true }), tr(C.keywords)]));
   kids.push(para([tr("Word count: ", { bold: true }), tr(`${bodyWords.toLocaleString("en-US")} (main text)`)]));
   kids.push(brk());

@@ -15,7 +15,7 @@ const rows = fs.readFileSync(path.join(ROOT, "outputs", "flow_counts.csv"), "utf
 const n = rows.map(r => Number(r.slice(r.lastIndexOf(",") + 1)));
 const f = x => x.toLocaleString("en-US");
 
-const FONT = "Calibri", SIZE = 22; // 11 pt
+const FONT = "Calibri", SIZE = 24; // 12 pt (PPE figure labels)
 const LINE = { style: BorderStyle.SINGLE, size: 8, color: "000000" };
 const NONE = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
 const W = [4300, 800, 4260];
