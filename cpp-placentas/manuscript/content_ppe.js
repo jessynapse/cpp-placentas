@@ -41,7 +41,7 @@ module.exports.keywords = "Hemangioma; Placenta Diseases; Placental Insufficienc
 
 module.exports.synopsis = [
   ["Study question", "Are patterns of placental injury (e.g., maternal vascular malperfusion and acute inflammation) associated with the development of infantile haemangioma?"],
-  ["What's already known", "Infantile haemangioma shares a molecular phenotype with placental blood vessels and shows a hypoxia-responsive profile. Clinical conditions of placental origin have been inconsistently associated with haemangioma, but these diagnoses capture the placental injury only indirectly, which histopathology can characterise directly."],
+  ["What's already known", "Infantile haemangioma shares a molecular phenotype with placental blood vessels and shows a hypoxia-responsive profile. Clinical conditions of placental origin have been inconsistently associated with haemangioma, but these diagnoses capture placental injury only indirectly, and the injury itself cannot be characterised without histopathology."],
   ["What this study adds", "In 40,700 prospectively followed infants with systematically assessed placental histopathology and haemangioma, haemangioma risk by 12 months was 2.4% with both malperfusion and inflammation and 1.6% with neither (adjusted relative risk 1.37, 95% confidence interval 1.05, 1.79). Adjusted relative risks for any malperfusion and any inflammation were each 1.14 (95% confidence interval 0.96, 1.35)."],
 ];
 
