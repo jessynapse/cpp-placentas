@@ -160,11 +160,55 @@ function headerWithN(rows) {
 // MAIN TABLES
 // ---------------------------------------------------------------------------
 function table1() {
-  const { header, rows } = headerWithN(readCSV("table1_analytic.csv"));
+  // Laid out like the ECHO Cycle 2 Table 1: No. (%), Missing rows, median
+  // (IQR) and range, binary variables on one row, SMD per characteristic.
+  const t = readCSV("table1_analytic.csv");
+  const ns = t[1], rows = t.slice(2);
+  const W = [1760, 1250, 1250, 1250, 560, 1250, 1250, 560];
+  const T1 = 16;  // 8 pt, so No. (%) fits on one line
+  const total = W.reduce((a, b) => a + b, 0);
+  const cell = (text, w, o = {}) => {
+    const lines = String(text).split("\n");
+    const indent = /^ {2,}/.test(lines[0]);
+    return new TableCell({
+      width: { size: w, type: WidthType.DXA }, columnSpan: o.span,
+      borders: { top: o.top ? LINE : NONE, bottom: o.bottom ? LINE : NONE, left: NONE, right: NONE },
+      margins: { top: 20, bottom: 20, left: 30, right: 30 },
+      children: lines.map(l => new Paragraph({
+        alignment: o.first ? AlignmentType.LEFT : AlignmentType.CENTER,
+        indent: indent && o.first ? { left: 160 } : undefined, spacing: { line: 240 },
+        children: supRuns(l.replace(/^ +/, "").replace(/>=/g, "\u2265").replace(/<=/g, "\u2264"), { size: T1, bold: o.bold }),
+      })),
+    });
+  };
+  const span = (a, b) => W.slice(a, b).reduce((x, y) => x + y, 0);
+  const trs = [
+    new TableRow({ tableHeader: true, children: [
+      cell("", W[0], { top: true, first: true }), cell("", W[1], { top: true }),
+      cell("Maternal vascular malperfusion", span(2, 5), { top: true, bottom: true, bold: true, span: 3 }),
+      cell("Acute inflammation", span(5, 8), { top: true, bottom: true, bold: true, span: 3 })] }),
+    new TableRow({ tableHeader: true, children: [
+      cell("Characteristic", W[0], { bottom: true, bold: true, first: true }),
+      cell("Total\n(N = " + ns[1].replace("n = ", "") + ")", W[1], { bottom: true, bold: true }),
+      cell("Any\n(" + ns[2] + ")", W[2], { bottom: true, bold: true }),
+      cell("None\n(" + ns[3] + ")", W[3], { bottom: true, bold: true }),
+      cell("SMD", W[4], { bottom: true, bold: true }),
+      cell("Any\n(" + ns[5] + ")", W[5], { bottom: true, bold: true }),
+      cell("None\n(" + ns[6] + ")", W[6], { bottom: true, bold: true }),
+      cell("SMD", W[7], { bottom: true, bold: true })] }),
+  ];
+  rows.forEach((r, i) => {
+    const last = i === rows.length - 1;
+    if (r[0].startsWith("## ")) {
+      trs.push(new TableRow({ cantSplit: true, children: [cell(r[0].slice(3), total, { bold: true, first: true, span: 8, bottom: last })] }));
+    } else {
+      trs.push(new TableRow({ cantSplit: true, children: r.map((x, k) => cell(x, W[k], { first: k === 0, bottom: last })) }));
+    }
+  });
   return [
-    caption("TABLE 1", "Characteristics of the 40,700 singleton infants in the analytic sample of the Collaborative Perinatal Project, overall and by placental maternal vascular malperfusion (MVM) and acute inflammation (AI)."),
-    table(header, rows.map(sgaInfant), [2960, 1280, 1280, 1280, 1280, 1280]),
-    note("Values are % (n) unless stated otherwise. Percentages for categories exclude missing values. Missing values are shown as a percentage of the column total. Perinatal characteristics are shown for description only and were not included in multivariable models. BMI, body mass index. SD, standard deviation."),
+    caption("TABLE 1", "Characteristics of singleton infants in the Collaborative Perinatal Project analytic sample (N = 40,700) by placental maternal vascular malperfusion (MVM) and acute inflammation (AI)."),
+    new Table({ width: { size: total, type: WidthType.DXA }, columnWidths: W, rows: trs }),
+    note("Values are No. (%) unless stated otherwise. Percentages for categories exclude missing values, and missing values are shown as a percentage of the column total. Standardised mean differences (SMD) compare any versus no MVM and any versus no AI, excluding missing values. ^aPerinatal characteristics are shown for description only and were not included in multivariable models. BMI, body mass index (calculated as weight in kilograms divided by height in metres squared). IQR, interquartile range."),
   ];
 }
 

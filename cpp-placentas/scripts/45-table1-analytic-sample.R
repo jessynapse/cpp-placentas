@@ -85,6 +85,10 @@ d <- d %>% mutate(
   smoking = case_when(clean_numeric(C52) == 0 ~ 0,
                       clean_numeric(C52) >= 1 & clean_numeric(C52) <= 19 ~ 1,
                       clean_numeric(C52) >= 20 ~ 2),
+  parity_raw = case_when(na_tag(C50) == "p" ~ 0,
+                         na_tag(C50) == "u" ~ NA_real_,
+                         is.na(C50)         ~ NA_real_,
+                         TRUE               ~ as.numeric(C50)),
   parity  = pmin(case_when(na_tag(C50) == "p" ~ 0,
                            na_tag(C50) == "u" ~ NA_real_,
                            is.na(C50)         ~ NA_real_,
@@ -111,85 +115,120 @@ stopifnot(nrow(d) == 45268, nrow(obs) == 40700, sum(obs$ih1) == 700,
           sum(obs$mvm2) == 11324, sum(obs$ai) == 8880)
 
 # ------------------------------------------------------------------------------
-# 2. TABLE 1 (40,700 infants)
+# 2. TABLE 1 (40,700 infants), laid out like the ECHO Cycle 2 Table 1:
+#    No. (%) with count first, Missing as its own row (% of column total),
+#    continuous variables as median (IQR) and range plus categories,
+#    binary variables on one row, and a standardised mean difference (SMD)
+#    for each characteristic (exposed vs unexposed, missing excluded).
 # ------------------------------------------------------------------------------
 obs <- obs %>% mutate(
-  race      = factor(race, c(1, 2, 4, 8), c("White", "Black", "Puerto Rican", "Other")),
-  educ      = factor(educ, 0:3, c("Less than high school", "Some high school",
-                                  "High school graduate", "Some college or more")),
-  income    = factor(income, 1:7, c("$1,999 or less", "$2,000 to $3,999",
-                                    "$4,000 to $5,999", "$6,000 to $7,999",
-                                    "$8,000 to $9,999", "$10,000 to $14,999",
-                                    "$15,000 or more")),
-  marital   = factor(marital, 0:2, c("Married or common law", "Single",
-                                     "Widowed, divorced, or separated")),
-  smoking   = factor(smoking, 0:2, c("Non-smoker", "1 to 19 cigarettes per day",
-                                     "20 or more cigarettes per day")),
-  parity    = factor(parity, 0:4, c("0", "1", "2", "3", "4 or more")),
-  dm        = factor(DM, 0:1, c("No", "Yes")),
-  chronic_htn = factor(chronic_htn, 0:1, c("No", "Yes")),
-  infant_sex = factor(infant_sex, 0:1, c("Female", "Male")),
-  preterm   = factor(preterm, 0:1, c("No", "Yes")),
-  SGA       = factor(SGA, 0:1, c("No", "Yes")),
-  mvm_any   = factor(mvm2, 0:1, c("None", "Any")),
-  ai_any    = factor(ai, 0:1, c("None", "Any")))
+  age_cat = cut(age, c(-Inf, 19.999, 24.999, 29.999, 34.999, Inf),
+                labels = c("<20", "20-24", "25-29", "30-34", ">=35")),
+  race    = factor(race, c(1, 2, 4, 8), c("White", "Black", "Puerto Rican", "Other")),
+  educ    = factor(educ, 0:3, c("Less Than High School", "Some High School",
+                                "High School Graduate", "Some College or More")),
+  income  = factor(income, 1:7, c("<=$1,999", "$2,000-$3,999", "$4,000-$5,999",
+                                  "$6,000-$7,999", "$8,000-$9,999", "$10,000-$14,999",
+                                  ">=$15,000")),
+  marital = factor(marital, 0:2, c("Married or Common Law", "Single",
+                                   "Widowed, Divorced, or Separated")),
+  parity_cat = factor(parity, 0:4, c("0", "1", "2", "3", ">=4")),
+  bmi_cat = cut(bmi, c(-Inf, 18.5, 25, 30, Inf), right = FALSE,
+                labels = c("Underweight (<18.5)", "Normal Weight (18.5-24.9)",
+                           "Overweight (25.0-29.9)", "Obesity (>=30.0)")),
+  smoking = factor(smoking, 0:2, c("Non-Smoker", "1-19 Cigarettes/d", ">=20 Cigarettes/d")),
+  infant_sex = factor(infant_sex, 0:1, c("Female", "Male")))
 
-cont_row <- function(dd, v, digits = 1) {
-  x <- dd[[v]]
-  sprintf(paste0("%.", digits, "f (%.", digits, "f)"), mean(x, na.rm = TRUE), sd(x, na.rm = TRUE))
-}
-cat_rows <- function(dd, v) {
-  x <- dd[[v]]; n_obs <- sum(!is.na(x))
-  out <- sapply(levels(x), function(l) pct_n(sum(x == l, na.rm = TRUE), n_obs))
-  if (any(is.na(x))) out <- c(out, Missing = pct_n(sum(is.na(x)), length(x)))
-  out
-}
-vars <- list(
-  list("Maternal age, years, mean (SD)", "age", "cont"),
-  list("Pre-pregnancy BMI, kg/m², mean (SD)", "bmi", "cont"),
-  list("Race and ethnicity", "race", "cat"),
-  list("Education", "educ", "cat"),
-  list("Family income, per year", "income", "cat"),
-  list("Marital status", "marital", "cat"),
-  list("Smoking during pregnancy", "smoking", "cat"),
-  list("Parity", "parity", "cat"),
-  list("Pre-pregnancy diabetes", "dm", "cat"),
-  list("Chronic hypertension", "chronic_htn", "cat"),
-  list("Infant sex", "infant_sex", "cat"),
-  list("Perinatal characteristics (not adjusted for)", NA, "header"),
-  list("Gestational age at delivery, weeks, mean (SD)", "gest_age", "cont"),
-  list("Preterm birth (<37 weeks)", "preterm", "cat"),
-  list("Birthweight, g, mean (SD)", "birthweight", "cont0"),
-  list("Small for gestational age", "SGA", "cat"))
+grp <- list(Total = obs,
+            `Any MVM` = filter(obs, mvm2 == 1), `No MVM` = filter(obs, mvm2 == 0),
+            `Any AI` = filter(obs, ai == 1), `No AI` = filter(obs, ai == 0))
 
-build_table <- function(groups) {
-  map_dfr(vars, function(v) {
-    lab <- v[[1]]; var <- v[[2]]; type <- v[[3]]
-    if (type == "header") return(tibble(Characteristic = lab))
-    if (type %in% c("cont", "cont0")) {
-      vals <- map_chr(groups, ~ cont_row(.x, var, ifelse(type == "cont0", 0, 1)))
-      miss <- map_int(groups, ~ sum(is.na(.x[[var]])))
-      out <- tibble(Characteristic = lab, !!!setNames(as.list(vals), names(groups)))
-      if (any(miss > 0))
-        out <- bind_rows(out, tibble(Characteristic = "   Missing",
-                                     !!!setNames(as.list(map2_chr(miss, map_int(groups, nrow), pct_n)), names(groups))))
-      return(out)
-    }
-    rows <- map(groups, ~ cat_rows(.x, var))
-    lv <- unique(unlist(map(rows, names)))
-    bind_rows(tibble(Characteristic = lab),
-              tibble(Characteristic = paste0("   ", lv),
-                     !!!map(rows, ~ unname(ifelse(lv %in% names(.x), .x[lv],
-                                                  ifelse(lv == "Missing", "0.0% (0)", ""))))))
-  }) %>% mutate(across(everything(), ~ replace_na(.x, "")))
+np <- function(k, n) {
+  p <- 100 * k / n
+  sprintf("%s (%s)", n_(k), ifelse(k > 0 & p < 0.05, "<0.1", sprintf("%.1f", p)))
+}
+fmt <- function(x, dg) formatC(x, format = "f", digits = dg, big.mark = ",")
+
+smd_cont <- function(x1, x2) {
+  abs(mean(x1, na.rm = TRUE) - mean(x2, na.rm = TRUE)) /
+    sqrt((var(x1, na.rm = TRUE) + var(x2, na.rm = TRUE)) / 2)
+}
+smd_cat <- function(x1, x2) {           # Yang and Dalton (2012), missing excluded
+  lv <- levels(x1)
+  p1 <- prop.table(table(factor(x1[!is.na(x1)], lv)))
+  p2 <- prop.table(table(factor(x2[!is.na(x2)], lv)))
+  if (length(lv) == 2) {
+    a <- p1[2]; b <- p2[2]
+    return(as.numeric(abs(a - b) / sqrt((a * (1 - a) + b * (1 - b)) / 2)))
+  }
+  d <- (p1 - p2)[-1]; q1 <- p1[-1]; q2 <- p2[-1]
+  S <- (-(outer(q1, q1) + outer(q2, q2)) / 2)
+  diag(S) <- (q1 * (1 - q1) + q2 * (1 - q2)) / 2
+  as.numeric(sqrt(t(d) %*% solve(S) %*% d))
+}
+smd_pair <- function(var, type) {
+  f <- if (type == "cont") smd_cont else smd_cat
+  c(sprintf("%.2f", f(grp$`Any MVM`[[var]], grp$`No MVM`[[var]])),
+    sprintf("%.2f", f(grp$`Any AI`[[var]], grp$`No AI`[[var]])))
+}
+mk <- function(label, vals = rep("", 5), smd = c("", "")) {
+  tibble(Characteristic = label, Total = vals[1], `Any MVM` = vals[2], `No MVM` = vals[3],
+         `SMD (MVM)` = smd[1], `Any AI` = vals[4], `No AI` = vals[5], `SMD (AI)` = smd[2])
+}
+miss_row <- function(var) {
+  k <- map_int(grp, ~ sum(is.na(.x[[var]])))
+  if (k[1] == 0) return(NULL)
+  mk("   Missing", unname(map2_chr(k, map_int(grp, nrow), np)))
+}
+cont_block <- function(label, var, dg, catvar = NULL) {
+  med <- map_chr(grp, ~ { q <- quantile(.x[[var]], c(.5, .25, .75), na.rm = TRUE)
+                          sprintf("%s (%s-%s)", fmt(q[1], dg), fmt(q[2], dg), fmt(q[3], dg)) })
+  rng <- map_chr(grp, ~ sprintf("%s-%s", fmt(min(.x[[var]], na.rm = TRUE), dg),
+                                fmt(max(.x[[var]], na.rm = TRUE), dg)))
+  out <- bind_rows(mk(label, smd = smd_pair(var, "cont")),
+                   mk("   Median (IQR)", unname(med)), mk("   Range", unname(rng)))
+  if (!is.null(catvar)) out <- bind_rows(out, cat_levels(catvar))
+  bind_rows(out, miss_row(var))
+}
+cat_levels <- function(var) {
+  lv <- levels(obs[[var]])
+  map_dfr(lv, function(l) mk(paste0("   ", l), unname(map_chr(grp, ~ {
+    x <- .x[[var]]; np(sum(x == l, na.rm = TRUE), sum(!is.na(x))) }))))
+}
+cat_block <- function(label, var, smd_var = var) {
+  bind_rows(mk(label, smd = smd_pair(smd_var, "cat")), cat_levels(var), miss_row(var))
+}
+bin_block <- function(label, var) {
+  vals <- map_chr(grp, ~ { x <- .x[[var]]; np(sum(x == 1, na.rm = TRUE), sum(!is.na(x))) })
+  obs[[paste0(var, "_f")]] <<- factor(obs[[var]], 0:1)
+  grp <<- map(grp, ~ mutate(.x, !!paste0(var, "_f") := factor(.x[[var]], 0:1)))
+  bind_rows(mk(label, unname(vals), smd_pair(paste0(var, "_f"), "cat")), miss_row(var))
 }
 
-g1 <- list(Overall = obs,
-           `No MVM` = filter(obs, mvm_any == "None"), `Any MVM` = filter(obs, mvm_any == "Any"),
-           `No AI` = filter(obs, ai_any == "None"), `Any AI` = filter(obs, ai_any == "Any"))
-t1 <- build_table(g1)
-hdr <- map_chr(g1, ~ sprintf("n = %s", n_(nrow(.x))))
-t1 <- bind_rows(tibble(Characteristic = "", !!!as.list(hdr)), t1)
+t1 <- bind_rows(
+  mk("", unname(map_chr(grp, ~ sprintf("n = %s", n_(nrow(.x)))))),
+  mk("## Maternal Sociodemographic Characteristics"),
+  cont_block("Age at Delivery, y", "age", 0, "age_cat"),
+  cat_block("Race and Ethnicity", "race"),
+  cat_block("Educational Attainment", "educ"),
+  cat_block("Annual Family Income", "income"),
+  cat_block("Marital Status", "marital"),
+  mk("## Maternal Health and Pregnancy Exposures"),
+  cont_block("Number of Prior Births", "parity_raw", 0, "parity_cat"),
+  cont_block("Pre-Pregnancy BMI", "bmi", 1, "bmi_cat"),
+  bin_block("Pre-Pregnancy Diabetes", "DM"),
+  bin_block("Chronic Hypertension", "chronic_htn"),
+  cat_block("Smoking During Pregnancy", "smoking"),
+  mk("## Infant Characteristics"),
+  cat_block("Sex", "infant_sex"),
+  cont_block("Gestational Age at Delivery, wk^a", "gest_age", 0),
+  bin_block("Preterm Birth (<37 wk)^a", "preterm"),
+  cont_block("Birth Weight, g^a", "birthweight", 0),
+  bin_block("Small for Gestational Age^a", "SGA"))
+
+# parity categories come from the capped variable, so their Missing row
+# duplicates the raw-parity Missing row: keep one
+t1 <- t1 %>% filter(!(Characteristic == "   Missing" & lag(Characteristic) == "   Missing"))
 
 dir.create(out_dir, showWarnings = FALSE)
 write_csv(t1, file.path(out_dir, "table1_analytic.csv"))
