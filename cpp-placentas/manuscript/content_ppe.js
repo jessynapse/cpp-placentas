@@ -42,7 +42,7 @@ module.exports.keywords = "Hemangioma; Placenta Diseases; Placental Insufficienc
 module.exports.synopsis = [
   ["Study question", "Are patterns of placental injury (e.g., maternal vascular malperfusion and acute inflammation) associated with the development of infantile haemangioma (IH)?"],
   ["What's already known", "IH shares a molecular phenotype with placental blood vessels and shows a hypoxia-responsive profile, inviting investigation of placental mechanisms. Clinical conditions of placental origin have been inconsistently associated with IH, but these diagnoses capture placental injury only indirectly, and the injury cannot be characterised without histopathology."],
-  ["What this study adds", "Infants whose placentas showed both malperfusion and inflammation on histopathology had a 37% higher risk of IH than those whose placentas showed neither (aRR 1.37, 95% CI 1.05, 1.79), suggesting that chronic and acute placental injury may act together in IH development."],
+  ["What this study adds", "Combined placental malperfusion and inflammation on histopathology was associated with a higher risk of IH than neither injury (aRR 1.37, 95% CI 1.05, 1.79), suggesting that chronic and acute placental injury may act together in IH development."],
 ];
 
 module.exports.socialMedia = "In 40,700 infants from the Collaborative Perinatal Project, placentas showing both malperfusion and acute inflammation were linked to a 37% higher risk of infantile haemangioma. Any malperfusion or any inflammation showed smaller, imprecise increases.";
