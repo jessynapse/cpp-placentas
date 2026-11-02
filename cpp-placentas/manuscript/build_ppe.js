@@ -162,7 +162,7 @@ function headerWithN(rows) {
 function table1() {
   const { header, rows } = headerWithN(readCSV("table1_corrected.csv"));
   return [
-    caption("TABLE 1", "Characteristics of 45,268 singleton pregnancies in the Collaborative Perinatal Project, overall and by placental maternal vascular malperfusion (MVM) and acute inflammation (AI)."),
+    caption("TABLE 1", "Characteristics of the eligible cohort of 45,268 singleton pregnancies in the Collaborative Perinatal Project, overall and by placental maternal vascular malperfusion (MVM) and acute inflammation (AI)."),
     table(header, rows.map(sgaInfant), [2960, 1280, 1280, 1280, 1280, 1280]),
     note("Values are % (n) unless stated otherwise. Percentages exclude missing values, and the number missing is shown for each characteristic. Perinatal characteristics are shown for description only and were not included in multivariable models. BMI, body mass index. SD, standard deviation."),
   ];
@@ -188,7 +188,7 @@ function table2() {
     ["  Score, per involved site^d", "", ...get("AI score, per 1 compartment")],
   ];
   return [
-    caption("TABLE 2", "Associations of placental maternal vascular malperfusion (MVM) and acute inflammation (AI) with definite infantile haemangioma (IH) by 12 months of age (700 cases among 40,700 infants)."),
+    caption("TABLE 2", "Associations of placental maternal vascular malperfusion (MVM) and acute inflammation (AI) with definite infantile haemangioma (IH) by the first year of life in the analytic sample (700 cases among 40,700 infants)."),
     table(["Placental exposure", "IH, % (cases/N)", "Crude\nRR (95% CI)", "Primary^a\nRR (95% CI)", "Secondary^b\nRR (95% CI)"], rows, [2760, 1800, 1600, 1600, 1600]),
     note("Relative risks (RR) and 95% confidence intervals (CI) from modified Poisson regression with generalised estimating equations clustered on mother, pooled across 50 imputed datasets. ^aAdjusted for maternal age, pre-pregnancy body mass index, race and ethnicity, education, income, marital status, smoking, parity, pre-pregnancy diabetes, chronic hypertension, infant sex, and study site, with stabilised inverse probability of censoring weights. ^bAs for the primary model but without study site. ^cMVM score range 0 to 8. ^dNumber of involved sites (0 to 7): amnion and chorion, each in the membrane roll and on the placental surface, umbilical vein, umbilical artery, and foetal surface vessels."),
   ];
