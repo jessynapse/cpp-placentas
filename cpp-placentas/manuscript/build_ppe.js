@@ -50,7 +50,7 @@ const fmtNum = s => String(s).replace(/\b(\d{4,})\b/g, m => Number(m).toLocaleSt
 const refFix = s => String(s).replace(/^1 REF$/, REFLAB).replace(/1\.00 \(ref\)/g, REFLAB)
   .replace(/\(-/g, "(−").replace(/, -/g, ", −").replace(/^-/, "−");
 const lab = s => s.replace("MVM any vs none", "Any MVM").replace("AI any vs none", "Any AI")
-  .replace("MVM score, per 1 point", "MVM score, per point").replace("AI score, per 1 compartment", "AI score, per compartment");
+  .replace("MVM score, per 1 point", "MVM score, per point").replace("AI score, per 1 compartment", "AI score, per involved site");
 const sgaInfant = r => r.map(x => x === "Small for gestational age" ? "Small for gestational age infant" : x);
 const foetal = s => s.replace(/Fetal/g, "Foetal").replace(/fetal/g, "foetal");
 const siteName = s => s.replace(/^\d+ /, "");
@@ -185,12 +185,12 @@ function table2() {
     ["Acute inflammation", "", "", "", ""],
     ["  None", "1.6% (519/31,820)", ...REF],
     ["  Any", "2.0% (181/8,880)", ...get("Any AI vs none")],
-    ["  Score, per compartment^d", "", ...get("AI score, per 1 compartment")],
+    ["  Score, per involved site^d", "", ...get("AI score, per 1 compartment")],
   ];
   return [
     caption("TABLE 2", "Associations of placental maternal vascular malperfusion (MVM) and acute inflammation (AI) with definite infantile haemangioma (IH) by 12 months of age (700 cases among 40,700 infants)."),
     table(["Placental exposure", "IH, % (cases/N)", "Crude\nRR (95% CI)", "Primary^a\nRR (95% CI)", "Secondary^b\nRR (95% CI)"], rows, [2760, 1800, 1600, 1600, 1600]),
-    note("Relative risks (RR) and 95% confidence intervals (CI) from modified Poisson regression with generalised estimating equations clustered on mother, pooled across 50 imputed datasets. ^aAdjusted for maternal age, pre-pregnancy body mass index, race and ethnicity, education, income, marital status, smoking, parity, pre-pregnancy diabetes, chronic hypertension, infant sex, and study site, with stabilised inverse probability of censoring weights. ^bAs for the primary model but without study site. ^cMVM score range 0 to 8. ^dNumber of involved placental compartments (0 to 7)."),
+    note("Relative risks (RR) and 95% confidence intervals (CI) from modified Poisson regression with generalised estimating equations clustered on mother, pooled across 50 imputed datasets. ^aAdjusted for maternal age, pre-pregnancy body mass index, race and ethnicity, education, income, marital status, smoking, parity, pre-pregnancy diabetes, chronic hypertension, infant sex, and study site, with stabilised inverse probability of censoring weights. ^bAs for the primary model but without study site. ^cMVM score range 0 to 8. ^dNumber of involved sites (0 to 7): amnion and chorion, each in the membrane roll and on the placental surface, umbilical vein, umbilical artery, and foetal surface vessels."),
   ];
 }
 
@@ -264,7 +264,7 @@ const ETABLES = {
       "3. + Health (BMI, smoking, diabetes, chronic HTN)": "+ Health factors^b", "4. + Reproductive (parity, infant sex) = full, no site": "+ Parity and infant sex (all 11 covariates)",
       "5. + Study site = full with site": "+ Study site", "SECONDARY: full, no site, + IPW": "Secondary: 11 covariates + IPW", "PRIMARY: full + site + IPW": "Primary: 11 covariates + study site + IPW" };
     return { cap: "Sequential adjustment of associations of placental pathology with definite infantile haemangioma.",
-      header: ["Model", "Any MVM", "MVM score, per point", "Any AI", "AI score, per compartment"],
+      header: ["Model", "Any MVM", "MVM score, per point", "Any AI", "AI score, per involved site"],
       rows: s.slice(1).map(r => [L[r[0]] || r[0], ...r.slice(1)]), widths: [3160, 1550, 1550, 1550, 1550],
       foot: "RR (95% CI). Covariate groups were added cumulatively without weights, followed by the secondary and primary models with inverse probability of censoring weights (IPW). ^aMaternal age, race and ethnicity, education, income, marital status. ^bPre-pregnancy body mass index, smoking, pre-pregnancy diabetes, chronic hypertension. MVM, maternal vascular malperfusion. AI, acute inflammation." };
   },
@@ -278,7 +278,7 @@ const ETABLES = {
   boston: () => {
     const s = readCSV("boston_4exp_m50.csv");
     return { cap: "Associations of placental pathology with definite infantile haemangioma, stratified by the Boston centre and the other 11 centres.",
-      header: ["Stratum", "Any MVM", "MVM score, per point", "Any AI", "AI score, per compartment"],
+      header: ["Stratum", "Any MVM", "MVM score, per point", "Any AI", "AI score, per involved site"],
       rows: s.slice(1).map(r => [r[0].replace(/\[/, "\n(").replace(/\]/, ")").replace("Boston (site 5)", "Boston").replace("Other 11 sites (+ site)", "Other 11 centres").replace("All sites (primary)", "All centres (primary)")].concat(r.slice(1))),
       widths: [2560, 1700, 1700, 1700, 1700],
       foot: "RR (95% CI), adjusted for 11 covariates with inverse probability of censoring weights, and for study site in the other 11 centres and all centres. In Boston, 92.6% of placentas were examined by one pathologist. MVM, maternal vascular malperfusion. AI, acute inflammation." };
@@ -289,7 +289,7 @@ const ETABLES = {
     const p = (e, m) => (s.find(r => r[2] === e && r[3] === m) || [])[7] || "";
     return { cap: "Associations of placental pathology with infantile haemangioma when suspect cases are classified as IH (930 cases among 40,700 infants).",
       header: ["Exposure", "Crude", "Primary", "Secondary"],
-      rows: ex.map(e => [e.replace("MVM any vs none", "Any MVM").replace("MVM score (continuous)", "MVM score, per point").replace("AI any vs none", "Any AI").replace("AI score (continuous)", "AI score, per compartment"), p(e, "crude"), p(e, "adjusted+site+IPW"), p(e, "adjusted+IPW")]),
+      rows: ex.map(e => [e.replace("MVM any vs none", "Any MVM").replace("MVM score (continuous)", "MVM score, per point").replace("AI any vs none", "Any AI").replace("AI score (continuous)", "AI score, per involved site"), p(e, "crude"), p(e, "adjusted+site+IPW"), p(e, "adjusted+IPW")]),
       widths: [3360, 2000, 2000, 2000], foot: "RR (95% CI). Prespecified sensitivity analysis. " + MODEL_NOTE.replace(" Definite IH, 700 cases among 40,700 infants, unless stated otherwise.", "") };
   },
 };
