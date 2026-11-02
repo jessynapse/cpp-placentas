@@ -452,6 +452,16 @@ async function main() {
     brk(), ...supplement()] }] });
   fs.writeFileSync(path.join(MS, "Wong_PPE_IH_supporting_information.docx"), await Packer.toBuffer(supp));
 
+  // All tables in one file (main tables portrait, eTables landscape) for review.
+  const allTables = new Document({ styles, sections: [
+    { properties: { page }, footers: { default: footer }, children: [
+      para([tr("All tables", { bold: true, size: 28 })], { align: AlignmentType.CENTER }),
+      para([tr(C.title, { italics: true })], { align: AlignmentType.CENTER, after: 240 }),
+      ...table1(), brk(), ...table2()] },
+    { properties: { page: { ...page, size: { width: 12240, height: 15840, orientation: PageOrientation.LANDSCAPE } } }, footers: { default: footer }, children: supplement() },
+  ] });
+  fs.writeFileSync(path.join(MS, "Wong_PPE_IH_all_tables.docx"), await Packer.toBuffer(allTables));
+
   const chars = C.socialMedia.length;
   console.log(`Main text: ${bodyWords} words (limit 3,500). Abstract: ${absWords} (limit 300). Synopsis: ${synWords} (limit 125). Social media: ${chars} characters (limit 280). Running title: ${C.runningTitle.length} characters (limit 40). References: ${order.length} (limit 60). eTables: ${etOrder.length}.`);
 }
