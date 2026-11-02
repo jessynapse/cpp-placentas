@@ -321,11 +321,11 @@ const ETABLES = {
   },
   boston: () => {
     const s = readCSV("boston_4exp_m50.csv");
-    return { cap: "Associations of placental pathology with definite infantile haemangioma, stratified by the Boston centre and the other 11 centres.",
+    return { cap: "Associations of placental pathology with definite infantile haemangioma, stratified by the Boston study site and the other 11 study sites.",
       header: ["Stratum", "Any MVM", "MVM score, per point", "Any AI", "AI score, per involved site"],
-      rows: s.slice(1).map(r => [r[0].replace(/\[/, "\n(").replace(/\]/, ")").replace("Boston (site 5)", "Boston").replace("Other 11 sites (+ site)", "Other 11 centres").replace("All sites (primary)", "All centres (primary)")].concat(r.slice(1))),
+      rows: s.slice(1).map(r => [r[0].replace(/\[/, "\n(").replace(/\]/, ")").replace("Boston (site 5)", "Boston").replace("Other 11 sites (+ site)", "Other 11 study sites").replace("All sites (primary)", "All study sites (primary)")].concat(r.slice(1))),
       widths: [2560, 1700, 1700, 1700, 1700],
-      foot: "RR (95% CI), adjusted for 11 covariates with inverse probability of censoring weights, and for study site in the other 11 centres and all centres. In Boston, 92.6% of placentas were examined by one pathologist. MVM, maternal vascular malperfusion. AI, acute inflammation." };
+      foot: "RR (95% CI), adjusted for 11 covariates with inverse probability of censoring weights, and for study site in the other 11 study sites and all study sites. In Boston, 92.6% of placentas were examined by one pathologist. MVM, maternal vascular malperfusion. AI, acute inflammation." };
   },
   ih2: () => {
     const s = readCSV("ih2_m50.csv");
