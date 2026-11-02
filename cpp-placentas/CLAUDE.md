@@ -188,6 +188,10 @@ Intermediate files created by the pipeline: `analytic_sample.RDS` (01),
   site, and crude within-site RRs
 - `07`-`10`: corrected copies of 01, 03, 04, 05 (changes marked
   `# CHANGED:`). Intermediate files use a `_corrected` suffix.
+- `45-table1-analytic-sample.R`: Table 1 for the PPE paper on the 40,700
+  analytic sample (examined at 12 months), overall and by any MVM and AI.
+  Rebuilds the 07 cohort and stops unless counts are 45,268 / 40,700 / 700.
+  Output `outputs/table1_analytic.csv`. Needs `path1all.sas7bdat`.
 - `11-compare-original-corrected.R`: original vs corrected, side by side
 - `12-ai-stage.R`: AI stage dose-response, IPW rebuilt with `ai3`
 - `13-sequential-site.R`: sequential adjustment, primary vs secondary,

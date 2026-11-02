@@ -160,9 +160,9 @@ function headerWithN(rows) {
 // MAIN TABLES
 // ---------------------------------------------------------------------------
 function table1() {
-  const { header, rows } = headerWithN(readCSV("table1_corrected.csv"));
+  const { header, rows } = headerWithN(readCSV("table1_analytic.csv"));
   return [
-    caption("TABLE 1", "Characteristics of the eligible cohort of 45,268 singleton pregnancies in the Collaborative Perinatal Project, overall and by placental maternal vascular malperfusion (MVM) and acute inflammation (AI)."),
+    caption("TABLE 1", "Characteristics of the 40,700 singleton infants in the analytic sample of the Collaborative Perinatal Project, overall and by placental maternal vascular malperfusion (MVM) and acute inflammation (AI)."),
     table(header, rows.map(sgaInfant), [2960, 1280, 1280, 1280, 1280, 1280]),
     note("Values are % (n) unless stated otherwise. Percentages exclude missing values, and the number missing is shown for each characteristic. Perinatal characteristics are shown for description only and were not included in multivariable models. BMI, body mass index. SD, standard deviation."),
   ];
