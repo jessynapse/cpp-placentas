@@ -17,7 +17,8 @@
 # 45,268, the analytic sample 40,700 and definite IH 700.
 #
 # Format: percentages before counts, e.g. 27.8% (11,324). Continuous
-# variables as mean (SD). Missing values shown as their own row.
+# variables as mean (SD). Missing values shown as their own row, as % of
+# the column total (count). Category percentages exclude missing values.
 #
 # Inputs: data/ (or /Users/wongjj/Downloads): ncppbasa.sas7bdat,
 #   path1all.sas7bdat, path2all.sas7bdat, cpp_diabetes_20231026.sas7bdat,
@@ -36,7 +37,8 @@ clean_numeric <- function(x) {
   x <- as.character(x); x[x %in% c(".u", ".U", "u", "U")] <- NA; as.numeric(x)
 }
 n_ <- function(x) format(x, big.mark = ",", trim = TRUE)
-pct_n <- function(k, n) sprintf("%.1f%% (%s)", 100 * k / n, n_(k))
+pct_n <- function(k, n) ifelse(k > 0 & 100 * k / n < 0.05, sprintf("<0.1%% (%s)", n_(k)),
+                               sprintf("%.1f%% (%s)", 100 * k / n, n_(k)))
 
 # ------------------------------------------------------------------------------
 # 1. DATA BUILD (as in 07)
@@ -139,7 +141,7 @@ cont_row <- function(dd, v, digits = 1) {
 cat_rows <- function(dd, v) {
   x <- dd[[v]]; n_obs <- sum(!is.na(x))
   out <- sapply(levels(x), function(l) pct_n(sum(x == l, na.rm = TRUE), n_obs))
-  if (any(is.na(x))) out <- c(out, Missing = n_(sum(is.na(x))))
+  if (any(is.na(x))) out <- c(out, Missing = pct_n(sum(is.na(x)), length(x)))
   out
 }
 vars <- list(
@@ -170,7 +172,7 @@ build_table <- function(groups) {
       out <- tibble(Characteristic = lab, !!!setNames(as.list(vals), names(groups)))
       if (any(miss > 0))
         out <- bind_rows(out, tibble(Characteristic = "   Missing",
-                                     !!!setNames(as.list(n_(miss)), names(groups))))
+                                     !!!setNames(as.list(map2_chr(miss, map_int(groups, nrow), pct_n)), names(groups))))
       return(out)
     }
     rows <- map(groups, ~ cat_rows(.x, var))
@@ -178,7 +180,7 @@ build_table <- function(groups) {
     bind_rows(tibble(Characteristic = lab),
               tibble(Characteristic = paste0("   ", lv),
                      !!!map(rows, ~ unname(ifelse(lv %in% names(.x), .x[lv],
-                                                  ifelse(lv == "Missing", "0", ""))))))
+                                                  ifelse(lv == "Missing", "0.0% (0)", ""))))))
   }) %>% mutate(across(everything(), ~ replace_na(.x, "")))
 }
 

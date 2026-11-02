@@ -164,7 +164,7 @@ function table1() {
   return [
     caption("TABLE 1", "Characteristics of the 40,700 singleton infants in the analytic sample of the Collaborative Perinatal Project, overall and by placental maternal vascular malperfusion (MVM) and acute inflammation (AI)."),
     table(header, rows.map(sgaInfant), [2960, 1280, 1280, 1280, 1280, 1280]),
-    note("Values are % (n) unless stated otherwise. Percentages exclude missing values, and the number missing is shown for each characteristic. Perinatal characteristics are shown for description only and were not included in multivariable models. BMI, body mass index. SD, standard deviation."),
+    note("Values are % (n) unless stated otherwise. Percentages for categories exclude missing values. Missing values are shown as a percentage of the column total. Perinatal characteristics are shown for description only and were not included in multivariable models. BMI, body mass index. SD, standard deviation."),
   ];
 }
 
