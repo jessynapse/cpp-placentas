@@ -7,7 +7,7 @@
 # which both round to aRR 1.14 (0.96, 1.35) in 37 (Ellen Francis queried
 # whether identical estimates indicate an error).
 #
-# Rebuilt from the raw data (07 -> 35 -> 36), then re-fitted here with
+# Rebuilt from the raw data (07 -> 49 -> 50), then re-fitted here with
 # separately written code (not the fit_pool() function in 37):
 #   1. Confirms MVM and AI are different variables (cross-tab, agreement)
 #   2. Primary model for each exposure in each of the 50 imputations,
@@ -16,7 +16,7 @@
 #   4. The same models without study site (secondary), without weights,
 #      and crude, to show the two exposures diverge once anything changes
 #
-# Input:  data/weighted_long_m50.RDS (36)
+# Input:  data/weighted_long_m50y.RDS (50, outcome in the imputation model)
 # Output: outputs/verify_any_mvm_ai.csv, outputs/verify_any_mvm_ai_by_imp.csv
 # ==============================================================================
 
@@ -27,7 +27,7 @@ in_dir  <- if (dir.exists("/Users/wongjj/Downloads")) "/Users/wongjj/Downloads" 
 out_dir <- if (basename(getwd()) == "scripts") "../outputs" else "outputs"
 if (basename(getwd()) == "data") out_dir <- "../outputs"
 
-w <- readRDS(file.path(in_dir, "weighted_long_m50.RDS"))
+w <- readRDS(file.path(in_dir, "weighted_long_m50y.RDS"))
 
 d <- w %>%
   filter(.imp > 0, !is.na(ih1), exclusion == 0) %>%
