@@ -1,0 +1,4 @@
+group,n_with_age,mean_wk,sd_wk,median_wk,q1_wk,q3_wk,min_wk,max_wk,pct_48_to_56wk,pct_under_48wk,pct_over_56wk,mean_months,n_missing_age
+"All examined (40,700)",37348,52.7,6.8,51,50,53,24,98,89.3,0.7,10,12.1,3352
+Definite IH,656,52.4,6,51,50,53,37,98,91.2,1.2,7.6,12,44
+No IH,36692,52.7,6.8,51,50,53,24,98,89.3,0.7,10.1,12.1,3308
