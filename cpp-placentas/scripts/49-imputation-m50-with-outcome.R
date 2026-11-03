@@ -137,14 +137,20 @@ library(parallel)
 n_cores <- min(4, detectCores())
 cat("\nRunning MICE: m=50 (10 chains x 5), maxit=10, cores =", n_cores, "...\n")
 
+# CHANGED (49): each chain is saved as it finishes and reused on a rerun, so
+# a container restart does not lose completed chains. Same seeds, same result.
 imp_list <- mclapply(1:10, function(k) {
-  mice(df_mi,
+  f <- sprintf("mice_chain_m50y_%02d.RDS", k)
+  if (file.exists(f)) return(readRDS(f))
+  res <- mice(df_mi,
        m               = 5,
        method          = meth,
        predictorMatrix = pred,
        seed            = 12344 + k,
        maxit           = 10,
        printFlag       = FALSE)
+  saveRDS(res, f)
+  res
 }, mc.cores = n_cores)
 
 failed <- sapply(imp_list, function(x) !inherits(x, "mids"))
