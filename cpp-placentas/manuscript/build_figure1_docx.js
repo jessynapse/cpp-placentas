@@ -46,7 +46,7 @@ const table = new Table({
     exclRow([`Excluded: no placental pathology record (n = ${f(n[1])})`]),
     boxRow(["Offspring with a placental pathology record", `n = ${f(n[2])}`]),
     exclRow([`Excluded (n = ${f(n[3] + n[4] + n[5])})`, `Multiple gestation (n = ${f(n[3])})`, `Missing MVM score (n = ${f(n[4])})`, `Missing AI (n = ${f(n[5])})`]),
-    boxRow(["Eligible cohort: singleton pregnancies with MVM and AI data", `n = ${f(n[6])}`]),
+    boxRow(["Singleton pregnancies with MVM and AI data", `n = ${f(n[6])}`]),
     exclRow([`IH outcome not observed (n = ${f(n[7] + n[8])})`, `Died before 12 months (n = ${f(n[7])})`, `No 12-month IH examination (n = ${f(n[8])})`, "Accounted for with inverse probability of censoring weights"]),
     boxRow(["Analytic sample: infants examined for IH at 12 months", `n = ${f(n[9])}`, `(${f(n[10])} definite IH cases)`]),
   ],
