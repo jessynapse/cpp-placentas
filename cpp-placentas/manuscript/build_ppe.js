@@ -1,6 +1,6 @@
 // Builds the Paediatric and Perinatal Epidemiology (PPE) manuscript and
 // Supporting Information Word files from manuscript/content_ppe.js and the
-// 50-imputation results in outputs/*_m50.csv.
+// 50-imputation results in outputs/*_m50y.csv (outcome in the imputation model, scripts 49-51).
 // Run from the repository folder: node manuscript/build_ppe.js
 // Requires the docx npm package (npm install docx).
 //
@@ -214,7 +214,7 @@ function table1() {
 }
 
 function table2() {
-  const t = readCSV("table2_main_m50.csv");
+  const t = readCSV("table2_main_m50y.csv");
   const get = l => t.find(r => r[0] === l).slice(2, 5).map(refFix);
   const REF = [REFLAB, REFLAB, REFLAB];
   const rows = [
@@ -259,7 +259,7 @@ const ETABLES = {
       foot: "Values are % (n) unless stated otherwise. MVM, maternal vascular malperfusion. AI, acute inflammation. BMI, body mass index. SD, standard deviation." };
   },
   site: () => {
-    const raw = readCSV("tableS2_site.csv"); const rr = readCSV("site_table_percentages_m50.csv");
+    const raw = readCSV("tableS2_site.csv"); const rr = readCSV("site_table_percentages_m50y.csv");
     const rows = raw.map((r, i) => i === 0 ? [...r, "Site RR (95% CI)^a"] :
       [...r, r[0] === "All sites" ? "" : refFix((rr.find(x => x[0] === r[0]) || [])[2] || "")]);
     return { cap: "Placental diagnoses, follow-up, and definite infantile haemangioma (IH) by Collaborative Perinatal Project study site (45,268 pregnancies).",
@@ -267,27 +267,27 @@ const ETABLES = {
       foot: "^aRR of definite IH for each site compared with Boston, from the primary model for any MVM (adjusted for the 11 covariates other than study site, with inverse probability of censoring weights). Site names other than Boston are from the study team's site mapping and should be confirmed against CPP documentation. MVM, maternal vascular malperfusion. AI, acute inflammation. RR, relative risk. CI, confidence interval." };
   },
   inter: () => {
-    const s = readCSV("synergy_reri_m50.csv");
+    const s = readCSV("synergy_reri_m50y.csv");
     return { cap: "Additive and multiplicative interaction between maternal vascular malperfusion (MVM) and acute inflammation (AI) for definite infantile haemangioma.",
       header: ["Measure", "Crude", "Primary", "Secondary"], rows: s.slice(1).map(r => [r[0], r[1], r[2], r[3]].map(refFix)), widths: [3960, 1800, 1800, 1800],
       foot: "Estimates (95% CI) from the four-category joint exposure (reference: neither). CIs by the delta method using the pooled variance-covariance matrix. RERI, relative excess risk due to interaction. The synergy index is unstable when the single-exposure RRs are close to 1 and is shown for completeness. " + MODEL_NOTE };
   },
   evalue: () => {
-    const s = readCSV("evalues_m50.csv");
+    const s = readCSV("evalues_m50y.csv");
     return { cap: "E-values for associations of placental pathology with definite infantile haemangioma (primary model).",
       header: ["Exposure", "RR (95% CI)", "E-value, point estimate", "E-value, CI limit"],
       rows: s.slice(1).map(r => [r[0], r[1], Number(r[2]).toFixed(2), Number(r[3]).toFixed(2)]), widths: [3600, 2000, 1900, 1900],
       foot: "The E-value is the minimum strength of association, on the RR scale, that an unmeasured confounder would need to have with both the exposure and the outcome, beyond the measured covariates, to fully explain the observed association. The E-value for the CI is 1.00 when the CI includes 1. " + MODEL_NOTE };
   },
   mutual: () => {
-    const s = readCSV("mutual_4exp_m50.csv");
+    const s = readCSV("mutual_4exp_m50y.csv");
     return { cap: "Mutually adjusted associations of maternal vascular malperfusion (MVM) and acute inflammation (AI) with definite infantile haemangioma.",
       header: ["Exposure", "Mutually adjusted for", "Crude", "Primary", "Secondary", "Primary, single exposure"],
       rows: s.slice(1).map(r => [lab(r[0]), r[1], r[2], r[4], r[3], r[5]]), widths: [2000, 1400, 1480, 1480, 1480, 1520],
       foot: "RR (95% CI). " + MODEL_NOTE };
   },
   grade: () => {
-    const s = readCSV("grade_stage_separate_m50.csv");
+    const s = readCSV("grade_stage_separate_m50y.csv");
     return { cap: "Associations of maternal vascular malperfusion (MVM) grade and acute inflammation (AI) stage with definite infantile haemangioma (IH).",
       header: ["Exposure", "IH, % (cases/N)", "Crude", "Primary", "Secondary"],
       rows: s.slice(1).flatMap((r, i, a) => {
@@ -297,14 +297,14 @@ const ETABLES = {
       foot: "RR (95% CI). MVM grade: low, score 1 to 2. High, score 3 or more. AI stage as recorded in the CPP placental dataset. " + MODEL_NOTE };
   },
   mf: () => {
-    const s = readCSV("maternal_fetal_ai_m50.csv"); const comp = readCSV("maternal_fetal_compartments.csv");
+    const s = readCSV("maternal_fetal_ai_m50y.csv"); const comp = readCSV("maternal_fetal_compartments.csv");
     return { cap: "Associations of acute inflammation (AI) by maternal or foetal involvement with definite infantile haemangioma (IH).",
       header: ["AI involvement", "IH, % (cases/N)", "Crude", "Primary", "Secondary"],
       rows: s.slice(1).map(r => r.slice(0, 5).map(foetal).map(refFix)), widths: [2360, 1800, 1700, 1700, 1800],
       foot: "RR (95% CI). Maternal response: amnion or chorion of the membrane roll or placental surface. Foetal response: umbilical vein, umbilical artery, or foetal surface vessels. Among placentas with foetal-only inflammation (n = " + fmtNum(comp[2][1]) + "), the umbilical vein was involved in " + comp[2][6] + ", the umbilical artery in " + comp[2][7] + ", and foetal surface vessels in " + comp[2][8] + ". " + MODEL_NOTE };
   },
   seq: () => {
-    const s = readCSV("seq_cumulative_4exp_m50.csv");
+    const s = readCSV("seq_cumulative_4exp_m50y.csv");
     const L = { "1. Crude": "Crude", "2. + Demographics (age, race, education, income, marital)": "+ Demographic factors^a",
       "3. + Health (BMI, smoking, diabetes, chronic HTN)": "+ Health factors^b", "4. + Reproductive (parity, infant sex) = full, no site": "+ Parity and infant sex (all 11 covariates)",
       "5. + Study site = full with site": "+ Study site", "SECONDARY: full, no site, + IPW": "Secondary: 11 covariates (no study site) + IPW", "PRIMARY: full + site + IPW": "Primary: 12 covariates (including study site) + IPW" };
@@ -314,14 +314,14 @@ const ETABLES = {
       foot: "RR (95% CI). Covariate groups were added cumulatively without weights, followed by the secondary and primary models with inverse probability of censoring weights (IPW). ^aMaternal age, race and ethnicity, education, income, marital status. ^bPre-pregnancy body mass index, smoking, pre-pregnancy diabetes, chronic hypertension. MVM, maternal vascular malperfusion. AI, acute inflammation." };
   },
   re: () => {
-    const s = readCSV("site_random_effect_models_m50.csv");
+    const s = readCSV("site_random_effect_models_m50y.csv");
     return { cap: "Associations of placental pathology with definite infantile haemangioma, with study site as a fixed or random effect.",
       header: ["Exposure", "Crude", "Site as fixed effect (primary)", "Site as random effect", "No site (secondary)"],
       rows: s.slice(1).map(r => [lab(r[0]), r[3], r[4], r[5], r[6]]), widths: [2560, 1700, 1700, 1700, 1700],
       foot: "RR (95% CI). Random-effect models were Poisson models with a random intercept for study site, adjusted for the other 11 covariates with inverse probability of censoring weights. Median rate ratio for study site: " + s[1][7] + " to " + s[4][7] + ". MVM, maternal vascular malperfusion. AI, acute inflammation." };
   },
   boston: () => {
-    const s = readCSV("boston_4exp_m50.csv");
+    const s = readCSV("boston_4exp_m50y.csv");
     return { cap: "Associations of placental pathology with definite infantile haemangioma, stratified by the Boston study site and the other 11 study sites.",
       header: ["Stratum", "Any MVM", "MVM score, per point", "Any AI", "AI score, per involved site"],
       rows: s.slice(1).map(r => [r[0].replace(/\[/, "\n(").replace(/\]/, ")").replace("Boston (site 5)", "Boston").replace("Other 11 sites (+ site)", "Other 11 study sites").replace("All sites (primary)", "All study sites (primary)")].concat(r.slice(1))),
@@ -329,7 +329,7 @@ const ETABLES = {
       foot: "RR (95% CI), adjusted for the 11 covariates other than study site with inverse probability of censoring weights, and also for study site in the other 11 study sites and all study sites. In Boston, 92.6% of placentas were examined by one pathologist. MVM, maternal vascular malperfusion. AI, acute inflammation." };
   },
   ih2: () => {
-    const s = readCSV("ih2_m50.csv");
+    const s = readCSV("ih2_m50y.csv");
     const ex = ["MVM any vs none", "MVM score (continuous)", "AI any vs none", "AI score (continuous)"].filter(e => s.some(r => r[2] === e));
     const p = (e, m) => (s.find(r => r[2] === e && r[3] === m) || [])[7] || "";
     return { cap: "Associations of placental pathology with infantile haemangioma when suspect cases are classified as IH (930 cases among 40,700 infants).",
