@@ -45,7 +45,7 @@ module.exports.synopsis = [
   ["What this study adds", "Infants whose placentas showed both malperfusion and inflammation had a higher risk of IH than those whose placentas showed neither injury, which suggests that chronic and acute placental injury may act together in IH development."],
 ];
 
-module.exports.socialMedia = "Placentas are rarely examined at this scale. Across 40,700, those showing both reduced maternal blood flow (malperfusion) and acute inflammation were linked to a 37% higher risk of infantile haemangioma, the bright-red vascular tumour that is the most common tumour of infancy.";
+module.exports.socialMedia = "Placentas from 40,700 infants were examined for injury patterns that may relate to the development of infantile haemangioma, the most common tumour of infancy. Those showing both reduced maternal blood flow and acute inflammation were linked to a 37% higher risk.";
 
 module.exports.body = [
   ["h1", "1 | BACKGROUND"],
