@@ -241,7 +241,7 @@ function table2() {
 // ---------------------------------------------------------------------------
 // eTABLES (numbered in order of first mention in the manuscript)
 // ---------------------------------------------------------------------------
-const MODEL_NOTE = "Primary: adjusted for 11 covariates and study site, with inverse probability of censoring weights. Secondary: as primary without study site. Pooled across 50 imputed datasets. Definite IH, 700 cases among 40,700 infants, unless stated otherwise. MVM, maternal vascular malperfusion. AI, acute inflammation. RR, relative risk. CI, confidence interval.";
+const MODEL_NOTE = "Primary: adjusted for 12 covariates including study site, with inverse probability of censoring weights. Secondary: as primary without study site. Pooled across 50 imputed datasets. Definite IH, 700 cases among 40,700 infants, unless stated otherwise. MVM, maternal vascular malperfusion. AI, acute inflammation. RR, relative risk. CI, confidence interval.";
 
 const ETABLES = {
   incl: () => {
@@ -263,7 +263,7 @@ const ETABLES = {
       [...r, r[0] === "All sites" ? "" : refFix((rr.find(x => x[0] === r[0]) || [])[2] || "")]);
     return { cap: "Placental diagnoses, follow-up, and definite infantile haemangioma (IH) by Collaborative Perinatal Project study site (45,268 pregnancies).",
       header: rows[0], rows: rows.slice(1).map(r => [siteName(r[0]), ...r.slice(1)]), widths: [2000, 1000, 1250, 1250, 1300, 1300, 1260],
-      foot: "^aRR of definite IH for each site compared with Boston, from the primary model for any MVM (adjusted for 11 covariates, with inverse probability of censoring weights). Site names other than Boston are from the study team's site mapping and should be confirmed against CPP documentation. MVM, maternal vascular malperfusion. AI, acute inflammation. RR, relative risk. CI, confidence interval." };
+      foot: "^aRR of definite IH for each site compared with Boston, from the primary model for any MVM (adjusted for the 11 covariates other than study site, with inverse probability of censoring weights). Site names other than Boston are from the study team's site mapping and should be confirmed against CPP documentation. MVM, maternal vascular malperfusion. AI, acute inflammation. RR, relative risk. CI, confidence interval." };
   },
   inter: () => {
     const s = readCSV("synergy_reri_m50.csv");
@@ -306,7 +306,7 @@ const ETABLES = {
     const s = readCSV("seq_cumulative_4exp_m50.csv");
     const L = { "1. Crude": "Crude", "2. + Demographics (age, race, education, income, marital)": "+ Demographic factors^a",
       "3. + Health (BMI, smoking, diabetes, chronic HTN)": "+ Health factors^b", "4. + Reproductive (parity, infant sex) = full, no site": "+ Parity and infant sex (all 11 covariates)",
-      "5. + Study site = full with site": "+ Study site", "SECONDARY: full, no site, + IPW": "Secondary: 11 covariates + IPW", "PRIMARY: full + site + IPW": "Primary: 11 covariates + study site + IPW" };
+      "5. + Study site = full with site": "+ Study site", "SECONDARY: full, no site, + IPW": "Secondary: 11 covariates (no study site) + IPW", "PRIMARY: full + site + IPW": "Primary: 12 covariates (including study site) + IPW" };
     return { cap: "Sequential adjustment of associations of placental pathology with definite infantile haemangioma.",
       header: ["Model", "Any MVM", "MVM score, per point", "Any AI", "AI score, per involved site"],
       rows: s.slice(1).map(r => [L[r[0]] || r[0], ...r.slice(1)]), widths: [3160, 1550, 1550, 1550, 1550],
@@ -317,7 +317,7 @@ const ETABLES = {
     return { cap: "Associations of placental pathology with definite infantile haemangioma, with study site as a fixed or random effect.",
       header: ["Exposure", "Crude", "Site as fixed effect (primary)", "Site as random effect", "No site (secondary)"],
       rows: s.slice(1).map(r => [lab(r[0]), r[3], r[4], r[5], r[6]]), widths: [2560, 1700, 1700, 1700, 1700],
-      foot: "RR (95% CI). Random-effect models were Poisson models with a random intercept for study site, adjusted for 11 covariates with inverse probability of censoring weights. Median rate ratio for study site: " + s[1][7] + " to " + s[4][7] + ". MVM, maternal vascular malperfusion. AI, acute inflammation." };
+      foot: "RR (95% CI). Random-effect models were Poisson models with a random intercept for study site, adjusted for the other 11 covariates with inverse probability of censoring weights. Median rate ratio for study site: " + s[1][7] + " to " + s[4][7] + ". MVM, maternal vascular malperfusion. AI, acute inflammation." };
   },
   boston: () => {
     const s = readCSV("boston_4exp_m50.csv");
@@ -325,7 +325,7 @@ const ETABLES = {
       header: ["Stratum", "Any MVM", "MVM score, per point", "Any AI", "AI score, per involved site"],
       rows: s.slice(1).map(r => [r[0].replace(/\[/, "\n(").replace(/\]/, ")").replace("Boston (site 5)", "Boston").replace("Other 11 sites (+ site)", "Other 11 study sites").replace("All sites (primary)", "All study sites (primary)")].concat(r.slice(1))),
       widths: [2560, 1700, 1700, 1700, 1700],
-      foot: "RR (95% CI), adjusted for 11 covariates with inverse probability of censoring weights, and for study site in the other 11 study sites and all study sites. In Boston, 92.6% of placentas were examined by one pathologist. MVM, maternal vascular malperfusion. AI, acute inflammation." };
+      foot: "RR (95% CI), adjusted for the 11 covariates other than study site with inverse probability of censoring weights, and also for study site in the other 11 study sites and all study sites. In Boston, 92.6% of placentas were examined by one pathologist. MVM, maternal vascular malperfusion. AI, acute inflammation." };
   },
   ih2: () => {
     const s = readCSV("ih2_m50.csv");
