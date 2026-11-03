@@ -11,6 +11,7 @@
 // reference categories as "1.00 (Reference)", supplementary tables as eTables.
 
 const fs = require("fs");
+const F1 = require("./build_figure1_docx.js");
 const path = require("path");
 const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType,
@@ -457,7 +458,8 @@ async function main() {
     { properties: { page }, footers: { default: footer }, children: [
       para([tr("All tables", { bold: true, size: 28 })], { align: AlignmentType.CENTER }),
       para([tr(C.title, { italics: true })], { align: AlignmentType.CENTER, after: 240 }),
-      ...table1(), brk(), ...table2()] },
+      ...table1(), brk(), ...table2(), brk(),
+      para([tr("Figure 1 (editable)", { bold: true })]), F1.figure1Table(), F1.figureLegend()] },
     { properties: { page: { ...page, size: { width: 12240, height: 15840, orientation: PageOrientation.LANDSCAPE } } }, footers: { default: footer }, children: supplement() },
   ] });
   fs.writeFileSync(path.join(MS, "Wong_PPE_IH_all_tables.docx"), await Packer.toBuffer(allTables));

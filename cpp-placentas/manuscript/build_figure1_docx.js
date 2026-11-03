@@ -52,6 +52,11 @@ const table = new Table({
   ],
 });
 
+// Exported so build_ppe.js can place the same editable figure in the all-tables file.
+const figureLegend = () => new Paragraph({ spacing: { before: 240 }, children: [new TextRun({ text: "FIGURE 1 ", font: FONT, size: 24, bold: true }),
+  new TextRun({ text: "Flow of participants in the Collaborative Perinatal Project. AI, acute inflammation. IH, infantile haemangioma. MVM, maternal vascular malperfusion.", font: FONT, size: 24 })] });
+module.exports = { figure1Table: () => table, figureLegend };
+if (require.main === module) {
 const doc = new Document({
   styles: { default: { document: { run: { font: FONT, size: SIZE } } } },
   sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 1440, bottom: 1440, left: 1440, right: 1440 } } },
@@ -65,3 +70,4 @@ Packer.toBuffer(doc).then(b => {
   fs.writeFileSync(path.join(ROOT, "manuscript", "Wong_PPE_IH_figure1_editable.docx"), b);
   console.log("Saved: manuscript/Wong_PPE_IH_figure1_editable.docx");
 });
+}
