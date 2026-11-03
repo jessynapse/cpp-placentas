@@ -45,7 +45,7 @@ module.exports.synopsis = [
   ["What this study adds", "Infants whose placentas showed both malperfusion and inflammation had a higher risk of IH than those whose placentas showed neither injury, which suggests that chronic and acute placental injury may act together in IH development."],
 ];
 
-module.exports.socialMedia = "In 40,700 infants from the Collaborative Perinatal Project, placentas showing both malperfusion and acute inflammation were linked to a 37% higher risk of infantile haemangioma. Any malperfusion or any inflammation showed smaller, imprecise increases.";
+module.exports.socialMedia = "Across 40,700 placentas examined in the Collaborative Perinatal Project, those showing both maternal vascular malperfusion and acute inflammation were linked to a 37% higher risk of infantile haemangioma in the first year of life.";
 
 module.exports.body = [
   ["h1", "1 | BACKGROUND"],
