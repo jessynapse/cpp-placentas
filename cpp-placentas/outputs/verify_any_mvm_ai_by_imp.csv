@@ -1,0 +1,401 @@
+model,exposure,imp,rr
+"Primary (covariates + site, weighted)",mvm_any,1,1.139669931334281
+"Primary (covariates + site, weighted)",mvm_any,2,1.1395590316279645
+"Primary (covariates + site, weighted)",mvm_any,3,1.1419211210432205
+"Primary (covariates + site, weighted)",mvm_any,4,1.1413488631261899
+"Primary (covariates + site, weighted)",mvm_any,5,1.1402466414492451
+"Primary (covariates + site, weighted)",mvm_any,6,1.1408182769090294
+"Primary (covariates + site, weighted)",mvm_any,7,1.1397280821546079
+"Primary (covariates + site, weighted)",mvm_any,8,1.1416091490332305
+"Primary (covariates + site, weighted)",mvm_any,9,1.1417064506513062
+"Primary (covariates + site, weighted)",mvm_any,10,1.1413962433035596
+"Primary (covariates + site, weighted)",mvm_any,11,1.1425771506941291
+"Primary (covariates + site, weighted)",mvm_any,12,1.14135913733448
+"Primary (covariates + site, weighted)",mvm_any,13,1.1380166266216238
+"Primary (covariates + site, weighted)",mvm_any,14,1.138893894118817
+"Primary (covariates + site, weighted)",mvm_any,15,1.1397975250201497
+"Primary (covariates + site, weighted)",mvm_any,16,1.1399444773317857
+"Primary (covariates + site, weighted)",mvm_any,17,1.1410843762846437
+"Primary (covariates + site, weighted)",mvm_any,18,1.1430601060115406
+"Primary (covariates + site, weighted)",mvm_any,19,1.1410985436363013
+"Primary (covariates + site, weighted)",mvm_any,20,1.1407686957380336
+"Primary (covariates + site, weighted)",mvm_any,21,1.1407334941151068
+"Primary (covariates + site, weighted)",mvm_any,22,1.1410402497460945
+"Primary (covariates + site, weighted)",mvm_any,23,1.1393806563787308
+"Primary (covariates + site, weighted)",mvm_any,24,1.1408517645807104
+"Primary (covariates + site, weighted)",mvm_any,25,1.1402867699449089
+"Primary (covariates + site, weighted)",mvm_any,26,1.1414820370256062
+"Primary (covariates + site, weighted)",mvm_any,27,1.1408439578963354
+"Primary (covariates + site, weighted)",mvm_any,28,1.1424651146753606
+"Primary (covariates + site, weighted)",mvm_any,29,1.1407304297595329
+"Primary (covariates + site, weighted)",mvm_any,30,1.142554394277493
+"Primary (covariates + site, weighted)",mvm_any,31,1.1420341781765446
+"Primary (covariates + site, weighted)",mvm_any,32,1.141816881906291
+"Primary (covariates + site, weighted)",mvm_any,33,1.1402341597769239
+"Primary (covariates + site, weighted)",mvm_any,34,1.1418527438653603
+"Primary (covariates + site, weighted)",mvm_any,35,1.1422101403424507
+"Primary (covariates + site, weighted)",mvm_any,36,1.1396029112184227
+"Primary (covariates + site, weighted)",mvm_any,37,1.1416616496223064
+"Primary (covariates + site, weighted)",mvm_any,38,1.1423775965574294
+"Primary (covariates + site, weighted)",mvm_any,39,1.1401048878645665
+"Primary (covariates + site, weighted)",mvm_any,40,1.137396784933899
+"Primary (covariates + site, weighted)",mvm_any,41,1.143454567783904
+"Primary (covariates + site, weighted)",mvm_any,42,1.1399197571058652
+"Primary (covariates + site, weighted)",mvm_any,43,1.1410945875279155
+"Primary (covariates + site, weighted)",mvm_any,44,1.140428495083491
+"Primary (covariates + site, weighted)",mvm_any,45,1.140699678510049
+"Primary (covariates + site, weighted)",mvm_any,46,1.140222798054761
+"Primary (covariates + site, weighted)",mvm_any,47,1.1405497352932323
+"Primary (covariates + site, weighted)",mvm_any,48,1.139664682775249
+"Primary (covariates + site, weighted)",mvm_any,49,1.1400700599439415
+"Primary (covariates + site, weighted)",mvm_any,50,1.1416520329027393
+"Primary (covariates + site, weighted)",ai_any,1,1.1419127211291082
+"Primary (covariates + site, weighted)",ai_any,2,1.1410984042414536
+"Primary (covariates + site, weighted)",ai_any,3,1.1402774487554441
+"Primary (covariates + site, weighted)",ai_any,4,1.1365105399587894
+"Primary (covariates + site, weighted)",ai_any,5,1.1440212346335141
+"Primary (covariates + site, weighted)",ai_any,6,1.1390548653398362
+"Primary (covariates + site, weighted)",ai_any,7,1.1411246700909865
+"Primary (covariates + site, weighted)",ai_any,8,1.138139340016159
+"Primary (covariates + site, weighted)",ai_any,9,1.1415621126056892
+"Primary (covariates + site, weighted)",ai_any,10,1.1414225374175822
+"Primary (covariates + site, weighted)",ai_any,11,1.1394725445857805
+"Primary (covariates + site, weighted)",ai_any,12,1.1387052295362377
+"Primary (covariates + site, weighted)",ai_any,13,1.1383609408567315
+"Primary (covariates + site, weighted)",ai_any,14,1.1375241660223558
+"Primary (covariates + site, weighted)",ai_any,15,1.1412342974935927
+"Primary (covariates + site, weighted)",ai_any,16,1.139244118774541
+"Primary (covariates + site, weighted)",ai_any,17,1.140389051668526
+"Primary (covariates + site, weighted)",ai_any,18,1.136408137379851
+"Primary (covariates + site, weighted)",ai_any,19,1.1397038521327962
+"Primary (covariates + site, weighted)",ai_any,20,1.1384752718243134
+"Primary (covariates + site, weighted)",ai_any,21,1.1410410814661096
+"Primary (covariates + site, weighted)",ai_any,22,1.1409260020674052
+"Primary (covariates + site, weighted)",ai_any,23,1.138898368275949
+"Primary (covariates + site, weighted)",ai_any,24,1.139037724103934
+"Primary (covariates + site, weighted)",ai_any,25,1.1368820368423853
+"Primary (covariates + site, weighted)",ai_any,26,1.1398708189897393
+"Primary (covariates + site, weighted)",ai_any,27,1.1403740977710446
+"Primary (covariates + site, weighted)",ai_any,28,1.140992595069662
+"Primary (covariates + site, weighted)",ai_any,29,1.1419629183024917
+"Primary (covariates + site, weighted)",ai_any,30,1.1393241886121401
+"Primary (covariates + site, weighted)",ai_any,31,1.1399187230427295
+"Primary (covariates + site, weighted)",ai_any,32,1.1391832884269293
+"Primary (covariates + site, weighted)",ai_any,33,1.1404369902767046
+"Primary (covariates + site, weighted)",ai_any,34,1.1393226296183607
+"Primary (covariates + site, weighted)",ai_any,35,1.139411666383431
+"Primary (covariates + site, weighted)",ai_any,36,1.1401129008039383
+"Primary (covariates + site, weighted)",ai_any,37,1.1375836873991332
+"Primary (covariates + site, weighted)",ai_any,38,1.1374143237285583
+"Primary (covariates + site, weighted)",ai_any,39,1.1403813037507151
+"Primary (covariates + site, weighted)",ai_any,40,1.1383217739678622
+"Primary (covariates + site, weighted)",ai_any,41,1.1404204647785863
+"Primary (covariates + site, weighted)",ai_any,42,1.142781452632786
+"Primary (covariates + site, weighted)",ai_any,43,1.1401660751196807
+"Primary (covariates + site, weighted)",ai_any,44,1.1386933405332664
+"Primary (covariates + site, weighted)",ai_any,45,1.1402410167965842
+"Primary (covariates + site, weighted)",ai_any,46,1.1385319550859119
+"Primary (covariates + site, weighted)",ai_any,47,1.1390351995131696
+"Primary (covariates + site, weighted)",ai_any,48,1.1391515522263422
+"Primary (covariates + site, weighted)",ai_any,49,1.1398174809915373
+"Primary (covariates + site, weighted)",ai_any,50,1.1395639880099586
+"Secondary (covariates, weighted)",mvm_any,1,1.2486801637031948
+"Secondary (covariates, weighted)",mvm_any,2,1.248345523249158
+"Secondary (covariates, weighted)",mvm_any,3,1.2521826880090035
+"Secondary (covariates, weighted)",mvm_any,4,1.2522701773097964
+"Secondary (covariates, weighted)",mvm_any,5,1.2510918377085827
+"Secondary (covariates, weighted)",mvm_any,6,1.251566455976667
+"Secondary (covariates, weighted)",mvm_any,7,1.2492671790429575
+"Secondary (covariates, weighted)",mvm_any,8,1.251491536659153
+"Secondary (covariates, weighted)",mvm_any,9,1.2517249208144006
+"Secondary (covariates, weighted)",mvm_any,10,1.2508641094870299
+"Secondary (covariates, weighted)",mvm_any,11,1.2533508951290735
+"Secondary (covariates, weighted)",mvm_any,12,1.2510192445137696
+"Secondary (covariates, weighted)",mvm_any,13,1.2485801220845711
+"Secondary (covariates, weighted)",mvm_any,14,1.2485863931959253
+"Secondary (covariates, weighted)",mvm_any,15,1.250600444373486
+"Secondary (covariates, weighted)",mvm_any,16,1.2494791751420202
+"Secondary (covariates, weighted)",mvm_any,17,1.2505238542077326
+"Secondary (covariates, weighted)",mvm_any,18,1.2525846484121337
+"Secondary (covariates, weighted)",mvm_any,19,1.2518170610552377
+"Secondary (covariates, weighted)",mvm_any,20,1.250861955936212
+"Secondary (covariates, weighted)",mvm_any,21,1.250696513749206
+"Secondary (covariates, weighted)",mvm_any,22,1.2508541929760926
+"Secondary (covariates, weighted)",mvm_any,23,1.2489928236124976
+"Secondary (covariates, weighted)",mvm_any,24,1.2520632435007613
+"Secondary (covariates, weighted)",mvm_any,25,1.2496293838615795
+"Secondary (covariates, weighted)",mvm_any,26,1.2520229531811902
+"Secondary (covariates, weighted)",mvm_any,27,1.251051639670131
+"Secondary (covariates, weighted)",mvm_any,28,1.252290118778645
+"Secondary (covariates, weighted)",mvm_any,29,1.2504550495722995
+"Secondary (covariates, weighted)",mvm_any,30,1.2529014921897716
+"Secondary (covariates, weighted)",mvm_any,31,1.2523999318364545
+"Secondary (covariates, weighted)",mvm_any,32,1.2509973157622796
+"Secondary (covariates, weighted)",mvm_any,33,1.2496134924666553
+"Secondary (covariates, weighted)",mvm_any,34,1.25113413208615
+"Secondary (covariates, weighted)",mvm_any,35,1.2517938526617742
+"Secondary (covariates, weighted)",mvm_any,36,1.2509895385834642
+"Secondary (covariates, weighted)",mvm_any,37,1.2524442681987578
+"Secondary (covariates, weighted)",mvm_any,38,1.2527930897192008
+"Secondary (covariates, weighted)",mvm_any,39,1.2507250253968805
+"Secondary (covariates, weighted)",mvm_any,40,1.245642940458916
+"Secondary (covariates, weighted)",mvm_any,41,1.2538589007900833
+"Secondary (covariates, weighted)",mvm_any,42,1.2483765669109597
+"Secondary (covariates, weighted)",mvm_any,43,1.2501865997812134
+"Secondary (covariates, weighted)",mvm_any,44,1.250504717961013
+"Secondary (covariates, weighted)",mvm_any,45,1.2507035444584822
+"Secondary (covariates, weighted)",mvm_any,46,1.2508832629348527
+"Secondary (covariates, weighted)",mvm_any,47,1.2509378076115152
+"Secondary (covariates, weighted)",mvm_any,48,1.2498111610647156
+"Secondary (covariates, weighted)",mvm_any,49,1.2499808152741005
+"Secondary (covariates, weighted)",mvm_any,50,1.2513333432332177
+"Secondary (covariates, weighted)",ai_any,1,1.2071078178139447
+"Secondary (covariates, weighted)",ai_any,2,1.2061680174709222
+"Secondary (covariates, weighted)",ai_any,3,1.2055857661554157
+"Secondary (covariates, weighted)",ai_any,4,1.2017916425770885
+"Secondary (covariates, weighted)",ai_any,5,1.2101605791630559
+"Secondary (covariates, weighted)",ai_any,6,1.2036884233346696
+"Secondary (covariates, weighted)",ai_any,7,1.2070413184759887
+"Secondary (covariates, weighted)",ai_any,8,1.2026869442889696
+"Secondary (covariates, weighted)",ai_any,9,1.2065301586289787
+"Secondary (covariates, weighted)",ai_any,10,1.206254022415266
+"Secondary (covariates, weighted)",ai_any,11,1.2048118000420496
+"Secondary (covariates, weighted)",ai_any,12,1.2043938154379286
+"Secondary (covariates, weighted)",ai_any,13,1.2036544726791916
+"Secondary (covariates, weighted)",ai_any,14,1.2035112600537892
+"Secondary (covariates, weighted)",ai_any,15,1.207112133294615
+"Secondary (covariates, weighted)",ai_any,16,1.2040771896735205
+"Secondary (covariates, weighted)",ai_any,17,1.205883442885645
+"Secondary (covariates, weighted)",ai_any,18,1.201661457943086
+"Secondary (covariates, weighted)",ai_any,19,1.2052244403474028
+"Secondary (covariates, weighted)",ai_any,20,1.2032172419010234
+"Secondary (covariates, weighted)",ai_any,21,1.2057918696686327
+"Secondary (covariates, weighted)",ai_any,22,1.2057499783774077
+"Secondary (covariates, weighted)",ai_any,23,1.2037992258183718
+"Secondary (covariates, weighted)",ai_any,24,1.2040145218549068
+"Secondary (covariates, weighted)",ai_any,25,1.2020283911567444
+"Secondary (covariates, weighted)",ai_any,26,1.2053115489456794
+"Secondary (covariates, weighted)",ai_any,27,1.205735392905754
+"Secondary (covariates, weighted)",ai_any,28,1.2064879988411403
+"Secondary (covariates, weighted)",ai_any,29,1.2075005799132474
+"Secondary (covariates, weighted)",ai_any,30,1.205083845506
+"Secondary (covariates, weighted)",ai_any,31,1.2058026041521015
+"Secondary (covariates, weighted)",ai_any,32,1.2045676693409253
+"Secondary (covariates, weighted)",ai_any,33,1.2057710413159441
+"Secondary (covariates, weighted)",ai_any,34,1.205168098650255
+"Secondary (covariates, weighted)",ai_any,35,1.2048900111211651
+"Secondary (covariates, weighted)",ai_any,36,1.2055148230147008
+"Secondary (covariates, weighted)",ai_any,37,1.2025671006776197
+"Secondary (covariates, weighted)",ai_any,38,1.2029831737951033
+"Secondary (covariates, weighted)",ai_any,39,1.2055061955049733
+"Secondary (covariates, weighted)",ai_any,40,1.2031588824314883
+"Secondary (covariates, weighted)",ai_any,41,1.2059490409466602
+"Secondary (covariates, weighted)",ai_any,42,1.208509774624133
+"Secondary (covariates, weighted)",ai_any,43,1.2060827418478537
+"Secondary (covariates, weighted)",ai_any,44,1.2043308157128814
+"Secondary (covariates, weighted)",ai_any,45,1.2052870017257409
+"Secondary (covariates, weighted)",ai_any,46,1.2039011901295833
+"Secondary (covariates, weighted)",ai_any,47,1.2043703907201966
+"Secondary (covariates, weighted)",ai_any,48,1.2040141761108607
+"Secondary (covariates, weighted)",ai_any,49,1.204984655376686
+"Secondary (covariates, weighted)",ai_any,50,1.2044743329191647
+"Covariates + site, unweighted",mvm_any,1,1.1370929225361457
+"Covariates + site, unweighted",mvm_any,2,1.1372575451568263
+"Covariates + site, unweighted",mvm_any,3,1.1388603916552962
+"Covariates + site, unweighted",mvm_any,4,1.1387318379162759
+"Covariates + site, unweighted",mvm_any,5,1.1383182493799127
+"Covariates + site, unweighted",mvm_any,6,1.1376910522891337
+"Covariates + site, unweighted",mvm_any,7,1.137124942785791
+"Covariates + site, unweighted",mvm_any,8,1.1384921450188579
+"Covariates + site, unweighted",mvm_any,9,1.1387587752076842
+"Covariates + site, unweighted",mvm_any,10,1.1385764653138053
+"Covariates + site, unweighted",mvm_any,11,1.1401512554718123
+"Covariates + site, unweighted",mvm_any,12,1.1378348973710162
+"Covariates + site, unweighted",mvm_any,13,1.1362696711924358
+"Covariates + site, unweighted",mvm_any,14,1.1354859250308817
+"Covariates + site, unweighted",mvm_any,15,1.1362289928816636
+"Covariates + site, unweighted",mvm_any,16,1.1378505461360209
+"Covariates + site, unweighted",mvm_any,17,1.137971476108452
+"Covariates + site, unweighted",mvm_any,18,1.1400912863390344
+"Covariates + site, unweighted",mvm_any,19,1.1381129709699978
+"Covariates + site, unweighted",mvm_any,20,1.1375971728882532
+"Covariates + site, unweighted",mvm_any,21,1.1376269525347273
+"Covariates + site, unweighted",mvm_any,22,1.1374094034368474
+"Covariates + site, unweighted",mvm_any,23,1.1376557665783151
+"Covariates + site, unweighted",mvm_any,24,1.1379445545867242
+"Covariates + site, unweighted",mvm_any,25,1.137720704125176
+"Covariates + site, unweighted",mvm_any,26,1.1391289143565193
+"Covariates + site, unweighted",mvm_any,27,1.13728090541505
+"Covariates + site, unweighted",mvm_any,28,1.1388471835829472
+"Covariates + site, unweighted",mvm_any,29,1.138256934756659
+"Covariates + site, unweighted",mvm_any,30,1.139073130339044
+"Covariates + site, unweighted",mvm_any,31,1.1389479355916008
+"Covariates + site, unweighted",mvm_any,32,1.1392313713415823
+"Covariates + site, unweighted",mvm_any,33,1.1378357012689517
+"Covariates + site, unweighted",mvm_any,34,1.1391409179826346
+"Covariates + site, unweighted",mvm_any,35,1.1392756573511957
+"Covariates + site, unweighted",mvm_any,36,1.1369353060253635
+"Covariates + site, unweighted",mvm_any,37,1.1399650858182422
+"Covariates + site, unweighted",mvm_any,38,1.13903797162211
+"Covariates + site, unweighted",mvm_any,39,1.1370024459899801
+"Covariates + site, unweighted",mvm_any,40,1.134829841717369
+"Covariates + site, unweighted",mvm_any,41,1.1400218197136507
+"Covariates + site, unweighted",mvm_any,42,1.1383300860296521
+"Covariates + site, unweighted",mvm_any,43,1.137998189250197
+"Covariates + site, unweighted",mvm_any,44,1.1373909158438864
+"Covariates + site, unweighted",mvm_any,45,1.1378756252964393
+"Covariates + site, unweighted",mvm_any,46,1.1382645943749672
+"Covariates + site, unweighted",mvm_any,47,1.137761416995542
+"Covariates + site, unweighted",mvm_any,48,1.1375661548776086
+"Covariates + site, unweighted",mvm_any,49,1.1372706534712067
+"Covariates + site, unweighted",mvm_any,50,1.1389765107747696
+"Covariates + site, unweighted",ai_any,1,1.134559997089177
+"Covariates + site, unweighted",ai_any,2,1.1334114368870851
+"Covariates + site, unweighted",ai_any,3,1.1321993461867348
+"Covariates + site, unweighted",ai_any,4,1.1292897066215877
+"Covariates + site, unweighted",ai_any,5,1.136183365007365
+"Covariates + site, unweighted",ai_any,6,1.1315386574851136
+"Covariates + site, unweighted",ai_any,7,1.1332508859951478
+"Covariates + site, unweighted",ai_any,8,1.1298660775646443
+"Covariates + site, unweighted",ai_any,9,1.1332116859302577
+"Covariates + site, unweighted",ai_any,10,1.133225206696162
+"Covariates + site, unweighted",ai_any,11,1.131965967271123
+"Covariates + site, unweighted",ai_any,12,1.1301701358534735
+"Covariates + site, unweighted",ai_any,13,1.1300700517134432
+"Covariates + site, unweighted",ai_any,14,1.1296850979660504
+"Covariates + site, unweighted",ai_any,15,1.133029688874641
+"Covariates + site, unweighted",ai_any,16,1.131775039415156
+"Covariates + site, unweighted",ai_any,17,1.1324722455335867
+"Covariates + site, unweighted",ai_any,18,1.1279698580503155
+"Covariates + site, unweighted",ai_any,19,1.1314647198461412
+"Covariates + site, unweighted",ai_any,20,1.130219703054045
+"Covariates + site, unweighted",ai_any,21,1.1324100529707468
+"Covariates + site, unweighted",ai_any,22,1.1325760501539568
+"Covariates + site, unweighted",ai_any,23,1.1317861214048652
+"Covariates + site, unweighted",ai_any,24,1.1311247029492213
+"Covariates + site, unweighted",ai_any,25,1.1296477661469946
+"Covariates + site, unweighted",ai_any,26,1.1320018313051905
+"Covariates + site, unweighted",ai_any,27,1.1313056833501394
+"Covariates + site, unweighted",ai_any,28,1.1331108801090006
+"Covariates + site, unweighted",ai_any,29,1.134076952324086
+"Covariates + site, unweighted",ai_any,30,1.1315905652127518
+"Covariates + site, unweighted",ai_any,31,1.131156963822727
+"Covariates + site, unweighted",ai_any,32,1.1305990412900553
+"Covariates + site, unweighted",ai_any,33,1.131991740265627
+"Covariates + site, unweighted",ai_any,34,1.1319460027596013
+"Covariates + site, unweighted",ai_any,35,1.1313931783580577
+"Covariates + site, unweighted",ai_any,36,1.1315651373222855
+"Covariates + site, unweighted",ai_any,37,1.1300152856156835
+"Covariates + site, unweighted",ai_any,38,1.1297435600958097
+"Covariates + site, unweighted",ai_any,39,1.131898817624193
+"Covariates + site, unweighted",ai_any,40,1.1296506833960223
+"Covariates + site, unweighted",ai_any,41,1.1322973466428514
+"Covariates + site, unweighted",ai_any,42,1.1347493910963087
+"Covariates + site, unweighted",ai_any,43,1.1323148172538906
+"Covariates + site, unweighted",ai_any,44,1.1312139060886044
+"Covariates + site, unweighted",ai_any,45,1.1320636393372847
+"Covariates + site, unweighted",ai_any,46,1.1306536296783707
+"Covariates + site, unweighted",ai_any,47,1.1309193684938694
+"Covariates + site, unweighted",ai_any,48,1.1312080683044685
+"Covariates + site, unweighted",ai_any,49,1.1314115433871457
+"Covariates + site, unweighted",ai_any,50,1.1313080326022549
+Crude,mvm_any,1,1.2244430312820036
+Crude,mvm_any,2,1.2244430312820036
+Crude,mvm_any,3,1.2244430312820036
+Crude,mvm_any,4,1.2244430312820036
+Crude,mvm_any,5,1.2244430312820036
+Crude,mvm_any,6,1.2244430312820036
+Crude,mvm_any,7,1.2244430312820036
+Crude,mvm_any,8,1.2244430312820036
+Crude,mvm_any,9,1.2244430312820036
+Crude,mvm_any,10,1.2244430312820036
+Crude,mvm_any,11,1.2244430312820036
+Crude,mvm_any,12,1.2244430312820036
+Crude,mvm_any,13,1.2244430312820036
+Crude,mvm_any,14,1.2244430312820036
+Crude,mvm_any,15,1.2244430312820036
+Crude,mvm_any,16,1.2244430312820036
+Crude,mvm_any,17,1.2244430312820036
+Crude,mvm_any,18,1.2244430312820036
+Crude,mvm_any,19,1.2244430312820036
+Crude,mvm_any,20,1.2244430312820036
+Crude,mvm_any,21,1.2244430312820036
+Crude,mvm_any,22,1.2244430312820036
+Crude,mvm_any,23,1.2244430312820036
+Crude,mvm_any,24,1.2244430312820036
+Crude,mvm_any,25,1.2244430312820036
+Crude,mvm_any,26,1.2244430312820036
+Crude,mvm_any,27,1.2244430312820036
+Crude,mvm_any,28,1.2244430312820036
+Crude,mvm_any,29,1.2244430312820036
+Crude,mvm_any,30,1.2244430312820036
+Crude,mvm_any,31,1.2244430312820036
+Crude,mvm_any,32,1.2244430312820036
+Crude,mvm_any,33,1.2244430312820036
+Crude,mvm_any,34,1.2244430312820036
+Crude,mvm_any,35,1.2244430312820036
+Crude,mvm_any,36,1.2244430312820036
+Crude,mvm_any,37,1.2244430312820036
+Crude,mvm_any,38,1.2244430312820036
+Crude,mvm_any,39,1.2244430312820036
+Crude,mvm_any,40,1.2244430312820036
+Crude,mvm_any,41,1.2244430312820036
+Crude,mvm_any,42,1.2244430312820036
+Crude,mvm_any,43,1.2244430312820036
+Crude,mvm_any,44,1.2244430312820036
+Crude,mvm_any,45,1.2244430312820036
+Crude,mvm_any,46,1.2244430312820036
+Crude,mvm_any,47,1.2244430312820036
+Crude,mvm_any,48,1.2244430312820036
+Crude,mvm_any,49,1.2244430312820036
+Crude,mvm_any,50,1.2244430312820036
+Crude,ai_any,1,1.247680793731462
+Crude,ai_any,2,1.247680793731462
+Crude,ai_any,3,1.247680793731462
+Crude,ai_any,4,1.247680793731462
+Crude,ai_any,5,1.247680793731462
+Crude,ai_any,6,1.247680793731462
+Crude,ai_any,7,1.247680793731462
+Crude,ai_any,8,1.247680793731462
+Crude,ai_any,9,1.247680793731462
+Crude,ai_any,10,1.247680793731462
+Crude,ai_any,11,1.247680793731462
+Crude,ai_any,12,1.247680793731462
+Crude,ai_any,13,1.247680793731462
+Crude,ai_any,14,1.247680793731462
+Crude,ai_any,15,1.247680793731462
+Crude,ai_any,16,1.247680793731462
+Crude,ai_any,17,1.247680793731462
+Crude,ai_any,18,1.247680793731462
+Crude,ai_any,19,1.247680793731462
+Crude,ai_any,20,1.247680793731462
+Crude,ai_any,21,1.247680793731462
+Crude,ai_any,22,1.247680793731462
+Crude,ai_any,23,1.247680793731462
+Crude,ai_any,24,1.247680793731462
+Crude,ai_any,25,1.247680793731462
+Crude,ai_any,26,1.247680793731462
+Crude,ai_any,27,1.247680793731462
+Crude,ai_any,28,1.247680793731462
+Crude,ai_any,29,1.247680793731462
+Crude,ai_any,30,1.247680793731462
+Crude,ai_any,31,1.247680793731462
+Crude,ai_any,32,1.247680793731462
+Crude,ai_any,33,1.247680793731462
+Crude,ai_any,34,1.247680793731462
+Crude,ai_any,35,1.247680793731462
+Crude,ai_any,36,1.247680793731462
+Crude,ai_any,37,1.247680793731462
+Crude,ai_any,38,1.247680793731462
+Crude,ai_any,39,1.247680793731462
+Crude,ai_any,40,1.247680793731462
+Crude,ai_any,41,1.247680793731462
+Crude,ai_any,42,1.247680793731462
+Crude,ai_any,43,1.247680793731462
+Crude,ai_any,44,1.247680793731462
+Crude,ai_any,45,1.247680793731462
+Crude,ai_any,46,1.247680793731462
+Crude,ai_any,47,1.247680793731462
+Crude,ai_any,48,1.247680793731462
+Crude,ai_any,49,1.247680793731462
+Crude,ai_any,50,1.247680793731462
