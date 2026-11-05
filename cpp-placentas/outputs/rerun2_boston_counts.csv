@@ -1,0 +1,9 @@
+stratum,joint,cases,n,IH % (cases/N),flag
+Boston,Neither,148,5110,"2.9% (148/5,110)",
+Boston,MVM only,52,1941,"2.7% (52/1,941)",
+Boston,AI only,53,1819,"2.9% (53/1,819)",
+Boston,Both MVM and AI,37,790,4.7% (37/790),
+Other 11 sites,Neither,216,18281,"1.2% (216/18,281)",
+Other 11 sites,MVM only,103,6488,"1.6% (103/6,488)",
+Other 11 sites,AI only,58,4166,"1.4% (58/4,166)",
+Other 11 sites,Both MVM and AI,33,2105,"1.6% (33/2,105)",

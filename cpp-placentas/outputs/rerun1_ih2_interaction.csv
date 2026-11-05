@@ -1,0 +1,4 @@
+Measure,Crude (95% CI),Primary (95% CI),Secondary (95% CI),n_cases,n_obs
+"RERI (additive, 0 = none)","0.12 (-0.29, 0.53)","0.15 (-0.20, 0.50)","0.20 (-0.20, 0.60)",930,40700
+"Attributable proportion, AP (additive, 0 = none)","0.08 (-0.18, 0.33)","0.12 (-0.14, 0.37)","0.13 (-0.11, 0.37)",930,40700
+"Ratio of RRs (multiplicative, 1 = none)","1.05 (0.77, 1.42)","1.13 (0.83, 1.52)","1.13 (0.83, 1.53)",930,40700
