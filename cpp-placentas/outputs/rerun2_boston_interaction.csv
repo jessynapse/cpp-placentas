@@ -1,0 +1,7 @@
+stratum,Measure,Crude (95% CI),Primary (95% CI),Secondary (95% CI),n_cases,n_obs
+Boston (no site term),"RERI (additive, 0 = none)","0.68 (0.06, 1.30)","0.68 (0.05, 1.32)",Same as primary (no site term),290,9660
+Boston (no site term),"Attributable proportion, AP (additive, 0 = none)","0.42 (0.12, 0.73)","0.42 (0.11, 0.72)",Same as primary (no site term),290,9660
+Boston (no site term),"Ratio of RRs (multiplicative, 1 = none)","1.74 (1.04, 2.90)","1.72 (1.03, 2.86)",Same as primary (no site term),290,9660
+Other 11 sites,"RERI (additive, 0 = none)","-0.19 (-0.81, 0.43)","-0.13 (-0.67, 0.41)","-0.07 (-0.71, 0.56)",410,31040
+Other 11 sites,"Attributable proportion, AP (additive, 0 = none)","-0.15 (-0.65, 0.36)","-0.12 (-0.63, 0.40)","-0.05 (-0.51, 0.41)",410,31040
+Other 11 sites,"Ratio of RRs (multiplicative, 1 = none)","0.84 (0.52, 1.36)","0.89 (0.54, 1.44)","0.92 (0.57, 1.50)",410,31040
