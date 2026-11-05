@@ -1,0 +1,6 @@
+Measure,Crude (95% CI),Primary (95% CI),Secondary (95% CI),n_cases,n_obs,n_imps
+"Heterogeneity, Boston vs other 11 sites (single model, shared covariate effects)",,,,700,40700,50
+"  Ratio of aRRs, MVM only","0.69 (0.47, 1.01)","0.80 (0.53, 1.19)","0.70 (0.47, 1.03)",700,40700,50
+"  Ratio of aRRs, AI only","0.86 (0.56, 1.31)","0.97 (0.63, 1.47)","0.93 (0.61, 1.41)",700,40700,50
+"  Ratio of aRRs, both vs neither","1.22 (0.73, 2.01)","1.48 (0.87, 2.50)","1.19 (0.72, 1.97)",700,40700,50
+  Ratio of the two ratios of RRs (1 = same),"2.06 (1.02, 4.18)","1.91 (0.95, 3.87)","1.84 (0.91, 3.72)",700,40700,50
