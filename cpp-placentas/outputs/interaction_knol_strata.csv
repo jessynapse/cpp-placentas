@@ -1,0 +1,5 @@
+Effect,Crude RR (95% CI),Primary aRR (95% CI),Secondary aRR (95% CI),n_cases,n_obs
+"Any MVM vs none, among placentas without AI","1.18 (0.98, 1.42)","1.08 (0.89, 1.32)","1.18 (0.98, 1.42)",700,40700
+"Any MVM vs none, among placentas with AI","1.30 (0.97, 1.75)","1.29 (0.95, 1.75)","1.42 (1.05, 1.90)",700,40700
+"Any AI vs none, among placentas without MVM","1.19 (0.96, 1.47)","1.07 (0.86, 1.32)","1.11 (0.90, 1.38)",700,40700
+"Any AI vs none, among placentas with MVM","1.32 (1.00, 1.74)","1.27 (0.96, 1.67)","1.34 (1.01, 1.77)",700,40700
