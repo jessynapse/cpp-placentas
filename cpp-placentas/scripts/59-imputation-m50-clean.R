@@ -126,7 +126,8 @@ pred <- ini$predictorMatrix
 
 # Fully observed — set to "" so MICE does not impute them
 # CHANGED: gest_age, birthweight, plurality no longer in the model
-fully_obs <- c("mvm","mvm3","mvm2","ai","ai3","age","race","site",
+# CHANGED (59): age removed, as 58 set ages under 13 to missing (17 women), so age is imputed
+fully_obs <- c("mvm","mvm3","mvm2","ai","ai3","race","site",
                "ih_obs")  # CHANGED (49): ih1_mi is imputed (then discarded)
 # CHANGED: verify the fully observed predictors really have no missing values
 stopifnot(all(colSums(is.na(df_mi[, fully_obs])) == 0))
