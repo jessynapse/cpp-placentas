@@ -1,0 +1,6 @@
+rule,all_45268,examined_40700
+Gestational age outside 20-44 weeks,1582,1361
+"Birthweight under 300 g or over 6,000 g",98,1
+Birthweight implausible for gestational age (GA set missing),175,146
+Gestational age missing after cleaning,1981,1706
+Birthweight missing after cleaning,150,13
