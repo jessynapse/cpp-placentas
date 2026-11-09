@@ -1,0 +1,61 @@
+item,row,IH % (cases/N),Unadjusted,Primary,Without study site,note
+Table 2,No MVM (reference),"1.6% (475/29,376)",1.00 (Reference),1.00 (Reference),1.00 (Reference),
+Table 2,Any MVM,"2.0% (225/11,324)","1.22 (1.05, 1.43)","1.14 (0.96, 1.35)","1.25 (1.07, 1.46)",
+Table 2,No AI (reference),"1.6% (519/31,820)",1.00 (Reference),1.00 (Reference),1.00 (Reference),
+Table 2,Any AI,"2.0% (181/8,880)","1.25 (1.06, 1.47)","1.14 (0.96, 1.35)","1.20 (1.02, 1.43)",
+Table 2,Neither (reference),"1.6% (364/23,391)",1.00 (Reference),1.00 (Reference),1.00 (Reference),
+Table 2,MVM only,"1.8% (155/8,429)","1.18 (0.98, 1.42)","1.08 (0.89, 1.32)","1.18 (0.98, 1.42)",
+Table 2,AI only,"1.9% (111/5,985)","1.19 (0.96, 1.47)","1.07 (0.86, 1.32)","1.11 (0.90, 1.38)",
+Table 2,Both MVM and AI,"2.4% (70/2,895)","1.55 (1.20, 1.99)","1.37 (1.05, 1.79)","1.58 (1.23, 2.03)",
+Table 2,RERI,,"0.18 (-0.28, 0.65)","0.22 (-0.20, 0.64)","0.29 (-0.18, 0.75)",
+Table 2,Attributable proportion,,"0.12 (-0.16, 0.40)","0.16 (-0.12, 0.44)","0.18 (-0.08, 0.45)",
+Table 2,Ratio of RRs,,"1.11 (0.78, 1.57)","1.19 (0.84, 1.68)","1.20 (0.85, 1.71)",
+Table 2,"Any MVM primary, 3 decimals",,,"1.141 (0.963, 1.352)",,
+Table 2,"Any AI primary, 3 decimals",,,"1.140 (0.963, 1.349)",,
+eTable 2,"Any MVM vs none, among placentas without AI",,"1.18 (0.98, 1.42)","1.08 (0.89, 1.32)","1.18 (0.98, 1.42)",
+eTable 2,"Any MVM vs none, among placentas with AI",,"1.30 (0.97, 1.75)","1.29 (0.95, 1.75)","1.42 (1.05, 1.90)",
+eTable 2,"Any AI vs none, among placentas without MVM",,"1.19 (0.96, 1.47)","1.07 (0.86, 1.32)","1.11 (0.90, 1.38)",
+eTable 2,"Any AI vs none, among placentas with MVM",,"1.32 (1.00, 1.74)","1.27 (0.96, 1.67)","1.34 (1.01, 1.77)",
+eTable 3A,MVM grade None,"1.6% (475/29,376)",1.00 (Reference),1.00 (Reference),1.00 (Reference),
+eTable 3A,MVM grade Low,"2.0% (192/9,556)","1.24 (1.05, 1.46)","1.15 (0.96, 1.37)","1.25 (1.06, 1.47)",
+eTable 3A,MVM grade High,"1.9% (33/1,768)","1.16 (0.81, 1.64)","1.09 (0.76, 1.54)","1.27 (0.90, 1.80)",
+eTable 3A,AI stage None,"1.6% (519/31,820)",1.00 (Reference),1.00 (Reference),1.00 (Reference),"AI stage is the CPP AI_3cat variable (rule undocumented, about 95% match to amnion or umbilical artery = high)"
+eTable 3A,AI stage Low,"2.4% (106/4,376)","1.48 (1.20, 1.82)","1.26 (1.02, 1.55)","1.32 (1.07, 1.63)","AI stage is the CPP AI_3cat variable (rule undocumented, about 95% match to amnion or umbilical artery = high)"
+eTable 3A,AI stage High,"1.7% (75/4,504)","1.02 (0.80, 1.30)","1.00 (0.79, 1.28)","1.07 (0.84, 1.36)","AI stage is the CPP AI_3cat variable (rule undocumented, about 95% match to amnion or umbilical artery = high)"
+eTable 3B,No MVM (reference),"2.1% (627/29,376)",1.00 (Reference),1.00 (Reference),1.00 (Reference),
+eTable 3B,Any MVM,"2.7% (303/11,324)","1.25 (1.09, 1.43)","1.13 (0.98, 1.30)","1.26 (1.10, 1.45)",
+eTable 3B,No AI (reference),"2.2% (689/31,820)",1.00 (Reference),1.00 (Reference),1.00 (Reference),
+eTable 3B,Any AI,"2.7% (241/8,880)","1.25 (1.08, 1.45)","1.10 (0.95, 1.28)","1.19 (1.03, 1.37)",
+eTable 3B,Neither (reference),"2.0% (478/23,391)",1.00 (Reference),1.00 (Reference),1.00 (Reference),
+eTable 3B,MVM only,"2.5% (211/8,429)","1.22 (1.04, 1.43)","1.09 (0.92, 1.29)","1.21 (1.03, 1.42)",
+eTable 3B,AI only,"2.5% (149/5,985)","1.21 (1.01, 1.46)","1.05 (0.88, 1.26)","1.12 (0.94, 1.35)",
+eTable 3B,Both MVM and AI,"3.2% (92/2,895)","1.55 (1.25, 1.93)","1.29 (1.03, 1.62)","1.54 (1.24, 1.91)",
+eTable 4,Boston stratum,"3.0% (290/9,660)",,,,
+eTable 4,Boston | No MVM (reference),"2.9% (201/6,929)",,1.00 (Reference),,
+eTable 4,Boston | Any MVM,"3.3% (89/2,731)",,"1.11 (0.87, 1.42)",,
+eTable 4,Boston | No AI (reference),"2.8% (200/7,051)",,1.00 (Reference),,
+eTable 4,Boston | Any AI,"3.4% (90/2,609)",,"1.28 (1.00, 1.63)",,
+eTable 4,Boston | Neither (reference),"2.9% (148/5,110)",,1.00 (Reference),,
+eTable 4,Boston | MVM only,"2.7% (52/1,941)",,"0.91 (0.67, 1.24)",,
+eTable 4,Boston | AI only,"2.9% (53/1,819)",,"1.05 (0.77, 1.43)",,
+eTable 4,Boston | Both MVM and AI,4.7% (37/790),,"1.65 (1.16, 2.34)",,
+eTable 4,Other 11 sites stratum,"1.3% (410/31,040)",,,,
+eTable 4,Other 11 sites | No MVM (reference),"1.2% (274/22,447)",,1.00 (Reference),,
+eTable 4,Other 11 sites | Any MVM,"1.6% (136/8,593)",,"1.14 (0.90, 1.44)",,
+eTable 4,Other 11 sites | No AI (reference),"1.3% (319/24,769)",,1.00 (Reference),,
+eTable 4,Other 11 sites | Any AI,"1.5% (91/6,271)",,"1.03 (0.82, 1.31)",,
+eTable 4,Other 11 sites | Neither (reference),"1.2% (216/18,281)",,1.00 (Reference),,
+eTable 4,Other 11 sites | MVM only,"1.6% (103/6,488)",,"1.17 (0.90, 1.52)",,
+eTable 4,Other 11 sites | AI only,"1.4% (58/4,166)",,"1.08 (0.81, 1.44)",,
+eTable 4,Other 11 sites | Both MVM and AI,"1.6% (33/2,105)",,"1.12 (0.75, 1.66)",,
+eTable 5,Any MVM,,,"1.14 (0.96, 1.35)",,"E-value estimate 1.54, CI limit 1.00"
+eTable 5,Any AI,,,"1.14 (0.96, 1.35)",,"E-value estimate 1.54, CI limit 1.00"
+eTable 5,MVM only,,,"1.08 (0.89, 1.32)",,"E-value estimate 1.39, CI limit 1.00"
+eTable 5,AI only,,,"1.07 (0.86, 1.32)",,"E-value estimate 1.33, CI limit 1.00"
+eTable 5,Both MVM and AI,,,"1.37 (1.05, 1.79)",,"E-value estimate 2.09, CI limit 1.29"
+eTable 5,Maternal angioma: RR_EU to explain away aRR (RR_UD = 1.64),,,,,3.28 (aRR 1.3723)
+eTable 5,Maternal angioma: RR_EU to move lower CI limit to 1,,,,,1.15 (lower limit 1.0525)
+eTable 1,"Birthweight, g, mean (SD): Alive without one-year examination (n = 2,734)",,,,,"3172 (511), birthweight recorded for 2,732"
+eTable 1,"Birthweight, g, mean (SD): Died before one year (n = 1,834)",,,,,"1999 (1138), birthweight recorded for 1,796"
+eTable 1,"Birthweight, g, mean (SD): Examined (n = 40,700)",,,,,"3191 (531), birthweight recorded for 40,688"
+eTable 1,"Birthweight, g, mean (SD): All not examined (n = 4,568)",,,,,"2707 (1000), birthweight recorded for 4,528"
