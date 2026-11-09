@@ -1,0 +1,12 @@
+rule,all_45268,examined_40700
+Maternal age under 13 years,17,14
+Height under 122 cm or over 213 cm,19,19
+Weight under 30 kg,4,2
+BMI under 13 or over 60,9,9
+Cigarettes per day coded 70 or 80,833,759
+Gestational age outside 20-44 weeks,1582,1361
+"Birthweight under 300 g or over 6,000 g",98,1
+Birthweight implausible for gestational age (GA set missing),175,146
+Age set missing (total missing after cleaning),17,14
+BMI set missing (total missing after cleaning),3963,3447
+Smoking set missing (total missing after cleaning),1175,998
