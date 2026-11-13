@@ -1,0 +1,16 @@
+Characteristic,MVM only vs neither,AI only vs neither,Both vs neither
+"Age at Delivery, y",0.02,0.08,0.12
+Race and Ethnicity,0.06,0.17,0.16
+Educational Attainment,0.09,0.04,0.12
+Annual Family Income,0.05,0.1,0.06
+Marital Status,0.04,0.05,0.03
+Number of Prior Births,0.05,0.02,0.14
+Pre-Pregnancy BMI,0.03,0.05,0.07
+Pre-Pregnancy Diabetes,0.05,0.04,0
+Chronic Hypertension,0,0.02,0.03
+Smoking During Pregnancy,0.04,0.12,0.08
+Sex,0.03,0.07,0.08
+"Gestational Age at Delivery, wk^a",0.08,0.06,0.13
+Preterm Birth (<37 wk)^a,0.09,0.03,0.18
+"Birth Weight, g^a",0.21,0.03,0.23
+Small for Gestational Age^a,0.12,0.02,0.15
