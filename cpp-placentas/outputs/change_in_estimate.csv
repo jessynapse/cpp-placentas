@@ -1,0 +1,61 @@
+model,type,covariate,exposure,RR,lower_ci,upper_ci,RR (95% CI),pct_change,change_definition,flag_10pct,n_cases,n_obs,n_imps
+"Crude (weighted, no covariates)",crude,,Maternal vascular malperfusion only,1.181,0.98,1.423,"1.18 (0.98, 1.42)",NA,,,700,40700,50
+"Crude (weighted, no covariates)",crude,,Acute inflammation only,1.187,0.961,1.467,"1.19 (0.96, 1.47)",NA,,,700,40700,50
+"Crude (weighted, no covariates)",crude,,Both,1.552,1.206,1.997,"1.55 (1.21, 2.00)",NA,,,700,40700,50
+Crude + Maternal age,add one,Maternal age,Maternal vascular malperfusion only,1.179,0.978,1.42,"1.18 (0.98, 1.42)",-0.2,vs weighted crude,,700,40700,50
+Crude + Maternal age,add one,Maternal age,Acute inflammation only,1.18,0.955,1.458,"1.18 (0.96, 1.46)",-0.6,vs weighted crude,,700,40700,50
+Crude + Maternal age,add one,Maternal age,Both,1.538,1.195,1.979,"1.54 (1.20, 1.98)",-0.9,vs weighted crude,,700,40700,50
+Crude + Race and ethnicity,add one,Race and ethnicity,Maternal vascular malperfusion only,1.149,0.954,1.383,"1.15 (0.95, 1.38)",-2.8,vs weighted crude,,700,40700,50
+Crude + Race and ethnicity,add one,Race and ethnicity,Acute inflammation only,1.092,0.883,1.349,"1.09 (0.88, 1.35)",-8.1,vs weighted crude,,700,40700,50
+Crude + Race and ethnicity,add one,Race and ethnicity,Both,1.49,1.159,1.917,"1.49 (1.16, 1.92)",-3.9,vs weighted crude,,700,40700,50
+Crude + Education,add one,Education,Maternal vascular malperfusion only,1.212,1.006,1.461,"1.21 (1.01, 1.46)",2.7,vs weighted crude,,700,40700,50
+Crude + Education,add one,Education,Acute inflammation only,1.172,0.949,1.448,"1.17 (0.95, 1.45)",-1.3,vs weighted crude,,700,40700,50
+Crude + Education,add one,Education,Both,1.611,1.252,2.073,"1.61 (1.25, 2.07)",3.8,vs weighted crude,,700,40700,50
+Crude + Annual family income,add one,Annual family income,Maternal vascular malperfusion only,1.196,0.993,1.44,"1.20 (0.99, 1.44)",1.2,vs weighted crude,,700,40700,50
+Crude + Annual family income,add one,Annual family income,Acute inflammation only,1.156,0.936,1.428,"1.16 (0.94, 1.43)",-2.6,vs weighted crude,,700,40700,50
+Crude + Annual family income,add one,Annual family income,Both,1.58,1.228,2.033,"1.58 (1.23, 2.03)",1.8,vs weighted crude,,700,40700,50
+Crude + Marital status,add one,Marital status,Maternal vascular malperfusion only,1.174,0.974,1.414,"1.17 (0.97, 1.41)",-0.6,vs weighted crude,,700,40700,50
+Crude + Marital status,add one,Marital status,Acute inflammation only,1.183,0.957,1.461,"1.18 (0.96, 1.46)",-0.4,vs weighted crude,,700,40700,50
+Crude + Marital status,add one,Marital status,Both,1.558,1.211,2.005,"1.56 (1.21, 2.00)",0.4,vs weighted crude,,700,40700,50
+Crude + Smoking,add one,Smoking,Maternal vascular malperfusion only,1.179,0.978,1.421,"1.18 (0.98, 1.42)",-0.2,vs weighted crude,,700,40700,50
+Crude + Smoking,add one,Smoking,Acute inflammation only,1.169,0.946,1.444,"1.17 (0.95, 1.44)",-1.6,vs weighted crude,,700,40700,50
+Crude + Smoking,add one,Smoking,Both,1.532,1.191,1.97,"1.53 (1.19, 1.97)",-1.3,vs weighted crude,,700,40700,50
+Crude + Parity,add one,Parity,Maternal vascular malperfusion only,1.195,0.991,1.44,"1.19 (0.99, 1.44)",1.1,vs weighted crude,,700,40700,50
+Crude + Parity,add one,Parity,Acute inflammation only,1.183,0.957,1.462,"1.18 (0.96, 1.46)",-0.4,vs weighted crude,,700,40700,50
+Crude + Parity,add one,Parity,Both,1.589,1.235,2.045,"1.59 (1.23, 2.04)",2.4,vs weighted crude,,700,40700,50
+Crude + Infant sex,add one,Infant sex,Maternal vascular malperfusion only,1.189,0.987,1.433,"1.19 (0.99, 1.43)",0.7,vs weighted crude,,700,40700,50
+Crude + Infant sex,add one,Infant sex,Acute inflammation only,1.207,0.977,1.492,"1.21 (0.98, 1.49)",1.7,vs weighted crude,,700,40700,50
+Crude + Infant sex,add one,Infant sex,Both,1.584,1.231,2.039,"1.58 (1.23, 2.04)",2.1,vs weighted crude,,700,40700,50
+Crude + Study site,add one,Study site,Maternal vascular malperfusion only,1.076,0.885,1.307,"1.08 (0.89, 1.31)",-8.9,vs weighted crude,,700,40700,50
+Crude + Study site,add one,Study site,Acute inflammation only,1.031,0.834,1.275,"1.03 (0.83, 1.27)",-13.2,vs weighted crude,YES,700,40700,50
+Crude + Study site,add one,Study site,Both,1.324,1.015,1.726,"1.32 (1.01, 1.73)",-14.7,vs weighted crude,YES,700,40700,50
+Full - Maternal age,drop one,Maternal age,Maternal vascular malperfusion only,1.089,0.896,1.325,"1.09 (0.90, 1.32)",0,vs full,,700,40700,50
+Full - Maternal age,drop one,Maternal age,Acute inflammation only,1.054,0.853,1.302,"1.05 (0.85, 1.30)",0.1,vs full,,700,40700,50
+Full - Maternal age,drop one,Maternal age,Both,1.361,1.044,1.775,"1.36 (1.04, 1.78)",0.2,vs full,,700,40700,50
+Full - Race and ethnicity,drop one,Race and ethnicity,Maternal vascular malperfusion only,1.101,0.905,1.338,"1.10 (0.91, 1.34)",1.1,vs full,,700,40700,50
+Full - Race and ethnicity,drop one,Race and ethnicity,Acute inflammation only,1.044,0.845,1.29,"1.04 (0.85, 1.29)",-0.8,vs full,,700,40700,50
+Full - Race and ethnicity,drop one,Race and ethnicity,Both,1.371,1.052,1.787,"1.37 (1.05, 1.79)",0.9,vs full,,700,40700,50
+Full - Education,drop one,Education,Maternal vascular malperfusion only,1.088,0.895,1.323,"1.09 (0.89, 1.32)",-0.1,vs full,,700,40700,50
+Full - Education,drop one,Education,Acute inflammation only,1.047,0.848,1.294,"1.05 (0.85, 1.29)",-0.6,vs full,,700,40700,50
+Full - Education,drop one,Education,Both,1.359,1.043,1.772,"1.36 (1.04, 1.77)",0.1,vs full,,700,40700,50
+Full - Annual family income,drop one,Annual family income,Maternal vascular malperfusion only,1.09,0.896,1.325,"1.09 (0.90, 1.32)",0,vs full,,700,40700,50
+Full - Annual family income,drop one,Annual family income,Acute inflammation only,1.051,0.851,1.298,"1.05 (0.85, 1.30)",-0.2,vs full,,700,40700,50
+Full - Annual family income,drop one,Annual family income,Both,1.349,1.034,1.759,"1.35 (1.03, 1.76)",-0.7,vs full,,700,40700,50
+Full - Marital status,drop one,Marital status,Maternal vascular malperfusion only,1.089,0.896,1.324,"1.09 (0.90, 1.32)",-0,vs full,,700,40700,50
+Full - Marital status,drop one,Marital status,Acute inflammation only,1.055,0.854,1.304,"1.06 (0.85, 1.30)",0.2,vs full,,700,40700,50
+Full - Marital status,drop one,Marital status,Both,1.363,1.046,1.777,"1.36 (1.05, 1.78)",0.3,vs full,,700,40700,50
+Full - Smoking,drop one,Smoking,Maternal vascular malperfusion only,1.089,0.895,1.324,"1.09 (0.90, 1.32)",-0,vs full,,700,40700,50
+Full - Smoking,drop one,Smoking,Acute inflammation only,1.058,0.857,1.308,"1.06 (0.86, 1.31)",0.5,vs full,,700,40700,50
+Full - Smoking,drop one,Smoking,Both,1.363,1.045,1.778,"1.36 (1.04, 1.78)",0.3,vs full,,700,40700,50
+Full - Parity,drop one,Parity,Maternal vascular malperfusion only,1.085,0.893,1.319,"1.09 (0.89, 1.32)",-0.4,vs full,,700,40700,50
+Full - Parity,drop one,Parity,Acute inflammation only,1.062,0.86,1.312,"1.06 (0.86, 1.31)",0.8,vs full,,700,40700,50
+Full - Parity,drop one,Parity,Both,1.361,1.044,1.774,"1.36 (1.04, 1.77)",0.1,vs full,,700,40700,50
+Full - Infant sex,drop one,Infant sex,Maternal vascular malperfusion only,1.078,0.887,1.311,"1.08 (0.89, 1.31)",-1,vs full,,700,40700,50
+Full - Infant sex,drop one,Infant sex,Acute inflammation only,1.036,0.838,1.279,"1.04 (0.84, 1.28)",-1.7,vs full,,700,40700,50
+Full - Infant sex,drop one,Infant sex,Both,1.327,1.018,1.731,"1.33 (1.02, 1.73)",-2.3,vs full,,700,40700,50
+Full - Study site,drop one,Study site,Maternal vascular malperfusion only,1.186,0.984,1.429,"1.19 (0.98, 1.43)",8.9,vs full,,700,40700,50
+Full - Study site,drop one,Study site,Acute inflammation only,1.099,0.89,1.357,"1.10 (0.89, 1.36)",4.3,vs full,,700,40700,50
+Full - Study site,drop one,Study site,Both,1.563,1.216,2.01,"1.56 (1.22, 2.01)",15,vs full,YES,700,40700,50
+Full (9 covariates),full,,Maternal vascular malperfusion only,1.089,0.896,1.324,"1.09 (0.90, 1.32)",-7.8,"total change, vs weighted crude",,700,40700,50
+Full (9 covariates),full,,Acute inflammation only,1.053,0.853,1.301,"1.05 (0.85, 1.30)",-11.3,"total change, vs weighted crude",,700,40700,50
+Full (9 covariates),full,,Both,1.359,1.042,1.772,"1.36 (1.04, 1.77)",-12.4,"total change, vs weighted crude",,700,40700,50
