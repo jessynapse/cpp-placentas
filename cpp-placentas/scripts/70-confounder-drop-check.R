@@ -45,7 +45,7 @@ fmt_n <- function(x) format(x, big.mark = ",", trim = TRUE)
 # DATA
 # ------------------------------------------------------------------------------
 w <- readRDS(file.path(in_dir, "weighted_long_m50y.RDS"))
-recode <- function(d) d %>% mutate(
+prep <- function(d) d %>% mutate(
   smoking = factor(as.character(smoking), levels = c("Non-smoker", "1-19/day", "20+/day")),
   parity  = factor(as.character(parity),  levels = c("0", "1", "2", "3", "4+")),
   income  = factor(as.character(income),
@@ -63,10 +63,10 @@ recode <- function(d) d %>% mutate(
                    levels = c("Neither", "MVM only", "AI only", "Both MVM and AI"))) %>%
   mutate(across(c(dm, chronic_htn, infant_sex), ~ factor(as.character(.x))))
 
-full_long <- w %>% filter(.imp > 0) %>% recode() %>%
+full_long <- w %>% filter(.imp > 0) %>% prep() %>%
   select(.imp, MOMID, PREGID, CHILDID, ih1, exclusion, ih_obs, ipw, site, age, bmi, race, educ,
          income, marital, smoking, parity, dm, chronic_htn, infant_sex, mvm2, ai, mvm2n, ain, joint)
-obs0 <- w %>% filter(.imp == 0, !is.na(ih1), exclusion == 0) %>% recode()   # observed data
+obs0 <- w %>% filter(.imp == 0, !is.na(ih1), exclusion == 0) %>% prep()   # observed data
 rm(w); invisible(gc())
 
 all_imp <- split(full_long, full_long$.imp)                 # 45,268 per imputation (for weights)
@@ -144,17 +144,20 @@ models <- c(
   list(`6. Reduced set, weights re-estimated` = list(covs = reduced, dropped = paste(lab[six], collapse = ", "),
                                                      wcol = "ipw_reduced", data = "rw")))
 
-res <- imap_dfr(models, function(s, name) {
+cache <- file.path(in_dir, "confounder_drop_fits_70.RDS")   # git-ignored, avoids refitting
+res_raw <- if (file.exists(cache)) readRDS(cache) else imap_dfr(models, function(s, name) {
   cat("Fitting", name, "\n")
   r <- if (name == "2. Full (12 covariates)") r_full else
     fit_pool(s$covs, wcol = if (is.null(s$wcol)) "ipw" else s$wcol,
              data = if (identical(s$data, "rw")) imp_rw else imp)
   r %>% mutate(model = name, covariates_dropped = s$dropped)
-}) %>%
+})
+saveRDS(res_raw, cache)
+res <- res_raw %>%
   left_join(r_full %>% select(category, rr_full = rr), by = "category") %>%
   mutate(pct_change_from_full = 100 * (rr - rr_full) / rr_full,
          flag_10pct = if_else(abs(pct_change_from_full) >= 10 & model != "2. Full (12 covariates)", "YES", ""),
-         category = recode(category, `MVM only` = "Maternal vascular malperfusion only",
+         category = dplyr::recode(category, `MVM only` = "Maternal vascular malperfusion only",
                            `AI only` = "Acute inflammation only", `Both MVM and AI` = "Both"),
          `aRR (95% CI)` = sprintf("%.2f (%.2f, %.2f)", rr, lci, uci),
          n_cases = 700, n_obs = 40700, n_imps = M) %>%
