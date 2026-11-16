@@ -1,0 +1,8 @@
+Exposure,"IH, % (cases/N)","12 covariates, aRR (95% CI)","9 covariates (primary), aRR (95% CI)"
+Neither,"1.6% (364/23,391)",1.00 (Reference),1.00 (Reference)
+Maternal vascular malperfusion only,"1.8% (155/8,429)","1.08 (0.89, 1.32)","1.09 (0.90, 1.32)"
+Acute inflammation only,"1.9% (111/5,985)","1.07 (0.86, 1.32)","1.05 (0.85, 1.30)"
+Both,"2.4% (70/2,895)","1.37 (1.05, 1.79)","1.36 (1.04, 1.77)"
+"RERI (additive, 0 = none)",,"0.22 (-0.20, 0.64)","0.22 (-0.20, 0.63)"
+"AP (additive, 0 = none)",,"0.16 (-0.12, 0.44)","0.16 (-0.12, 0.44)"
+"Ratio of RRs (multiplicative, 1 = none)",,"1.19 (0.84, 1.68)","1.18 (0.83, 1.68)"
