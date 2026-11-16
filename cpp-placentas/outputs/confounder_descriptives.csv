@@ -1,0 +1,35 @@
+check,item,value,note
+Cramer's V,education vs income,0.21,"0 = no association, 1 = complete overlap"
+Cramer's V,education vs marital status,0.15,"0 = no association, 1 = complete overlap"
+Cramer's V,income vs marital status,0.25,"0 = no association, 1 = complete overlap"
+Pre-pregnancy diabetes,Overall,"1.5% (600/40,695)",
+Pre-pregnancy diabetes,Category: Neither,"1.4% (330/23,387)",
+Pre-pregnancy diabetes,Category: MVM only,"2.0% (169/8,429)",
+Pre-pregnancy diabetes,Category: AI only,"1.0% (61/5,984)",
+Pre-pregnancy diabetes,Category: Both MVM and AI,"1.4% (40/2,895)",
+Pre-pregnancy diabetes,IH cases among infants of mothers with diabetes,3.2% (19/600),definite IH
+Pre-pregnancy diabetes,"IH cases with diabetes, category: Neither",3.0% (10/330),
+Pre-pregnancy diabetes,"IH cases with diabetes, category: MVM only",2.4% (4/169),
+Pre-pregnancy diabetes,"IH cases with diabetes, category: AI only",3.3% (2/61),
+Pre-pregnancy diabetes,"IH cases with diabetes, category: Both MVM and AI",7.5% (3/40),
+Largest SMD vs neither,education,0.12,"MVM only 0.09, AI only 0.04, both 0.12"
+Crude RR with IH (unweighted),education: educSome HS,"0.99 (0.76, 1.30)",reference: <HS
+Crude RR with IH (unweighted),education: educHS grad,"1.91 (1.49, 2.45)",reference: <HS
+Crude RR with IH (unweighted),education: educCollege+,"2.73 (2.09, 3.58)",reference: <HS
+Largest SMD vs neither,income,0.10,"MVM only 0.05, AI only 0.10, both 0.06"
+Crude RR with IH (unweighted),"income: income<=$1,999","0.71 (0.10, 5.13)","reference: $4,000-$5,999"
+Crude RR with IH (unweighted),"income: income$2,000-$3,999","0.91 (0.68, 1.22)","reference: $4,000-$5,999"
+Crude RR with IH (unweighted),"income: income$6,000-$7,999","1.73 (1.42, 2.10)","reference: $4,000-$5,999"
+Crude RR with IH (unweighted),"income: income$8,000-$9,999","1.76 (1.37, 2.24)","reference: $4,000-$5,999"
+Crude RR with IH (unweighted),"income: income$10,000-$14,999","3.14 (2.37, 4.16)","reference: $4,000-$5,999"
+Crude RR with IH (unweighted),"income: income>=$15,000","3.90 (2.91, 5.23)","reference: $4,000-$5,999"
+Largest SMD vs neither,marital status,0.05,"MVM only 0.04, AI only 0.05, both 0.03"
+Crude RR with IH (unweighted),marital status: maritalSingle,"0.53 (0.40, 0.69)",reference: Married/CL
+Crude RR with IH (unweighted),marital status: maritalWid/Div/Sep,"0.70 (0.52, 0.95)",reference: Married/CL
+Largest SMD vs neither,smoking,0.12,"MVM only 0.04, AI only 0.12, both 0.08"
+Crude RR with IH (unweighted),smoking: smoking1-19/day,"0.85 (0.71, 1.01)",reference: Non-smoker
+Crude RR with IH (unweighted),smoking: smoking20+/day,"1.34 (1.11, 1.62)",reference: Non-smoker
+Largest SMD vs neither,pre-pregnancy BMI,0.07,"MVM only 0.03, AI only 0.05, both 0.07"
+Crude RR with IH (unweighted),pre-pregnancy BMI: I(bmi/5),"0.76 (0.68, 0.84)",per 5 kg/m2
+Largest SMD vs neither,pre-pregnancy diabetes,0.05,"MVM only 0.05, AI only 0.04, both 0.00"
+Crude RR with IH (unweighted),pre-pregnancy diabetes: dmYes,"1.86 (1.18, 2.91)",reference: No
