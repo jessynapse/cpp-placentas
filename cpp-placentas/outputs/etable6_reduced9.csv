@@ -1,0 +1,5 @@
+Exposure,"aRR (95% CI), 9 covariates","E-value, point estimate","E-value, CI bound",note
+Maternal vascular malperfusion only vs neither,"1.09 (0.90, 1.32)",1.40,1.00,"Adjusted for maternal age, race and ethnicity, education, annual family income, marital status, smoking, parity, infant sex and study site, with the same 50 imputations and stabilised censoring weights re-estimated from both patterns and these 9 covariates. 700 definite IH cases among 40,700 infants unless stated."
+Acute inflammation only vs neither,"1.05 (0.85, 1.30)",1.29,1.00,
+Both vs neither,"1.36 (1.04, 1.77)",2.06,1.25,
+Maternal history of angioma (RR_UD 1.64): RR_EU to explain away the aRR for both,,3.09,1.12,

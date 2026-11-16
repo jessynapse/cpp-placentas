@@ -1,0 +1,11 @@
+Exposure,Level,"IH, % (cases/N)",Unadjusted RR (95% CI),"aRR (95% CI), 9 covariates",note
+"MVM, any vs none",None,"1.6% (475/29,376)",1.00 (Reference),1.00 (Reference),"Adjusted for maternal age, race and ethnicity, education, annual family income, marital status, smoking, parity, infant sex and study site, with the same 50 imputations and stabilised censoring weights re-estimated from both patterns and these 9 covariates. 700 definite IH cases among 40,700 infants unless stated."
+"MVM, any vs none",Any,"2.0% (225/11,324)","1.22 (1.05, 1.43)","1.15 (0.97, 1.36)",
+MVM grade,None,"1.6% (475/29,376)",1.00 (Reference),1.00 (Reference),
+MVM grade,Low (score 1-2),"2.0% (192/9,556)","1.24 (1.05, 1.46)","1.15 (0.96, 1.37)",
+MVM grade,High (score 3 or more),"1.9% (33/1,768)","1.16 (0.81, 1.64)","1.11 (0.78, 1.58)",
+"AI, any vs none",None,"1.6% (519/31,820)",1.00 (Reference),1.00 (Reference),
+"AI, any vs none",Any,"2.0% (181/8,880)","1.25 (1.06, 1.47)","1.12 (0.95, 1.33)",
+AI stage,None,"1.6% (519/31,820)",1.00 (Reference),1.00 (Reference),
+AI stage,Low,"2.4% (106/4,376)","1.48 (1.20, 1.82)","1.25 (1.01, 1.53)",
+AI stage,High,"1.7% (75/4,504)","1.02 (0.80, 1.30)","0.98 (0.77, 1.26)",
