@@ -1,0 +1,6 @@
+rule,"All 45,268","Examined 40,700",Died before 12 months,"Alive, no examination"
+Over 44 weeks,1466,1319,35,112
+"Under 20 weeks (birthweight 500 g or more, or survived to 12 months)",59,42,12,5
+Implausible for birthweight,175,146,16,13
+Total set to missing,1700,1507,63,130
+Gestational age missing after cleaning,1924,1706,70,148
