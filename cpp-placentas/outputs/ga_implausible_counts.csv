@@ -1,0 +1,11 @@
+item,value
+Gestational age under 20 weeks,"0.1% (42/40,700)"
+Gestational age over 44 weeks,"3.2% (1,319/40,700)"
+Implausible for birthweight (within 20 to 44 weeks),"0.4% (146/40,700)"
+"Improbable gestational age, total","3.7% (1,507/40,700)"
+IH cases among infants with improbable gestational age,3.0% (21/700)
+Gestational age missing,"0.5% (199/40,700)"
+"Improbable gestational age, category: Neither","828 of 23,391 infants, 12 IH cases"
+"Improbable gestational age, category: MVM only","279 of  8,429 infants, 5 IH cases"
+"Improbable gestational age, category: AI only","276 of  5,985 infants, 4 IH cases"
+"Improbable gestational age, category: Both MVM and AI","124 of  2,895 infants, 0 IH cases"
